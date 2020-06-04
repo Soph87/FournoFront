@@ -1,16 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import {createAppContainer } from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
-import SignIn from './screens/signin'
-import SignUp from './screens/signup'
-
-
+import SignIn from './screens/signin';
+import SignUp from './screens/signup';
+import Accueil from './screens/accueil';
 
 
 var StackNavigator = createStackNavigator({
   Home: SignIn,
   SignUp: SignUp,
+  Accueil: Accueil
 }, 
 {
   headerMode: "none"
