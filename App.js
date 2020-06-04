@@ -4,12 +4,14 @@ import {createStackNavigator} from 'react-navigation-stack';
 import SignIn from './screens/signin';
 import SignUp from './screens/signup';
 import Accueil from './screens/accueil';
+import ListePlats from './screens/liste-plats';
 
 
 var StackNavigator = createStackNavigator({
-  Home: SignIn,
-  SignUp: SignUp,
-  Accueil: Accueil
+    Home: SignIn,
+    SignUp: SignUp,
+    Accueil: Accueil,
+    ListePlats : ListePlats
 }, 
 {
   headerMode: "none"
