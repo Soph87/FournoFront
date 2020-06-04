@@ -45,7 +45,7 @@ function Accueil({navigation}) {
                         <Text>Entrées</Text>
                     </View>
                 </View>
-                <Text>+ de catégories</Text>
+                <Text onPress={() => navigation.navigate('ListePlats')}>+ de catégories</Text>
             </View>
         </View>
     )
