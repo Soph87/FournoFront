@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Text, View, StyleSheet, AsyncStorage } from 'react-native';
-import { Input, Button, Header } from 'react-native-elements';
+import { View, StyleSheet, AsyncStorage } from 'react-native';
+import { Text, Input, Button, Header, ThemeProvider } from 'react-native-elements';
 import FlecheRetour from '../assets/images/fleche-retour.svg'
 import Popover from 'react-native-popover-view'
 
@@ -11,6 +11,26 @@ function SignUp({ navigation }) {
     const [password, setPassword] = useState("")
     const [isVisible, setIsVisible] = useState(false)
     const [error, setError] = useState("")
+
+    const theme = {
+        Button: {
+          titleStyle: {
+            color: '#FFFFFF',
+            fontFamily: "BarlowCondensed-SemiBold",
+          },
+        },
+        Input: {
+          inputStyle: {
+            color: "#ADADAD",
+            fontFamily: "BarlowCondensed-Regular",
+          },
+        },
+        Text: {
+          style: {
+            fontFamily: "BarlowCondensed-Regular",
+          },
+        }
+      };
 
     var enregistrer = async () => {
 
@@ -47,7 +67,8 @@ function SignUp({ navigation }) {
     }
 
     return (
-        <View style={styles.global}>
+        <ThemeProvider theme={theme}>
+            <View style={styles.global}>
             <Header
                 centerComponent={{ style: { color: '#fff' } }}
                 barStyle="light-content"
@@ -74,6 +95,7 @@ function SignUp({ navigation }) {
             </View>
             <Text style={{ color: "white", textAlign: "center", marginBottom: 10 }}>© Fourneaux&Cie 2020</Text>
         </View>
+        </ThemeProvider>
     )
 }
 
