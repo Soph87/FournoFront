@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Text, View, StyleSheet } from 'react-native';
 import { Input, Button, Header } from 'react-native-elements';
 import FlecheRetour from '../assets/fleche-retour.svg'
@@ -10,7 +10,7 @@ function SignUp({ navigation }) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    var enregistrer = () => {
+    var enregistrer = async () => {
 
         
 
