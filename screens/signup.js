@@ -10,14 +10,25 @@ function SignUp({ navigation }) {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    var enregistrer = async () => {
+    var enregistrer =  async () => {
 
-        
+        var body = {
+            prenom: prenom,
+            email: email,
+            password: password
+        }
 
-        await fetch("http://192.168.1.23:3000", {
+        var bodyToSend = JSON.stringify(body)
+
+        let registerToDb = await fetch("http://192.168.1.23:3000/users/signup", {
             method: "POST",
-            
+            body: bodyToSend,
+            headers: {'Content-Type': 'application/json'}
         })
+
+        if (registerToDb.result){
+            
+        }
     }
 
     return (
