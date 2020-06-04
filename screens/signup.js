@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { Text, View, StyleSheet } from 'react-native';
 import { Input, Button, Header } from 'react-native-elements';
-import FlecheRetour from '../assets/fleche-retour.svg'
+import FlecheRetour from '../assets/images/fleche-retour.svg'
 
 
 function SignUp({ navigation }) {
