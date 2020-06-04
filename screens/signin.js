@@ -22,8 +22,23 @@ function SignIn({navigation}) {
                 <View style={styles.connect}>
                     <Input placeholderTextColor="#ADADAD" placeholder="Email" inputContainerStyle={styles.input} />
                     <Input placeholderTextColor="#ADADAD" placeholder="Mot de passe" inputContainerStyle={styles.input} />
-                    <Button title="S'enregistrer" type="solid" containerStyle={{ padding: 20 }} buttonStyle={styles.button} containerStyle={{marginBottom: 5}} />
-                    <Text style={{ alignSelf: "center", color: "#666666", marginTop: 20}}>Pas encore inscrit.e ? <Text style={{ textDecorationLine: "underline", color: "#01B393" }} onPress={() => navigation.navigate('SignUp')}>Créez votre compte !</Text></Text>
+                    <Button 
+                        title="Se connecter" 
+                        type="solid" 
+                        containerStyle={{ padding: 20 }} 
+                        buttonStyle={styles.button} 
+                        containerStyle={{marginBottom: 5}}
+                        onPress={() => navigation.navigate('Accueil')}
+                    />
+                    <Text style={{ alignSelf: "center", color: "#666666", marginTop: 20}}>
+                        Pas encore inscrit.e ? 
+                        <Text 
+                            style={{ textDecorationLine: "underline", color: "#01B393" }} 
+                            onPress={() => navigation.navigate('SignUp')}
+                        >
+                            Créez votre compte !
+                        </Text>
+                    </Text>
                 </View>
             </View>
             <View style={{marginBottom: 10}}>
