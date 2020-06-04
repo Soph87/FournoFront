@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native';
-import { Input, Button, Header } from 'react-native-elements';
-import Burger from '../assets/burger.svg'
+import { Input, Button, Header, Image } from 'react-native-elements';
+import Burger from '../assets/images/burger.svg'
 
 
 
@@ -17,7 +17,36 @@ function Accueil({navigation}) {
             >
                 <Burger width={30} height={30} />
             </Header>
-            <Text>Page accueil</Text>
+            <View>
+                <Text>Fourneaux</Text><Text>&Cie</Text>
+                <Text>Bonjour Prénom, quelle recette allez-vous préparer aujourd'hui ?</Text>
+            </View>
+            <View>
+                <View style={{display:'flex', flexDirection: 'row'}}>
+                    <View>
+                        <Image
+                            source={require('../assets/images/entrees.png')}
+                            style={{ width: '25%', height: 'auto' }}
+                        />
+                        <Text>Entrées</Text>
+                    </View>
+                    <View>
+                        <Image
+                            source={require('../assets/images/entrees.png')}
+                            style={{ width: '25%', height: 'auto' }}
+                        />
+                        <Text>Entrées</Text>
+                    </View>
+                    <View>
+                        <Image
+                            source={require('../assets/images/entrees.png')}
+                            style={{ width: '25%', height: 'auto' }}
+                        />
+                        <Text>Entrées</Text>
+                    </View>
+                </View>
+                <Text>+ de catégories</Text>
+            </View>
         </View>
     )
 }
