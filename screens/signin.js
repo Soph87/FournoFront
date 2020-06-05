@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import {View, StyleSheet, AsyncStorage } from 'react-native';
-import {Input, Button, Header, Text, ThemeProvider } from 'react-native-elements';
-import Popover from 'react-native-popover-view';
+import { Text, View, StyleSheet, AsyncStorage, KeyboardAvoidingView } from 'react-native';
+import { Input, Button, Header, Overlay, ThemeProvider } from 'react-native-elements';
+import {connect} from 'react-redux'
 
 
-function SignIn({ navigation }) {
+
+
+function SignIn({ navigation, sendPrenomToRedux }) {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -13,23 +15,24 @@ function SignIn({ navigation }) {
 
     const theme = {
         Button: {
-          titleStyle: {
-            color: '#FFFFFF',
-            fontFamily: "BarlowCondensed-SemiBold",
-          },
+            titleStyle: {
+                color: '#FFFFFF',
+                fontFamily: "BarlowCondensed-SemiBold",
+            },
         },
         Input: {
-          inputStyle: {
-            color: "#ADADAD",
-            fontFamily: "BarlowCondensed-Regular",
-          },
+            inputStyle: {
+                color: "#ADADAD",
+                fontFamily: "BarlowCondensed-Regular",
+            },
         },
         Text: {
-          style: {
-            fontFamily: "BarlowCondensed-Regular",
-          },
+            style: {
+                fontFamily: "BarlowCondensed-Regular",
+            },
         }
-      };
+    };
+
 
     useEffect(() => {
 
@@ -37,13 +40,15 @@ function SignIn({ navigation }) {
             AsyncStorage.getItem("user",
             function (error, data) {
                 if(data){
+                    data = JSON.parse(data)
+                    
+                    sendPrenomToRedux(data.prenom)
                    navigation.navigate("Accueil")
                 }
             })
         }
 
         retrieveInfo()
-
       
 
     }, [])
@@ -95,27 +100,28 @@ function SignIn({ navigation }) {
 
     return (
         <ThemeProvider theme={theme}>
-            <View style={styles.global}>
-
+        <KeyboardAvoidingView style={styles.global} behavior="padding">
+          
             <Header
+                centerComponent={{ style: { color: '#fff' } }}
                 barStyle="light-content"
                 containerStyle={{ backgroundColor: '#FF5A5D', borderBottomWidth: 0 }}
-                centerComponent={{ text: 'Connection', style: { color: '#fff', fontSize: 18 } }}
+                centerComponent={{ text: 'Connexion', style: { color: '#fff', fontSize: 18 } }}
 
             >
             </Header>
             <View style={{ alignItems: "center" }}>
-                <Popover
+                <Overlay
                     isVisible={isVisible}
-                    popoverStyle={styles.popover}
+                    
                 >
                     <Text>{error}</Text>
-                </Popover>
+                </Overlay>
                 <Text style={{ color: "white", fontSize: 60 }}>Fourneaux</Text>
                 <Text style={{ color: "white", fontSize: 60, marginBottom: 50 }}>&Cie</Text>
                 <View style={styles.connect}>
-                    <Input placeholderTextColor="#ADADAD" type={{email}} onChangeText={(text) => setEmail(text)} placeholder="Email" inputContainerStyle={styles.input} />
-                    <Input placeholderTextColor="#ADADAD" secureTextEntry={true} onChangeText={(text) => setPassword(text)} placeholder="Mot de passe" inputContainerStyle={styles.input} />
+                    <Input placeholderTextColor="#ADADAD" keyboardType="email-address" onChangeText={(text) => setEmail(text)} placeholder="Email" inputContainerStyle={styles.input} />
+                    <Input placeholderTextColor="#ADADAD" textContentType="oneTimeCode" secureTextEntry={true} onChangeText={(text) => setPassword(text)} placeholder="Mot de passe" inputContainerStyle={styles.input} />
                     <Button
                         title="Se connecter"
                         type="solid"
@@ -139,7 +145,8 @@ function SignIn({ navigation }) {
 
                 <Text style={{ color: "white", textAlign: "center" }}>© Fourneaux&Cie 2020</Text>
             </View>
-        </View>
+       
+        </KeyboardAvoidingView>
         </ThemeProvider>
     )
 }
@@ -182,8 +189,22 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFC830",
         borderRadius: 5,
         padding: 10
-    }
+    },
+    container: {
+        flex: 1
+      },
 });
 
 
-export default SignIn
+function mapDispatchToProps(dispatch){
+    return {
+        sendPrenomToRedux: function(prenom){
+            dispatch({type: 'addPrenom', prenom})
+        }
+    }
+}
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(SignIn)
