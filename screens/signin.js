@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, StyleSheet, AsyncStorage } from 'react-native';
-import { Input, Button, Header } from 'react-native-elements';
-import Popover from 'react-native-popover-view'
-
+import {View, StyleSheet, AsyncStorage } from 'react-native';
+import {Input, Button, Header, Text, ThemeProvider } from 'react-native-elements';
+import Popover from 'react-native-popover-view';
 
 
 function SignIn({ navigation }) {
@@ -11,6 +10,26 @@ function SignIn({ navigation }) {
     const [password, setPassword] = useState('')
     const [isVisible, setIsVisible] = useState(false)
     const [error, setError] = useState("")
+
+    const theme = {
+        Button: {
+          titleStyle: {
+            color: '#FFFFFF',
+            fontFamily: "BarlowCondensed-SemiBold",
+          },
+        },
+        Input: {
+          inputStyle: {
+            color: "#ADADAD",
+            fontFamily: "BarlowCondensed-Regular",
+          },
+        },
+        Text: {
+          style: {
+            fontFamily: "BarlowCondensed-Regular",
+          },
+        }
+      };
 
     useEffect(() => {
 
@@ -75,10 +94,10 @@ function SignIn({ navigation }) {
     }
 
     return (
-        <View style={styles.global}>
+        <ThemeProvider theme={theme}>
+            <View style={styles.global}>
 
             <Header
-                centerComponent={{ style: { color: '#fff' } }}
                 barStyle="light-content"
                 containerStyle={{ backgroundColor: '#FF5A5D', borderBottomWidth: 0 }}
                 centerComponent={{ text: 'Connection', style: { color: '#fff', fontSize: 18 } }}
@@ -121,6 +140,7 @@ function SignIn({ navigation }) {
                 <Text style={{ color: "white", textAlign: "center" }}>© Fourneaux&Cie 2020</Text>
             </View>
         </View>
+        </ThemeProvider>
     )
 }
 
