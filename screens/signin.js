@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, StyleSheet, AsyncStorage, KeyboardAvoidingView } from 'react-native';
-import { Input, Button, Header, Overlay, ThemeProvider } from 'react-native-elements';
+import { Text, View, StyleSheet, AsyncStorage, KeyboardAvoidingView, Keyboard, SafeAreaView, TouchableWithoutFeedback, Image, Dimensions} from 'react-native';
+import { Input, Button, Overlay } from 'react-native-elements';
 import {connect} from 'react-redux'
-
-
-
 
 function SignIn({ navigation, sendPrenomToRedux }) {
 
@@ -12,27 +9,6 @@ function SignIn({ navigation, sendPrenomToRedux }) {
     const [password, setPassword] = useState('')
     const [isVisible, setIsVisible] = useState(false)
     const [error, setError] = useState("")
-
-    const theme = {
-        Button: {
-            titleStyle: {
-                color: '#FFFFFF',
-                fontFamily: "BarlowCondensed-SemiBold",
-            },
-        },
-        Input: {
-            inputStyle: {
-                color: "#ADADAD",
-                fontFamily: "BarlowCondensed-Regular",
-            },
-        },
-        Text: {
-            style: {
-                fontFamily: "BarlowCondensed-Regular",
-            },
-        }
-    };
-
 
     useEffect(() => {
 
@@ -50,16 +26,9 @@ function SignIn({ navigation, sendPrenomToRedux }) {
         }
 
         retrieveInfo()
-      
-
     }, [])
 
-  
-
-
     var connecter = async () => {
-
-       
             var body = {
                 email: email,
                 password: password
@@ -93,71 +62,95 @@ function SignIn({ navigation, sendPrenomToRedux }) {
                 setIsVisible(true)
                 setTimeout(() => setIsVisible(false), 2000)
             }
-
-        
-
-
     }
 
     return (
-        <ThemeProvider theme={theme}>
-        <KeyboardAvoidingView style={styles.global} behavior="padding">
-          
-            <Header
-                centerComponent={{ style: { color: '#fff' } }}
-                barStyle="light-content"
-                containerStyle={{ backgroundColor: '#FF5A5D', borderBottomWidth: 0 }}
-                centerComponent={{ text: 'Connexion', style: { color: '#fff', fontSize: 18 } }}
-
-            >
-            </Header>
-            <View style={{ alignItems: "center" }}>
-                <Overlay
-                    isVisible={isVisible}
-                    
-                >
-                    <Text>{error}</Text>
-                </Overlay>
-                <Text style={{ color: "white", fontSize: 60 }}>Fourneaux</Text>
-                <Text style={{ color: "white", fontSize: 60, marginBottom: 50 }}>&Cie</Text>
-                <View style={styles.connect}>
-                    <Input placeholderTextColor="#ADADAD" keyboardType="email-address" onChangeText={(text) => setEmail(text)} placeholder="Email" inputContainerStyle={styles.input} />
-                    <Input placeholderTextColor="#ADADAD" textContentType="oneTimeCode" secureTextEntry={true} onChangeText={(text) => setPassword(text)} placeholder="Mot de passe" inputContainerStyle={styles.input} />
-                    <Button
-                        title="Se connecter"
-                        type="solid"
-                        containerStyle={{ padding: 20 }}
-                        buttonStyle={styles.button}
-                        containerStyle={{ marginBottom: 5 }}
-                        onPress={() => connecter()}
-                    />
-                    <Text style={{ alignSelf: "center", color: "#666666", marginTop: 20 }}>
-                        Pas encore inscrit.e ?
-                        <Text
-                            style={{ textDecorationLine: "underline", color: "#01B393" }}
-                            onPress={() => navigation.navigate('SignUp')}
-                        >
-                            Créez votre compte !
-                        </Text>
-                    </Text>
-                </View>
-            </View>
-            <View style={{ marginBottom: 10 }}>
-
-                <Text style={{ color: "white", textAlign: "center" }}>© Fourneaux&Cie 2020</Text>
-            </View>
-       
+        <KeyboardAvoidingView style={{flex: 1, backgroundColor: "#FF5A5D"}} behavior={Platform.OS == "ios" ? "padding" : "height"}>
+            <SafeAreaView style={{flex: 1}}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <View style={styles.global}>
+                        <Overlay isVisible={isVisible}>
+                            <Text>{error}</Text>
+                        </Overlay>
+                        <View style={styles.logoContainer}>
+                            <Image
+                                source={require('../assets/images/logo-caca.png')}
+                                style={styles.logo}
+                                resizeMode='contain'
+                            />
+                        </View>
+                        <View style={styles.connect}>
+                            <Input 
+                                placeholderTextColor="#ADADAD" 
+                                keyboardType="email-address" 
+                                onChangeText={(text) => setEmail(text)} 
+                                placeholder="Email" 
+                                inputContainerStyle={styles.input}
+                                inputStyle={{ fontFamily: "BarlowCondensed-Regular", fontSize: 20 }}
+                            />
+                            <Input 
+                                placeholderTextColor="#ADADAD" 
+                                textContentType="oneTimeCode" 
+                                secureTextEntry={true} 
+                                onChangeText={(text) => setPassword(text)} 
+                                placeholder="Mot de passe" 
+                                inputContainerStyle={styles.input}
+                                inputStyle={{ fontFamily: "BarlowCondensed-Regular", fontSize: 20 }}
+                            />
+                            <Button
+                                title="Se connecter"
+                                type="solid"
+                                containerStyle={{ padding: 20 }}
+                                buttonStyle={styles.button}
+                                containerStyle={{ marginBottom: 5 }}
+                                titleStyle={{fontFamily: "BarlowCondensed-SemiBold", fontSize: 20}}
+                                onPress={() => connecter()}
+                            />
+                        </View>
+                        <View style={styles.pasInscritContainer}>
+                            <Text style={styles.pasInscrit}>
+                                Pas encore inscrit.e ?  <Text
+                                    style={{ textDecorationLine: "underline", color: "#01B393", }}
+                                    onPress={() => navigation.navigate('SignUp')}
+                                >
+                                    Créez votre compte !
+                                </Text>
+                            </Text>
+                        </View>
+                    </View>
+                </TouchableWithoutFeedback>
+            </SafeAreaView>
         </KeyboardAvoidingView>
-        </ThemeProvider>
     )
 }
 
+const win = Dimensions.get('window');
+const ratio = 70 * win.width / (500 * 100);
+
 const styles = StyleSheet.create({
+    global: {
+        flex: 1,
+        justifyContent: 'flex-end'
+    },
+    //Logo
+    logoContainer: {
+        alignItems: 'center', 
+        paddingVertical: 40
+    },
+    logo: {
+        width: 70 * win.width / 100,
+        height: 341 * ratio,
+    },
+    // Inputs de connection
+    connect: {
+        backgroundColor: "white",
+        paddingVertical: 20,
+        width: "100%",
+        alignItems: "center",
+    },
     input: {
         backgroundColor: "#F0F0F0",
         borderRadius: 150,
-        maxWidth: "85%",
-        alignSelf: "center",
         paddingHorizontal: 20,
         borderBottomWidth: 0
     },
@@ -166,22 +159,20 @@ const styles = StyleSheet.create({
         borderRadius: 150,
         paddingHorizontal: 30
     },
-    global: {
-        backgroundColor: "#FF5A5D",
-        flex: 1,
-        justifyContent: "space-between"
+    //Texte en bas de l'écran
+    pasInscritContainer: {
+        flex: 1, 
+        backgroundColor: 'white', 
+        justifyContent: 'flex-end', 
+        alignItems:'center'
     },
-    connect: {
-        backgroundColor: "white",
-        paddingVertical: 20,
-        width: "100%",
-        alignItems: "center",
-        borderTopColor: "#FFC830",
-        borderBottomColor: "#FFC830",
-        borderStyle: "solid",
-        borderTopWidth: 2,
-        borderBottomWidth: 2
+    pasInscrit: {
+        color: "#666666", 
+        marginBottom: 20, 
+        fontFamily: "BarlowCondensed-Regular", 
+        fontSize: 18
     },
+    //Popup d'erreur
     popover: {
         height: 40,
         alignItems: "center",
@@ -191,11 +182,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 10
     },
-    container: {
-        flex: 1
-      },
 });
-
 
 function mapDispatchToProps(dispatch){
     return {

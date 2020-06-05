@@ -58,7 +58,7 @@ function Accueil({navigation, prenomToDisplay}) {
                                     renderErrorMessage={false} 
                                     placeholder='Chercher une recette par mot clé'
                                     containerStyle={{ paddingHorizontal: 0 }}
-                                    inputStyle={{ fontFamily: "BarlowCondensed-Regular" }}
+                                    inputStyle={{ fontFamily: "BarlowCondensed-Regular", fontSize: 20 }}
                                 />
                                 <Button
                                     icon={<Loupe width={30} height={30} />}
@@ -67,7 +67,12 @@ function Accueil({navigation, prenomToDisplay}) {
                                 />
                             </View>
                             <View style={{ alignItems: 'center', marginBottom: 20 }}>
-                                <Button onPress={() => navigation.navigate('Categories')} title='Ajouter une recette' buttonStyle={styles.ajoutRecetteBtn} titleStyle={{fontFamily: "BarlowCondensed-SemiBold"}} />
+                                <Button 
+                                    onPress={() => navigation.navigate('Categories')} 
+                                    title='Ajouter une recette' 
+                                    buttonStyle={styles.ajoutRecetteBtn} 
+                                    titleStyle={{fontFamily: "BarlowCondensed-SemiBold", fontSize: 20}} 
+                                />
                             </View>
                         </View>
                         <View style={{ flex : 1, backgroundColor: 'white' }} />
