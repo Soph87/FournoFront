@@ -40,6 +40,7 @@ function SignIn({ navigation, sendPrenomToRedux }) {
             AsyncStorage.getItem("user",
             function (error, data) {
                 if(data){
+                    console.log(data)
                     data = JSON.parse(data)
                     
                     sendPrenomToRedux(data.prenom)

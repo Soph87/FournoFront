@@ -3,8 +3,9 @@ import { Text, View, Keyboard, StyleSheet, Image, KeyboardAvoidingView, SafeArea
 import { Input, Button } from 'react-native-elements';
 import Burger from '../assets/images/burger.svg';
 import Loupe from '../assets/images/loupe.svg'
+import {connect} from 'react-redux'
 
-function Accueil({navigation}) {
+function Accueil({navigation, prenomToDisplay}) {
     return (
         <KeyboardAvoidingView style={{flex: 1, backgroundColor: "#FF5A5D"}} behavior={Platform.OS == "ios" ? "padding" : "height"}>
             <SafeAreaView style={{flex: 1}}>
@@ -19,7 +20,7 @@ function Accueil({navigation}) {
                                 style={{ margin: 10, height: 80 }}
                                 resizeMode='contain'
                             />
-                            <Text style={styles.sousTitre}>Bonjour Prénom, quelle recette allez-vous préparer aujourd'hui ?</Text>
+                            <Text style={styles.sousTitre}>Bonjour {prenomToDisplay}, quelle recette allez-vous préparer aujourd'hui ?</Text>
                         </View>
                         <View style={{backgroundColor: 'white', paddingHorizontal: 15}}>
                             <View style={styles.catContainer}>
@@ -164,4 +165,13 @@ const styles = StyleSheet.create({
 });
 
 
-export default Accueil;
+function mapStateToProps(state){
+    return {
+        prenomToDisplay : state.prenom
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    null
+)(Accueil)
