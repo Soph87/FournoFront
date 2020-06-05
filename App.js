@@ -6,15 +6,22 @@ import SignIn from './screens/signin';
 import SignUp from './screens/signup';
 import Accueil from './screens/accueil';
 import ListePlats from './screens/liste-plats';
-
+import Categories from './screens/categories'
+import prenom from './reducers/prenom'
+import {Provider} from 'react-redux'
+import {createStore, combineReducers} from 'redux'
 import { useFonts } from '@use-expo/font';
 import { AppLoading } from "expo";
+import { AsyncStorage } from 'react-native';
+
+const store = createStore(combineReducers({prenom}))
 
 var StackNavigator = createStackNavigator({
     Home: SignIn,
     SignUp: SignUp,
     Accueil: Accueil,
-    ListePlats : ListePlats
+    ListePlats : ListePlats,
+    Categories : Categories
 }, 
 {
   headerMode: "none"
@@ -34,7 +41,11 @@ export default function App() {
     return <AppLoading />;
   }
 
+  
+
   return (
+    <Provider store={store}>
     <Navigation />
+    </Provider>
   )
 }
