@@ -6,6 +6,7 @@ import SignIn from './screens/signin';
 import SignUp from './screens/signup';
 import Accueil from './screens/accueil';
 import ListePlats from './screens/liste-plats';
+import Categories from './screens/categories'
 import prenom from './reducers/prenom'
 import {Provider} from 'react-redux'
 import {createStore, combineReducers} from 'redux'
@@ -19,7 +20,8 @@ var StackNavigator = createStackNavigator({
     Home: SignIn,
     SignUp: SignUp,
     Accueil: Accueil,
-    ListePlats : ListePlats
+    ListePlats : ListePlats,
+    Categories : Categories
 }, 
 {
   headerMode: "none"

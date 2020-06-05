@@ -67,7 +67,7 @@ function Accueil({navigation, prenomToDisplay}) {
                                 />
                             </View>
                             <View style={{ alignItems: 'center', marginBottom: 20 }}>
-                                <Button title='Ajouter une recette' buttonStyle={styles.ajoutRecetteBtn} titleStyle={{fontFamily: "BarlowCondensed-SemiBold"}} />
+                                <Button onPress={() => navigation.navigate('Categories')} title='Ajouter une recette' buttonStyle={styles.ajoutRecetteBtn} titleStyle={{fontFamily: "BarlowCondensed-SemiBold"}} />
                             </View>
                         </View>
                         <View style={{ flex : 1, backgroundColor: 'white' }} />
