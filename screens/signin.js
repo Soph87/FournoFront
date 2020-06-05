@@ -95,7 +95,7 @@ function SignIn({ navigation }) {
                 <Text style={{ color: "white", fontSize: 60 }}>Fourneaux</Text>
                 <Text style={{ color: "white", fontSize: 60, marginBottom: 50 }}>&Cie</Text>
                 <View style={styles.connect}>
-                    <Input placeholderTextColor="#ADADAD" onChangeText={(text) => setEmail(text)} placeholder="Email" inputContainerStyle={styles.input} />
+                    <Input placeholderTextColor="#ADADAD" type={{email}} onChangeText={(text) => setEmail(text)} placeholder="Email" inputContainerStyle={styles.input} />
                     <Input placeholderTextColor="#ADADAD" secureTextEntry={true} onChangeText={(text) => setPassword(text)} placeholder="Mot de passe" inputContainerStyle={styles.input} />
                     <Button
                         title="Se connecter"
