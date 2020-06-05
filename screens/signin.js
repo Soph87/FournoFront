@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, StyleSheet, AsyncStorage, KeyboardAvoidingView, Keyboard, SafeAreaView, TouchableWithoutFeedback, Image, Dimensions} from 'react-native';
+import { Text, View, StyleSheet, AsyncStorage, StatusBar, KeyboardAvoidingView, Keyboard, SafeAreaView, TouchableWithoutFeedback, Image, Dimensions} from 'react-native';
 import { Input, Button, Overlay } from 'react-native-elements';
 import {connect} from 'react-redux'
 
@@ -67,6 +67,7 @@ function SignIn({ navigation, sendPrenomToRedux }) {
     return (
         <KeyboardAvoidingView style={{flex: 1, backgroundColor: "#FF5A5D"}} behavior={Platform.OS == "ios" ? "padding" : "height"}>
             <SafeAreaView style={{flex: 1}}>
+            <StatusBar barStyle="light-content" backgroundColor="#ecf0f1" />
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <View style={styles.global}>
                         <Overlay isVisible={isVisible}>
