@@ -75,7 +75,7 @@ function SignIn({ navigation, sendPrenomToRedux }) {
                         </Overlay>
                         <View style={styles.logoContainer}>
                             <Image
-                                source={require('../assets/images/logo-caca.png')}
+                                source={require('../../assets/images/logo-caca.png')}
                                 style={styles.logo}
                                 resizeMode='contain'
                             />

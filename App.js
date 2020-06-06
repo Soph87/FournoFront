@@ -2,14 +2,32 @@ console.disableYellowBox = true;
 import React from 'react';
 import {createAppContainer } from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
-import SignIn from './screens/signin';
-import SignUp from './screens/signup';
+
+//Screens users
+import SignIn from './screens/users/signin';
+import SignUp from './screens/users/signup';
+//Screens accueil
 import Accueil from './screens/accueil';
-import ListePlats from './screens/liste-plats';
-import Categories from './screens/categories'
+import Menu from './screens/menu';
+//Screens recherche de recette
+import SearchCategorie from './screens/rechercher-recette/categories';
+import ListePlats from './screens/rechercher-recette/liste-plats';
+import Recette from './screens/rechercher-recette/recette';
+import RecetteModif from './screens/rechercher-recette/modifier-recette';//Je suis pas sûre qu'on ait besoin de cet écran
+//Screens ajout de recette
+import Categories from './screens/ajouter-recette/ajout-categories';
+import TitreRecette from './screens/ajouter-recette/ajout-titre';
+import PrepaRecette from './screens/ajouter-recette/ajout-preparation';
+import Ingredients from './screens/ajouter-recette/ajout-ingredients';
+import Etapes from './screens/ajouter-recette/ajout-etapes';
+import Photo from './screens/ajouter-recette/ajout-photo';
+import Recap from './screens/ajouter-recette/recapitulatif';
+
+//Redux
 import prenom from './reducers/prenom'
 import {Provider} from 'react-redux'
 import {createStore, combineReducers} from 'redux'
+
 import { useFonts } from '@use-expo/font';
 import { AppLoading } from "expo";
 import { AsyncStorage } from 'react-native';
@@ -19,9 +37,18 @@ const store = createStore(combineReducers({prenom}))
 var StackNavigator = createStackNavigator({
     Home: SignIn,
     SignUp: SignUp,
+    Menu: Menu,
     Accueil: Accueil,
-    ListePlats : ListePlats,
-    Categories : Categories
+    ListeCategories: SearchCategorie,
+    ListePlats: ListePlats,
+    Recette: Recette,
+    Categories : Categories,
+    Titre: TitreRecette,
+    Preparation: PrepaRecette,
+    Ingredients: Ingredients,
+    Etapes: Etapes,
+    Photo: Photo,
+    Recap: Recap
 }, 
 {
   headerMode: "none"
@@ -41,11 +68,9 @@ export default function App() {
     return <AppLoading />;
   }
 
-  
-
   return (
     <Provider store={store}>
-    <Navigation />
+        <Navigation />
     </Provider>
   )
 }

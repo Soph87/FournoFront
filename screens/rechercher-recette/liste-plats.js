@@ -1,30 +1,30 @@
 import React from 'react'
 import { View, StyleSheet, ScrollView, Image, ImageBackground, Text } from 'react-native';
 import { Input, Button, Header, Card, ListItem, Avatar} from 'react-native-elements';
-import FlecheRetour from '../assets/images/fleche-retour.svg'
+import FlecheRetour from '../../assets/images/fleche-retour.svg'
 
 function ListePlats({navigation}) {
 
     // const recettesListe = [
     //     {
     //     titre: 'Délicieuse tarte aux fraises',
-    //     photo: require('../assets/images/tarte.jpg')
+    //     photo: require('../../assets/images/tarte.jpg')
     //     },
     //     {
     //     titre: 'Quiche lorraine',
-    //     photo: require('../assets/images/tarte.jpg')
+    //     photo: require('../../assets/images/tarte.jpg')
     //     },
     //     {
     //     titre: 'Tarte maison aux poireaux et aux lardons',
-    //     photo: require('../assets/images/tarte.jpg')
+    //     photo: require('../../assets/images/tarte.jpg')
     //     },
     //     {
     //     titre: 'Tarte citron meringuée',
-    //     photo: require('../assets/images/tarte.jpg')
+    //     photo: require('../../assets/images/tarte.jpg')
     //     },
     //     {
     //     titre: 'Tarte au chocolat',
-    //     photo: require('../assets/images/tarte.jpg')
+    //     photo: require('../../assets/images/tarte.jpg')
     //     }
     //    ]
 
@@ -44,7 +44,7 @@ function ListePlats({navigation}) {
 
                 <View style={{flex: 1, flexDirection: 'row', borderRadius: 8, backgroundColor: "white", marginLeft: 15, marginRight: 15, marginTop: 10}}>
                     <View style={{width: 84, height: 60}}>
-                        <Image source={require('../assets/images/tarte.jpg')} style={{width: 84, height: 60, borderBottomLeftRadius: 8, borderTopLeftRadius: 8}}/>
+                        <Image source={require('../../assets/images/tarte.jpg')} style={{width: 84, height: 60, borderBottomLeftRadius: 8, borderTopLeftRadius: 8}}/>
                     </View>
                     <View style={{width: "80%", height: 60, paddingHorizontal: 10}}>
                         <Text style={{flex: 1, fontFamily: "BarlowCondensed-Regular", justifyContent: "center", color: "#666666", fontSize: 20, marginRight: 15}}>
@@ -55,7 +55,7 @@ function ListePlats({navigation}) {
 
                 <View style={{flex: 1, flexDirection: 'row', borderRadius: 8, backgroundColor: "white", marginLeft: 15, marginRight: 15, marginTop: 10}}>
                     <View style={{width: 84, height: 60}}>
-                        <Image source={require('../assets/images/tarte.jpg')} style={{width: 84, height: 60, borderBottomLeftRadius: 8, borderTopLeftRadius: 8}}/>
+                        <Image source={require('../../assets/images/tarte.jpg')} style={{width: 84, height: 60, borderBottomLeftRadius: 8, borderTopLeftRadius: 8}}/>
                     </View>
                     <View style={{width: "80%", height: 60, paddingHorizontal: 10}}>
                         <Text style={{flex: 1, fontFamily: "BarlowCondensed-Regular", justifyContent: "center", color: "#666666", fontSize: 20, marginRight: 15}}>
@@ -66,7 +66,7 @@ function ListePlats({navigation}) {
 
                 <View style={{flex: 1, flexDirection: 'row', borderRadius: 8, backgroundColor: "white", marginLeft: 15, marginRight: 15, marginTop: 10}}>
                     <View style={{width: 84, height: 60}}>
-                        <Image source={require('../assets/images/tarte.jpg')} style={{width: 84, height: 60, borderBottomLeftRadius: 8, borderTopLeftRadius: 8}}/>
+                        <Image source={require('../../assets/images/tarte.jpg')} style={{width: 84, height: 60, borderBottomLeftRadius: 8, borderTopLeftRadius: 8}}/>
                     </View>
                     <View style={{width: "80%", height: 60, paddingHorizontal: 10}}>
                         <Text style={{flex: 1, fontFamily: "BarlowCondensed-Regular", justifyContent: "center", color: "#666666", fontSize: 20, marginRight: 15}}>
@@ -81,7 +81,7 @@ function ListePlats({navigation}) {
                 titleStyle={{fontFamily: "BarlowCondensed-Regular", fontSize: 20, marginRight: 15}}
                 title="Délicieuse tarte aux fraises"
 
-                leftAvatar={{source: require('../assets/images/tarte.jpg'), width:84, height: 60, borderRadius: 8}}
+                leftAvatar={{source: require('../../assets/images/tarte.jpg'), width:84, height: 60, borderRadius: 8}}
                 imageProps={{width: 84, height: 60, border:50}}
                 avatarStyle={{backgroundColor: "#e056fd", borderWidth: 2, borderTopLeftRadius: 21}}               
               />

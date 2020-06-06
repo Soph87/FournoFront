@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, StyleSheet, AsyncStorage, KeyboardAvoidingView, Keyboard, SafeAreaView, TouchableWithoutFeedback, Image, Dimensions } from 'react-native';
 import { Text, Input, Button, Overlay } from 'react-native-elements';
-import FlecheRetour from '../assets/images/fleche-retour.svg'
+import FlecheRetour from '../../assets/images/fleche-retour.svg'
 import { connect } from 'react-redux'
 
 function SignUp({ navigation, sendPrenomToRedux }) {
@@ -59,7 +59,7 @@ function SignUp({ navigation, sendPrenomToRedux }) {
                         </View>
                         <View style={styles.logoContainer}>
                             <Image
-                                source={require('../assets/images/logo-caca.png')}
+                                source={require('../../assets/images/logo-caca.png')}
                                 style={styles.logo}
                                 resizeMode='contain'
                             />
