@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text, View, Keyboard, StyleSheet, Image, KeyboardAvoidingView, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
 import { Input, Button } from 'react-native-elements';
-import Burger from '../assets/images/burger.svg';
-import Loupe from '../assets/images/loupe.svg'
+import Burger from '../assets/images/icones/burger.svg';
+import Loupe from '../assets/images/icones/loupe.svg'
 import {connect} from 'react-redux'
 
 function Accueil({navigation, prenomToDisplay}) {
@@ -26,7 +26,7 @@ function Accueil({navigation, prenomToDisplay}) {
                             <View style={styles.catContainer}>
                                 <View style={styles.categories}>
                                     <Image
-                                        source={require('../assets/images/entrees.png')}
+                                        source={require('../assets/images/categories/entrees.png')}
                                         style={{ width: '100%' }}
                                         resizeMode='contain'
                                     />
@@ -34,19 +34,19 @@ function Accueil({navigation, prenomToDisplay}) {
                                 </View>
                                 <View style={styles.catmilieu}>
                                     <Image
-                                        source={require('../assets/images/entrees.png')}
+                                        source={require('../assets/images/categories/Plat.png')}
                                         style={{ width: '100%' }}
                                         resizeMode='contain'
                                     />
-                                    <Text style={styles.texteCat}>Entrées</Text>
+                                    <Text style={styles.texteCat}>Plats</Text>
                                 </View>
                                 <View style={styles.categories}>
                                     <Image
-                                        source={require('../assets/images/entrees.png')}
+                                        source={require('../assets/images/categories/Dessert.png')}
                                         style={{ width: '100%' }}
                                         resizeMode='contain'
                                     />
-                                    <Text style={styles.texteCat}>Entrées</Text>
+                                    <Text style={styles.texteCat}>Dessert</Text>
                                 </View>
                             </View>
                             <View style={{borderBottomWidth: 2, borderBottomColor: '#FF5A5D', alignItems: 'flex-end'}}>

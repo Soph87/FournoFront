@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View, Keyboard, StyleSheet, Image, KeyboardAvoidingView, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
-import { Input, Button } from 'react-native-elements';
-import Burger from '../../assets/images/burger.svg';
-import Loupe from '../../assets/images/loupe.svg'
-import { connect } from 'react-redux'
-import FlecheRetour from '../../assets/images/fleche-retour.svg'
+import FlecheRetour from '../../assets/images/icones/fleche-retour.svg'
 import { ScrollView } from 'react-native-gesture-handler';
 
 
@@ -41,43 +37,43 @@ function Catgeories({ navigation }) {
     let categoryMap = categoryList.map((cat, i) => {
     let image;
         switch(cat.nom){
-            case "entrees" : image = require('../../assets/images/entrees.png');
+            case "entrees" : image = require('../../assets/images/categories/entrees.png');
             break;
-            case "plats" : image = require('../../assets/images/entrees.png');
+            case "plats" : image = require('../../assets/images/categories/entrees.png');
             break;
-            case "desserts" : image = require('../../assets/images/entrees.png');
+            case "desserts" : image = require('../../assets/images/categories/entrees.png');
             break;
-            case "salades" : image = require('../../assets/images/entrees.png');
+            case "salades" : image = require('../../assets/images/categories/entrees.png');
             break;
-            case "soupes" : image = require('../../assets/images/entrees.png');
+            case "soupes" : image = require('../../assets/images/categories/entrees.png');
             break;
-            case "volailles" : image = require('../../assets/images/entrees.png');
+            case "volailles" : image = require('../../assets/images/categories/entrees.png');
             break;
-            case "sauces" : image = require('../../assets/images/entrees.png');
+            case "sauces" : image = require('../../assets/images/categories/entrees.png');
             break;
-            case "poissons" : image = require('../../assets/images/entrees.png');
+            case "poissons" : image = require('../../assets/images/categories/entrees.png');
             break;
-            case "viandes" : image = require('../../assets/images/entrees.png');
+            case "viandes" : image = require('../../assets/images/categories/entrees.png');
             break;
-            case "legumes" : image = require('../../assets/images/entrees.png');
+            case "legumes" : image = require('../../assets/images/categories/entrees.png');
             break;
-            case "boulangerie" : image = require('../../assets/images/entrees.png');
+            case "boulangerie" : image = require('../../assets/images/categories/entrees.png');
             break;
-            case "gateaux" : image = require('../../assets/images/entrees.png');
+            case "gateaux" : image = require('../../assets/images/categories/entrees.png');
             break;
-            case "confitures" : image = require('../../assets/images/entrees.png');
+            case "confitures" : image = require('../../assets/images/categories/entrees.png');
             break;
-            case "aperitifs" : image = require('../../assets/images/entrees.png');
+            case "aperitifs" : image = require('../../assets/images/categories/entrees.png');
             break;
-            case "boissons" : image = require('../../assets/images/entrees.png');
+            case "boissons" : image = require('../../assets/images/categories/entrees.png');
             break;
-            case "encas" : image = require('../../assets/images/entrees.png');
+            case "encas" : image = require('../../assets/images/categories/entrees.png');
             break;
-            case "pates" : image = require('../../assets/images/entrees.png');
+            case "pates" : image = require('../../assets/images/categories/entrees.png');
             break;
-            case "petits-dejeuner" : image = require('../../assets/images/entrees.png');
+            case "petits-dejeuner" : image = require('../../assets/images/categories/entrees.png');
             break;
-            case "autres" : image = require('../../assets/images/entrees.png');
+            case "autres" : image = require('../../assets/images/categories/entrees.png');
             break;
 
         }

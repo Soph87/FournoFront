@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, StyleSheet, ScrollView, Image, ImageBackground, Text } from 'react-native';
 import { Input, Button, Header, Card, ListItem, Avatar} from 'react-native-elements';
-import FlecheRetour from '../../assets/images/fleche-retour.svg'
+import FlecheRetour from '../../assets/images/icones/fleche-retour.svg'
 
 function ListePlats({navigation}) {
 
