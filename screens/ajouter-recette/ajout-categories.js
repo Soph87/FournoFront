@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, Keyboard, StyleSheet, Image, KeyboardAvoidingView, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
+import { Text, View, StyleSheet, Image, SafeAreaView } from 'react-native';
 import FlecheRetour from '../../assets/images/icones/fleche-retour.svg'
 import { ScrollView } from 'react-native-gesture-handler';
 
@@ -9,27 +9,19 @@ function Catgeories({ navigation }) {
     const [categoryList, setCategoryList] = useState([])
 
     useEffect(() => {
-        
-
         var retrieveCategories = async () => {
+            let response = await fetch('https://protected-anchorage-65968.herokuapp.com/users/getCategories')
 
-           
-                let response = await fetch('https://protected-anchorage-65968.herokuapp.com/users/getCategories')
+            response = await response.json()
 
-                response = await response.json()
-    
-                let copyTab = [...categoryList]
-                for (let i = 0; i < response.categories.length; i++) {
-                    copyTab.push(response.categories[i])
-                }
-                setCategoryList(copyTab)
-    
+            let copyTab = [...categoryList]
+            for (let i = 0; i < response.categories.length; i++) {
+                copyTab.push(response.categories[i])
             }
+            setCategoryList(copyTab)
+        }
     
-            retrieveCategories()
-            
-
-
+        retrieveCategories()
     }, [])
 
 
@@ -80,34 +72,28 @@ function Catgeories({ navigation }) {
         
         return (
             <View style={styles.categories} key={i}>
-            <Image
-                source={image}
-                style={{ width: '100%' }}
-                resizeMode='contain'
-            />
-            <Text style={styles.texteCat}>Entrées</Text>
-        </View>
+                <Image
+                    source={image}
+                    style={{ width: '100%' }}
+                    resizeMode='contain'
+                />
+                <Text style={styles.texteCat}>Entrées</Text>
+            </View>
         )
     })
 
 
     return (
-        <View style={{ flex: 1, backgroundColor: "#FF5A5D" }}>
-
+        <View style={styles.global}>
             <SafeAreaView style={{ flex: 1 }}>
-                <View style={{ paddingHorizontal: 15 }}>
+                <View>
                     <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                        <View>
-                            <FlecheRetour width={30} height={30} fill={"white"} onPress={() => { navigation.navigate('Accueil') }} />
-                        </View>
-                        <View>
-                            <Text style={styles.titre}> Choisir une catégorie </Text>
-                        </View>
-                        <View>
-                        </View>
+                        <FlecheRetour width={30} height={30} fill={"white"} onPress={() => { navigation.navigate('Accueil') }} />
+                        <Text style={styles.titre}> Choisir une catégorie </Text>
+                        <View/>
                     </View>
                     <ScrollView>
-                        <View style={{ marginTop: 20, flex: 1, flexDirection: "row", justifyContent: "center", flexWrap: "wrap" }}>
+                        <View style={styles.catContainer}>
                                 {categoryMap}
                         </View>
                     </ScrollView>
@@ -118,35 +104,33 @@ function Catgeories({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-
+    global: {
+        flex: 1, 
+        backgroundColor: "#FF5A5D",
+        padding: 15
+    },
+    //header
     titre: {
         fontFamily: "BarlowCondensed-SemiBold",
         fontSize: 20,
         color: "white"
     },
+    //Liste des catégories
     catContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 15,
-        marginTop: 5
+        marginTop: 15,
+        marginBottom: 30,
+        flexDirection: "row",
+        justifyContent: 'space-between', 
+        flexWrap: "wrap",
+        width: '100%'
     },
     categories: {
         backgroundColor: '#FFC830',
         padding: 10,
         borderRadius: 8,
-        flex: 1,
-        maxWidth: 115,
-        margin: 5,
-        flexBasis: "30%"
-    },
-    catmilieu: {
-        backgroundColor: '#FFC830',
-        padding: 10,
-        borderRadius: 8,
-        flex: 1,
-        //marginHorizontal: 15,
-        maxWidth: 115
+        width: "33%",
+        maxWidth: 120,
+        marginBottom: 15
     },
     texteCat: {
         textAlign: 'center',
@@ -156,7 +140,5 @@ const styles = StyleSheet.create({
         fontSize: 20
     },
 });
-
-
 
 export default Catgeories
