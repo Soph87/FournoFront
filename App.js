@@ -15,7 +15,8 @@ import ListePlats from './screens/rechercher-recette/liste-plats';
 import Recette from './screens/rechercher-recette/recette';
 import RecetteModif from './screens/rechercher-recette/modifier-recette';//Je suis pas sûre qu'on ait besoin de cet écran
 //Screens ajout de recette
-import Categories from './screens/ajouter-recette/ajout-categories';
+import AjoutCategorie from './screens/ajouter-recette/ajout-categories';
+import ListeCategories from './screens/rechercher-recette/categories'
 import TitreRecette from './screens/ajouter-recette/ajout-titre';
 import PrepaRecette from './screens/ajouter-recette/ajout-preparation';
 import Ingredients from './screens/ajouter-recette/ajout-ingredients';
@@ -39,10 +40,10 @@ var StackNavigator = createStackNavigator({
     SignUp: SignUp,
     Menu: Menu,
     Accueil: Accueil,
-    ListeCategories: SearchCategorie,
+    ListeCategories: ListeCategories,
     ListePlats: ListePlats,
     Recette: Recette,
-    Categories : Categories,
+    AjoutCategorie : AjoutCategorie,
     Titre: TitreRecette,
     Preparation: PrepaRecette,
     Ingredients: Ingredients,

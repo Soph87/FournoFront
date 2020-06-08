@@ -50,7 +50,7 @@ function Accueil({navigation, prenomToDisplay}) {
                                 </View>
                             </View>
                             <View style={{borderBottomWidth: 2, borderBottomColor: '#FF5A5D', alignItems: 'flex-end'}}>
-                                <Text onPress={() => navigation.navigate('ListePlats')} style={styles.lienVert}>+ de catégories</Text>
+                                <Text onPress={() => navigation.navigate('ListeCategories')} style={styles.lienVert}>+ de catégories</Text>
                             </View>
                             <View style={styles.inputContainer}>
                                 <Input 
@@ -68,7 +68,7 @@ function Accueil({navigation, prenomToDisplay}) {
                             </View>
                             <View style={{ alignItems: 'center', marginBottom: 20 }}>
                                 <Button 
-                                    onPress={() => navigation.navigate('Categories')} 
+                                    onPress={() => navigation.navigate('AjoutCategorie')} 
                                     title='Ajouter une recette' 
                                     buttonStyle={styles.ajoutRecetteBtn} 
                                     titleStyle={{fontFamily: "BarlowCondensed-SemiBold", fontSize: 20}} 

@@ -4,7 +4,7 @@ import FlecheRetour from '../../assets/images/icones/fleche-retour.svg'
 import { ScrollView } from 'react-native-gesture-handler';
 
 
-function Catgeories({ navigation }) {
+function AjoutCategorie({ navigation }) {
 
     const [categoryList, setCategoryList] = useState([])
 
@@ -141,4 +141,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Catgeories
+export default AjoutCategorie
