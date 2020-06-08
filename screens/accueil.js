@@ -12,7 +12,7 @@ function Accueil({navigation, prenomToDisplay}) {
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <View style={styles.global}>
                         <View style={{ paddingHorizontal: 15, paddingTop: 10 }}>
-                            <Burger width={30} height={30} />
+                            <Burger width={30} height={30} onPress={() => { navigation.navigate('Menu') }}/>
                         </View>
                         <View style={styles.titreContainer} >
                             <Image
