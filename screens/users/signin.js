@@ -52,6 +52,7 @@ function SignIn({ navigation, sendPrenomToRedux }) {
                 }
 
                 AsyncStorage.setItem("user", JSON.stringify(user))
+                sendPrenomToRedux(response.user.prenom)
                 navigation.navigate('Accueil')
             } else {
                 if (response.error === "mail") {
