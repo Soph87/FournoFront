@@ -24,8 +24,11 @@ import Etapes from './screens/ajouter-recette/ajout-etapes';
 import Photo from './screens/ajouter-recette/ajout-photo';
 import Recap from './screens/ajouter-recette/recapitulatif';
 
+
 //Redux
 import prenom from './reducers/prenom'
+import category from './reducers/category'
+import recette from './reducers/recette'
 import {Provider} from 'react-redux'
 import {createStore, combineReducers} from 'redux'
 
@@ -33,7 +36,7 @@ import { useFonts } from '@use-expo/font';
 import { AppLoading } from "expo";
 import { AsyncStorage } from 'react-native';
 
-const store = createStore(combineReducers({prenom}))
+const store = createStore(combineReducers({prenom, category, recette}))
 
 var StackNavigator = createStackNavigator({
     Home: SignIn,
