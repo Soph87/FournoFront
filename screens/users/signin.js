@@ -68,7 +68,7 @@ function SignIn({ navigation, sendPrenomToRedux }) {
     return (
         <KeyboardAvoidingView style={{flex: 1, backgroundColor: "#FF5A5D"}} behavior={Platform.OS == "ios" ? "padding" : "height"}>
             <SafeAreaView style={{flex: 1}}>
-            <StatusBar barStyle="light-content" backgroundColor="#ecf0f1" />
+            <StatusBar barStyle="light-content" backgroundColor="#FF5A5D" />
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <View style={styles.global}>
                         <Overlay isVisible={isVisible}>

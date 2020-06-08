@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
 import { Button } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 
-import FlecheRetour from '../../assets/images/icones/fleche-retour.svg'
+import FlecheRetour from '../../assets/images/icones/fleche-retour.svg';
 import CatCard from './components/cat-card';
 
 
@@ -65,7 +65,7 @@ function AjoutCategorie({ navigation }) {
             <SafeAreaView style={{ flex: 1 }}>
                 <View style={{ flex: 1 }}>
                     <View style={styles.header}>
-                        <FlecheRetour width={30} height={30} fill={"white"} onPress={() => { navigation.navigate('Accueil') }} />
+                        <FlecheRetour width={30} height={30} onPress={() => { navigation.navigate('Accueil') }} />
                         <Text style={styles.titre}> Choisir une catégorie </Text>
                         <View/>
                     </View>
