@@ -1,93 +1,70 @@
-import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, Image, SafeAreaView } from 'react-native';
-import FlecheRetour from '../../assets/images/icones/fleche-retour.svg'
+import React, { useState, useEffect } from 'react';
+import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
+import { Button } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
+
+import FlecheRetour from '../../assets/images/icones/fleche-retour.svg'
+import CatCard from './components/cat-card';
 
 
 function Catgeories({ navigation }) {
-
-    const [categoryList, setCategoryList] = useState([])
+    const [estSelectionne, setEstSelectionne] = useState(false);
+    const [listeCat, setListeCat] = useState([]);
 
     useEffect(() => {
-        var retrieveCategories = async () => {
-            let response = await fetch('https://protected-anchorage-65968.herokuapp.com/users/getCategories')
-
-            response = await response.json()
-
-            let copyTab = [...categoryList]
-            for (let i = 0; i < response.categories.length; i++) {
-                copyTab.push(response.categories[i])
-            }
-            setCategoryList(copyTab)
+        if(listeCat.length >= 1) {
+            setEstSelectionne(true);
+        } else {
+            setEstSelectionne(false)
         }
-    
-        retrieveCategories()
-    }, [])
+    }, [listeCat])
 
+    let categories = [
+        {titre: 'Entrées', image: require('../../assets/images/categories/entrees.png')},
+        {titre: 'Plats', image: require('../../assets/images/categories/Plat.png')},
+        {titre: 'Desserts', image: require('../../assets/images/categories/Dessert.png')},
+        {titre: 'Petits-déj', image: require('../../assets/images/categories/Petit-dej.png')},
+        {titre: 'Salades', image: require('../../assets/images/categories/Salade.png')},
+        {titre: 'Soupes', image: require('../../assets/images/categories/Soupe.png')},
+        {titre: 'Viandes', image: require('../../assets/images/categories/Viande.png')},
+        {titre: 'Volailles', image: require('../../assets/images/categories/Volaille.png')},
+        {titre: 'Poissons', image: require('../../assets/images/categories/Poisson.png')},
+        {titre: 'Légumes', image: require('../../assets/images/categories/Legumes.png')},
+        {titre: 'Pâtes', image: require('../../assets/images/categories/Pates.png')},
+        {titre: 'Sauces', image: require('../../assets/images/categories/Sauce.png')},
+        {titre: 'Gâteaux', image: require('../../assets/images/categories/Gateaux.png')},
+        {titre: 'En-cas', image: require('../../assets/images/categories/En-cas.png')},
+        {titre: 'Confitures', image: require('../../assets/images/categories/Confiture.png')},
+        {titre: 'Boulangerie', image: require('../../assets/images/categories/Boulangerie.png')},
+        {titre: 'Apéritifs', image: require('../../assets/images/categories/Apero.png')},
+        {titre: 'Boissons', image: require('../../assets/images/categories/Boisson.png')},
+        {titre: 'Autres', image: require('../../assets/images/categories/Autre.png')},
+    ]
 
-
-    let categoryMap = categoryList.map((cat, i) => {
-    let image;
-        switch(cat.nom){
-            case "entrees" : image = require('../../assets/images/categories/entrees.png');
-            break;
-            case "plats" : image = require('../../assets/images/categories/entrees.png');
-            break;
-            case "desserts" : image = require('../../assets/images/categories/entrees.png');
-            break;
-            case "salades" : image = require('../../assets/images/categories/entrees.png');
-            break;
-            case "soupes" : image = require('../../assets/images/categories/entrees.png');
-            break;
-            case "volailles" : image = require('../../assets/images/categories/entrees.png');
-            break;
-            case "sauces" : image = require('../../assets/images/categories/entrees.png');
-            break;
-            case "poissons" : image = require('../../assets/images/categories/entrees.png');
-            break;
-            case "viandes" : image = require('../../assets/images/categories/entrees.png');
-            break;
-            case "legumes" : image = require('../../assets/images/categories/entrees.png');
-            break;
-            case "boulangerie" : image = require('../../assets/images/categories/entrees.png');
-            break;
-            case "gateaux" : image = require('../../assets/images/categories/entrees.png');
-            break;
-            case "confitures" : image = require('../../assets/images/categories/entrees.png');
-            break;
-            case "aperitifs" : image = require('../../assets/images/categories/entrees.png');
-            break;
-            case "boissons" : image = require('../../assets/images/categories/entrees.png');
-            break;
-            case "encas" : image = require('../../assets/images/categories/entrees.png');
-            break;
-            case "pates" : image = require('../../assets/images/categories/entrees.png');
-            break;
-            case "petits-dejeuner" : image = require('../../assets/images/categories/entrees.png');
-            break;
-            case "autres" : image = require('../../assets/images/categories/entrees.png');
-            break;
-
+    const handlePress = (catName) => {
+        let catChoisies = [...listeCat];
+        if(catChoisies.indexOf(catName) === -1) {
+            catChoisies.push(catName);
+        } else {
+            let index = catChoisies.indexOf(catName);
+            catChoisies.splice(index, 1);
         }
         
+        setListeCat(catChoisies);
+    } 
+
+    let categoryMap = categories.map((cat) => {
         return (
-            <View style={styles.categories} key={i}>
-                <Image
-                    source={image}
-                    style={{ width: '100%' }}
-                    resizeMode='contain'
-                />
-                <Text style={styles.texteCat}>Entrées</Text>
-            </View>
+            <CatCard key={cat.titre} titre={cat.titre} image={cat.image} handlePressParent={handlePress} />
         )
-    })
+    });
 
 
     return (
         <View style={styles.global}>
             <SafeAreaView style={{ flex: 1 }}>
-                <View>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                <View style={{ flex: 1 }}>
+                    <View style={styles.header}>
                         <FlecheRetour width={30} height={30} fill={"white"} onPress={() => { navigation.navigate('Accueil') }} />
                         <Text style={styles.titre}> Choisir une catégorie </Text>
                         <View/>
@@ -97,6 +74,17 @@ function Catgeories({ navigation }) {
                                 {categoryMap}
                         </View>
                     </ScrollView>
+                    <Button 
+                        onPress={() => navigation.navigate('Titre')}
+                        type='solid'
+                        title='Valider' 
+                        buttonStyle={styles.validerBtn} 
+                        titleStyle={{fontFamily: "BarlowCondensed-SemiBold", fontSize: 20, color: '#FF5A5D'}}
+                        containerStyle = {styles.btnPosition}
+                        disabled = {!estSelectionne}
+                        raised
+                    />
+      
                 </View>
             </SafeAreaView>
         </View>
@@ -107,9 +95,17 @@ const styles = StyleSheet.create({
     global: {
         flex: 1, 
         backgroundColor: "#FF5A5D",
-        padding: 15
+        paddingHorizontal: 15,
+        paddingTop: 30,
+        position: 'relative'
     },
     //header
+    header: {
+        flexDirection: "row", 
+        justifyContent: "space-between", 
+        alignItems: "center", 
+        paddingBottom: 10
+    },
     titre: {
         fontFamily: "BarlowCondensed-SemiBold",
         fontSize: 20,
@@ -117,28 +113,28 @@ const styles = StyleSheet.create({
     },
     //Liste des catégories
     catContainer: {
-        marginTop: 15,
-        marginBottom: 30,
+        marginBottom: 70,
         flexDirection: "row",
         justifyContent: 'space-between', 
         flexWrap: "wrap",
         width: '100%'
     },
-    categories: {
-        backgroundColor: '#FFC830',
-        padding: 10,
-        borderRadius: 8,
-        width: "33%",
-        maxWidth: 120,
-        marginBottom: 15
+    //Navigation bas de page
+    bottomNav: {
+        alignItems: 'center',
+        padding: 15
     },
-    texteCat: {
-        textAlign: 'center',
-        color: '#DB0A5B',
-        marginTop: 0,
-        fontFamily: "BarlowCondensed-SemiBold",
-        fontSize: 20
+    btnPosition: {
+        position: 'absolute',
+        bottom: 15,
+        left: '50%',
+        transform: [{ translateX: '-50%' }],
     },
+    validerBtn: {
+        backgroundColor: 'white',
+        borderRadius: 150,
+        paddingHorizontal: 30,
+    }
 });
 
 export default Catgeories
