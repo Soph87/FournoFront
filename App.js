@@ -34,7 +34,6 @@ import {createStore, combineReducers} from 'redux'
 
 import { useFonts } from '@use-expo/font';
 import { AppLoading } from "expo";
-import { AsyncStorage } from 'react-native';
 
 const store = createStore(combineReducers({prenom, category, recette}))
 
@@ -46,7 +45,7 @@ var StackNavigator = createStackNavigator({
     ListeCategories: ListeCategories,
     ListePlats: ListePlats,
     Recette: Recette,
-    AjoutCategorie : AjoutCategorie,
+    AjoutCategorie: AjoutCategorie,
     Titre: TitreRecette,
     Preparation: PrepaRecette,
     Ingredients: Ingredients,

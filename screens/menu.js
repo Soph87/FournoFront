@@ -1,38 +1,55 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
 import CroixBlanche from '../assets/images/icones/croix-blanche.svg';
 import Userjaune from '../assets/images/icones/user-jaune.svg';
 import Liste from '../assets/images/icones/liste.svg';
 import Sync from '../assets/images/icones/sync.svg';
 
-function Menu({navigation}) {
+function Menu({ navigation }) {
     return (
-        <View style={{flex: 1, backgroundColor: "#FF5A5D", justifyContent: 'center'}}>
-
-            <View style={styles.croix}>
-                <CroixBlanche width={21} height={21} onPress={() => { navigation.navigate('Accueil') }}/>
-            </View>
-
-            <View style={{flex: 1, justifyContent: 'center', marginTop: -40}}>
-                <View style={styles.ongletMenu}>
-                    <Userjaune width={30} height={30}/>
-                    <Text style={styles.ongletText}>Mon compte</Text>
+        <View style={styles.global}>
+            <SafeAreaView style={{flex: 1}}>
+                <View style={{ flex: 1 }}>
+                    <View style={styles.header}>
+                        <TouchableWithoutFeedback onPress={() => { console.log('coucou'); navigation.navigate('Accueil') }}>
+                            <CroixBlanche width={30} height={30} />
+                        </TouchableWithoutFeedback>
+                    </View>
+                    <View style={{flex: 1, justifyContent: 'center', marginTop: -40}}>
+                        <View style={styles.ongletMenu}>
+                            <Userjaune width={30} height={30}/>
+                            <Text style={styles.ongletText}>Mon compte</Text>
+                        </View>
+                        <View style={styles.ongletMenu}>
+                            <Liste width={30} height={30}/>
+                            <Text style={styles.ongletText}>Gestion des catégories et des plats</Text>
+                        </View>
+                        <View style={styles.ongletMenu}>
+                            <Sync width={30} height={30}/>
+                            <Text style={styles.ongletText}>Synchronisation pour mode offline</Text>
+                        </View>
+                    </View>
                 </View>
-                <View style={styles.ongletMenu}>
-                    <Liste width={30} height={30}/>
-                    <Text style={styles.ongletText}>Gestion des catégories et des plats</Text>
-                </View>
-                <View style={styles.ongletMenu}>
-                    <Sync width={30} height={30}/>
-                    <Text style={styles.ongletText}>Synchronisation pour mode offline</Text>
-                </View>
-            </View>
-
+            </SafeAreaView>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    global: {
+        flex: 1, 
+        backgroundColor: "#FF5A5D",
+        paddingHorizontal: 15,
+        paddingTop: 30,
+        position: 'relative'
+    },
+    //header
+    header: {
+        flexDirection: "row", 
+        justifyContent: 'flex-end', 
+        alignItems: "center", 
+        paddingBottom: 10
+    },
     ongletMenu: {
         flexDirection: "row",
         width: "90%",
@@ -52,9 +69,6 @@ const styles = StyleSheet.create({
         shadowRadius: 4.65,
         
         elevation: 6,
-    },
-    icones: {
-        color : "#FFC830",
     },
     ongletText: {
         fontSize: 20,
