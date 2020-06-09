@@ -24,18 +24,18 @@ import Etapes from './screens/ajouter-recette/ajout-etapes';
 import Photo from './screens/ajouter-recette/ajout-photo';
 import Recap from './screens/ajouter-recette/recapitulatif';
 
-
 //Redux
-import prenom from './reducers/prenom'
-import category from './reducers/category'
-import recette from './reducers/recette'
-import {Provider} from 'react-redux'
-import {createStore, combineReducers} from 'redux'
+import prenom from './reducers/prenom';
+import category from './reducers/category';
+import recette from './reducers/recette';
+import ajoutCats from './reducers/ajout-cats';
+import {Provider} from 'react-redux';
+import {createStore, combineReducers} from 'redux';
 
 import { useFonts } from '@use-expo/font';
 import { AppLoading } from "expo";
 
-const store = createStore(combineReducers({prenom, category, recette}))
+const store = createStore(combineReducers({prenom, category, recette, ajoutCats}))
 
 var StackNavigator = createStackNavigator({
     Home: SignIn,

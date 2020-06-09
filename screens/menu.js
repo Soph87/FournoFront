@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
+import { Button } from 'react-native-elements';
 import CroixBlanche from '../assets/images/icones/croix-blanche.svg';
 import Userjaune from '../assets/images/icones/user-jaune.svg';
 import Liste from '../assets/images/icones/liste.svg';
@@ -10,10 +11,12 @@ function Menu({ navigation }) {
         <View style={styles.global}>
             <SafeAreaView style={{flex: 1}}>
                 <View style={{ flex: 1 }}>
+                    
+                    <TouchableWithoutFeedback onPress={ () =>  console.log('press') } >
+                            <CroixBlanche width={30} height={30}  />
+                    </TouchableWithoutFeedback>
                     <View style={styles.header}>
-                        <TouchableWithoutFeedback onPress={() => { console.log('coucou'); navigation.navigate('Accueil') }}>
-                            <CroixBlanche width={30} height={30} />
-                        </TouchableWithoutFeedback>
+                    
                     </View>
                     <View style={{flex: 1, justifyContent: 'center', marginTop: -40}}>
                         <View style={styles.ongletMenu}>
@@ -46,7 +49,7 @@ const styles = StyleSheet.create({
     //header
     header: {
         flexDirection: "row", 
-        justifyContent: 'flex-end', 
+        justifyContent: 'space-between', 
         alignItems: "center", 
         paddingBottom: 10
     },
