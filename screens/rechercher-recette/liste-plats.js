@@ -32,18 +32,18 @@ function ListePlats({ navigation, catToDisplay, sendRecette }) {
 
         return (
             <TouchableOpacity onPress={() => clickRecette(recette)}>
-            < View style={styles.cards} >
-                <View style={{ width: 84, height: 60 }}>
-                    
-                    <Image source={require('../../assets/images/tarte.jpg')} style={styles.cardImages} />
-                   
-                </View>
-                
-                <Text style={styles.cardTexte}>
-                    {recette.titre}
-            </Text>
-            
-            </View >
+                < View style={styles.cards} >
+                    <View style={{ width: 84, height: 60 }}>
+
+                        <Image source={require('../../assets/images/tarte.jpg')} style={styles.cardImages} />
+
+                    </View>
+
+                    <Text style={styles.cardTexte}>
+                        {recette.titre}
+                    </Text>
+
+                </View >
             </TouchableOpacity>
         )
     })
@@ -60,18 +60,8 @@ function ListePlats({ navigation, catToDisplay, sendRecette }) {
                 </View>
                 <ScrollView style={{ flex: 1, width: "100%" }}>
 
-                {recettesTab}
+                    {recettesTab}
 
-                    {/* <View containerStyle={{borderRadius: 50}}>
-                            <ListItem containerStyle={{marginHorizontal: 15, height: 60, borderRadius: 8, marginVertical:5, backgroundColor: "#dffde9", padding:0}}
-                                titleStyle={{fontFamily: "BarlowCondensed-Regular", fontSize: 20, marginRight: 15}}
-                                title="Délicieuse tarte aux fraises"
-
-                                leftAvatar={{source: require('../../assets/images/tarte.jpg'), width:84, height: 60, borderRadius: 8}}
-                                imageProps={{width: 84, height: 60, border:50}}
-                                avatarStyle={{backgroundColor: "#e056fd", borderWidth: 2, borderTopLeftRadius: 21}}               
-                            />
-                        </View> */}
                 </ScrollView>
             </SafeAreaView>
         </View>
@@ -87,7 +77,7 @@ const styles = StyleSheet.create({
     //Header
     titre: {
         fontFamily: "BarlowCondensed-SemiBold",
-        fontSize: 20,
+        fontSize: 27,
         color: "white"
     },
     //Liste des plats
@@ -96,7 +86,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         borderRadius: 8,
         backgroundColor: "white",
-        marginTop: 10
+        marginTop: 10,
+        alignItems: "center"
     },
     cardImages: {
         width: 84,
@@ -107,12 +98,12 @@ const styles = StyleSheet.create({
     cardTexte: {
         flex: 1,
         width: "100%",
-        height: 60,
         paddingHorizontal: 10,
         fontFamily: "BarlowCondensed-Regular",
-        justifyContent: "center",
         color: "#666666",
         fontSize: 20,
+        alignItems: "center",
+        justifyContent: "center"
 
     }
 });
@@ -124,10 +115,10 @@ function mapStateToProps(state) {
     }
 }
 
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch) {
     return {
-        sendRecette: function(recette){
-            dispatch({type: 'selectRecette', recette})
+        sendRecette: function (recette) {
+            dispatch({ type: 'selectRecette', recette })
         }
     }
 }

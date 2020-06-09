@@ -76,7 +76,7 @@ function ListeCategories({ navigation, sendCategoryToRedux }) {
             image : require('../../assets/images/categories/Pates.png')
          },
          {
-            nom : "petits-dejeuner",
+            nom : "petits-dej",
             image : require('../../assets/images/categories/Petit-dej.png')
          },
          {

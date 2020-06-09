@@ -13,7 +13,7 @@ import Menu from './screens/menu';
 import SearchCategorie from './screens/rechercher-recette/categories';
 import ListePlats from './screens/rechercher-recette/liste-plats';
 import Recette from './screens/rechercher-recette/recette';
-import RecetteModif from './screens/rechercher-recette/modifier-recette';//Je suis pas sûre qu'on ait besoin de cet écran
+import RecetteModif from './screens/rechercher-recette/components/modifier-recette';//Je suis pas sûre qu'on ait besoin de cet écran
 //Screens ajout de recette
 import AjoutCategorie from './screens/ajouter-recette/ajout-categories';
 import ListeCategories from './screens/rechercher-recette/categories'
