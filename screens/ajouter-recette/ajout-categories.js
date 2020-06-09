@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
 import { Button } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
 
 import FlecheRetour from '../../assets/images/icones/fleche-retour.svg';
 import CatCard from './components/cat-card';
 
 
-function AjoutCategorie({ navigation }) {
+function AjoutCategorie({ navigation, sendCategories, suppCategorie }) {
     const [estSelectionne, setEstSelectionne] = useState(false);
     const [listeCat, setListeCat] = useState([]);
 
@@ -45,13 +46,20 @@ function AjoutCategorie({ navigation }) {
         let catChoisies = [...listeCat];
         if(catChoisies.indexOf(catName) === -1) {
             catChoisies.push(catName);
+            sendCategories(catName);
         } else {
             let index = catChoisies.indexOf(catName);
             catChoisies.splice(index, 1);
+            suppCategorie(catName);
         }
         
         setListeCat(catChoisies);
-    } 
+    };
+
+    const handleValider = () => {
+        
+        navigation.navigate('Titre');
+    }
 
     let categoryMap = categories.map((cat) => {
         return (
@@ -67,7 +75,7 @@ function AjoutCategorie({ navigation }) {
                     <View style={styles.header}>
                         <FlecheRetour width={30} height={30} onPress={() => { navigation.navigate('Accueil') }} />
                         <Text style={styles.titre}> Choisir une catégorie </Text>
-                        <View/>
+                        <View width={30} height={30} />
                     </View>
                     <ScrollView>
                         <View style={styles.catContainer}>
@@ -75,7 +83,7 @@ function AjoutCategorie({ navigation }) {
                         </View>
                     </ScrollView>
                     <Button 
-                        onPress={() => navigation.navigate('Titre')}
+                        onPress={() => handleValider()}
                         type='solid'
                         title='Valider' 
                         buttonStyle={styles.validerBtn} 
@@ -137,4 +145,24 @@ const styles = StyleSheet.create({
     }
 });
 
-export default AjoutCategorie
+/* function mapStateToProps(state) {
+    return {
+        catChoisies: state.ajoutCats
+    }
+} */
+
+function mapDispatchToProps(dispatch){
+    return {
+        sendCategories: function(cat){
+            dispatch({type: 'ajoutCat', cat})
+        },
+        suppCategorie: function(cat){
+            dispatch({type: 'suppCat', cat})
+        }
+    }
+}
+
+export default connect(
+    null,
+    mapDispatchToProps
+) (AjoutCategorie)

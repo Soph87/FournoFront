@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { View, StyleSheet, ScrollView, Image, ImageBackground, Text, SafeAreaView } from 'react-native';
-import { Input, Button, Header, Card, ListItem, Avatar } from 'react-native-elements';
-import FlecheRetour from '../../assets/images/icones/fleche-retour.svg'
-import { connect } from 'react-redux'
+import { View, StyleSheet, ScrollView, Image, Text, SafeAreaView } from 'react-native';
+import FlecheRetour from '../../assets/images/icones/fleche-retour.svg';
+import { connect } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
