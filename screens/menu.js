@@ -9,26 +9,24 @@ import Sync from '../assets/images/icones/sync.svg';
 function Menu({ navigation }) {
     return (
         <View style={styles.global}>
-            <SafeAreaView style={{flex: 1}}>
+            <SafeAreaView style={{ flex: 1 }}>
                 <View style={{ flex: 1 }}>
-                    
-                    <TouchableWithoutFeedback onPress={ () =>  console.log('press') } >
-                            <CroixBlanche width={30} height={30}  />
-                    </TouchableWithoutFeedback>
-                    <View style={styles.header}>
-                    
+                    <View style={{alignItems: 'flex-end'}}>
+                        <TouchableWithoutFeedback onPress={() => navigation.navigate('Accueil')} >
+                            <CroixBlanche width={30} height={30} />
+                        </TouchableWithoutFeedback>
                     </View>
-                    <View style={{flex: 1, justifyContent: 'center', marginTop: -40}}>
+                    <View style={{ flex: 1, justifyContent: 'center' }}>
                         <View style={styles.ongletMenu}>
-                            <Userjaune width={30} height={30}/>
+                            <Userjaune width={30} height={30} />
                             <Text style={styles.ongletText}>Mon compte</Text>
                         </View>
                         <View style={styles.ongletMenu}>
-                            <Liste width={30} height={30}/>
+                            <Liste width={30} height={30} />
                             <Text style={styles.ongletText}>Gestion des catégories et des plats</Text>
                         </View>
                         <View style={styles.ongletMenu}>
-                            <Sync width={30} height={30}/>
+                            <Sync width={30} height={30} />
                             <Text style={styles.ongletText}>Synchronisation pour mode offline</Text>
                         </View>
                     </View>
