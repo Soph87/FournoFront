@@ -57,7 +57,6 @@ function AjoutCategorie({ navigation, sendCategories, suppCategorie }) {
     };
 
     const handleValider = () => {
-        
         navigation.navigate('Titre');
     }
 
@@ -144,12 +143,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
     }
 });
-
-/* function mapStateToProps(state) {
-    return {
-        catChoisies: state.ajoutCats
-    }
-} */
 
 function mapDispatchToProps(dispatch){
     return {
