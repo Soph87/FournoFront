@@ -10,13 +10,20 @@ import CroixRose from '../../../assets/images/icones/croixrose.svg'
 import Diviser from '../../../assets/images/icones/diviser.svg'
 import DiviserBlanc from '../../../assets/images/icones/diviserblanc'
 
-function ConsulterRecette({navigation, recetteToDisplay, clickModifierParent}){
+function ConsulterRecette({ navigation, recetteToDisplay, clickModifierParent }) {
 
     const [isVisible, setIsVisible] = useState(false)
     const [operator, setOperator] = useState(null)
+    const [nombre, setNombre] = useState(1)
+    const [ingredients, setIngredients] = useState(recetteToDisplay.ingredients)
 
     var clickModifier = () => {
         clickModifierParent()
+    }
+
+    var appliquerDivMult = () => {
+
+       
     }
 
     let ingredientTable = recetteToDisplay.ingredients.map((ing, i) => {
@@ -65,13 +72,13 @@ function ConsulterRecette({navigation, recetteToDisplay, clickModifierParent}){
 
 
 
-    return(
+    return (
 
         <View style={{ flex: 1, backgroundColor: "#FF5A5B" }}>
             <SafeAreaView style={{ flex: 1 }}>
                 <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingLeft: 15, paddingRight: 15, marginBottom: 10 }}>
                     <FlecheRetour width={30} height={30} onPress={() => { navigation.navigate('ListePlats') }} />
-                    <Modifier width={30} height={30} onPress={() => {clickModifier()}}/>
+                    <Modifier width={30} height={30} onPress={() => { clickModifier() }} />
 
                 </View>
                 <ScrollView style={{ flex: 1, width: "100%" }}>
@@ -82,7 +89,7 @@ function ConsulterRecette({navigation, recetteToDisplay, clickModifierParent}){
                     <View style={{ padding: 15 }}>
                         <View style={{ backgroundColor: "#FFF", borderRadius: 10, padding: 10, flexDirection: "column", justifyContent: "space-between", height: 100 }}>
                             <Text style={styles.preparation}> <Text style={styles.sousTitre}>Préparation :</Text> {recetteToDisplay.preparation[0].preparation} min</Text>
-                            <Text style={styles.preparation}> <Text style={styles.sousTitre}>Cuisson :</Text> {recetteToDisplay.preparation[0].cuisson} min</Text>
+                            <Text style={styles.preparation}> <Text style={styles.sousTitre}>Cuisson :</Text> {recetteToDisplay.preparation[0].cuisson} min </Text>
                             <Text style={styles.preparation}> <Text style={styles.sousTitre}>Total :</Text> {recetteToDisplay.preparation[0].total} min</Text>
                             <Text style={styles.preparation}> <Text style={styles.sousTitre}>Quantité :</Text> {recetteToDisplay.preparation[0].personne} personnes </Text>
                         </View>
@@ -107,7 +114,7 @@ function ConsulterRecette({navigation, recetteToDisplay, clickModifierParent}){
                         </View>
                     </View>
                 </ScrollView>
-                <Overlay isVisible={isVisible} onBackdropPress={() => setIsVisible(false)} overlayStyle={{borderRadius: 10}} >
+                <Overlay isVisible={isVisible} onBackdropPress={() => setIsVisible(false)} overlayStyle={{ borderRadius: 10 }} >
                     <View style={{ flexDirection: "row", justifyContent: "space-between", width: "70%" }}>
                         <View />
                         <Text style={{ fontSize: 20, color: "#FF5A5B", fontWeight: "bold", marginLeft: 40 }}>Changer les quantités</Text>
@@ -123,12 +130,12 @@ function ConsulterRecette({navigation, recetteToDisplay, clickModifierParent}){
                     </View>
                     <View style={{ alignItems: "center" }}>
                         <View style={{ marginTop: 30, justifyContent: "center", alignItems: "center", width: 200 }}>
-                            <Input inputContainerStyle={{ borderWidth: "1px", borderColor: "black" }} keyboardType="number-pad" />
+                            <Input onChangeText={text => setNombre(text)} inputContainerStyle={{ borderWidth: "1px", borderColor: "black" }} keyboardType="number-pad" />
                         </View>
                     </View>
 
                     <View style={{ justifyContent: "center", alignItems: "center" }}>
-                        <Button title="Valider" buttonStyle={{ backgroundColor: "#FF5A5B", borderRadius: 20, width: 100 }} />
+                        <Button onPress={() => { appliquerDivMult() }} title="Valider" buttonStyle={{ backgroundColor: "#FF5A5B", borderRadius: 20, width: 100 }} />
                     </View>
                 </Overlay>
             </SafeAreaView>
@@ -176,7 +183,7 @@ const styles = StyleSheet.create({
 
     },
 
-    sousTitre:{
+    sousTitre: {
         fontFamily: "BarlowCondensed-Medium",
         fontSize: 16
     },
@@ -195,7 +202,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: "#fff"
     }
-   
+
 });
 
 

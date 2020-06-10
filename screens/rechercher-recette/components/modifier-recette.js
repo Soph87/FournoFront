@@ -7,13 +7,21 @@ import Photo from '../../../assets/images/icones/appareil-photo.svg'
 import FlecheRetour from '../../../assets/images/icones/fleche-retour.svg'
 import PoubelleBlanche from '../../../assets/images/icones/poubelleBlanche.svg'
 import PhotoCamera from '../../rechercher-recette/components/photo'
-import { BorderlessButton } from 'react-native-gesture-handler';
+import Ajouter from '../../../assets/images/icones/ajouter.svg'
 
 
 
 function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent }) {
 
     const [photo, setPhoto] = useState(false)
+    const [titre, setTitre] = useState(recetteToDisplay.titre)
+    const [ingredients, setIngredients] = useState(recetteToDisplay.ingredients)
+    const [cuisson, setCuisson] = useState(recetteToDisplay.preparation[0].cuisson)
+    const [total, setTotal] = useState(recetteToDisplay.preparation[0].total)
+    const [preparation, setPreparation] = useState(recetteToDisplay.preparation[0].preparation)
+    const [quantite, setQuantite] = useState(recetteToDisplay.preparation[0].personne)
+    const [etapes, setEtapes] = useState(recetteToDisplay.etapes)
+
 
     var cancelPhoto = () => {
         setPhoto(false)
@@ -23,101 +31,172 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent }) {
         clicRetourParent()
     }
 
-    var ingredientsTable = recetteToDisplay.ingredients.map((ing, i) => {
+    var validerRecette = async () => {
+        var recette = recetteToDisplay;
+        recette.titre = titre
+        recette.ingredients = ingredients
+        recette.preparation[0].preparation = preparation
+        recette.preparation[0].cuisson = cuisson
+        recette.preparation[0].quantite = quantite
+        recette.etapes = etapes
+        console.log(recette)
+
+        var body = JSON.stringify(recette)
+
+        var response = await fetch("https://protected-anchorage-65968.herokuapp.com/updateRecette", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: body,
+
+        })
+        if (response) {
+            navigation.navigate('Accueil')
+        }
+
+    }
+
+
+
+    var updateIngredients = (index, text) => {
+        let newIng = [...ingredients]
+        newIng[index] = text
+        setIngredients(newIng)
+    }
+
+    var updateEtapes = (index, text) => {
+        let newEtapes = [...etapes]
+        newEtapes[index] = text
+        setEtapes(newEtapes)
+    }
+
+    var deleteIng = (index) => {
+        let newIng = [...ingredients]
+        newIng.splice(index, 1)
+        setIngredients(newIng)
+    }
+
+    var deleteEtape = (index) => {
+        let newEtap = [...etapes]
+        newEtap.splice(index, 1)
+        setEtapes(newEtap)
+    }
+
+    var ajouterIng = () => {
+        let newIng = [...ingredients]
+        newIng.push("")
+        setIngredients(newIng)
+    }
+
+    var ajouterEtap = () => {
+        let newEtap = [...etapes]
+        newEtap.push("")
+        setEtapes(newEtap)
+    }
+
+    var ingredientsTable = ingredients.map((ing, i) => {
 
         return (
-            <Input inputContainerStyle={styles.input} value={ing} rightIcon={<Poubelle height={30} width={30}/>}></Input>
+            <Input onChangeText={text => { updateIngredients(i, text) }} inputContainerStyle={styles.input} value={ingredients[i]} rightIcon={<Poubelle height={30} width={30} onPress={() => { deleteIng(i) }} />}></Input>
         )
     })
 
-    var etapesTable = recetteToDisplay.etapes.map((etape, i) => {
+    var etapesTable = etapes.map((etape, i) => {
 
         return (
-            <Input multiline={true} inputContainerStyle={styles.input} inputStyle={{ fontFamily: "BarlowCondensed-Regular", fontSize: 20, padding: 10 }} value={etape} rightIcon={<Poubelle height={30} width={30}/>}></Input>
+            <Input onChangeText={text => { updateEtapes(i, text) }} multiline={true} inputContainerStyle={styles.input} inputStyle={{ fontFamily: "BarlowCondensed-Regular", fontSize: 20, padding: 10 }} value={etapes[i]} rightIcon={<Poubelle height={30} width={30} onPress={() => { deleteEtape(i) }} />}></Input>
         )
     })
 
     if (photo) {
         return (
-            <PhotoCamera navigation={navigation} clickCancelPhoto={cancelPhoto}/>
+            <PhotoCamera navigation={navigation} clickCancelPhoto={cancelPhoto} />
         )
     } else {
 
-  
 
 
-    return (
 
-        <View style={{ flex: 1, backgroundColor: "#FF5A5B" }}>
-            <SafeAreaView style={{ flex: 1 }}>
-                <ScrollView style={{ flex: 1, width: "100%" }}>
+        return (
 
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingLeft: 15, paddingRight: 15 }}>
-                        <FlecheRetour width={30} height={30} fill={"white"} onPress={() => { clickRetour() }} />
-                        <Text style={styles.titre}>Modifier la recette </Text>
-                        <View />
-                    </View>
+            <View style={{ flex: 1, backgroundColor: "#FF5A5B" }}>
+                <SafeAreaView style={{ flex: 1 }}>
+                    <ScrollView style={{ flex: 1, width: "100%" }}>
 
-                    <ImageBackground source={require("../../../assets/images/tarte.jpg")} style={{ width: '100%', height: 200, marginTop: 25, flex: 1, justifyContent: "flex-end" }}>
+                        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingLeft: 15, paddingRight: 15 }}>
+                            <FlecheRetour width={30} height={30} fill={"white"} onPress={() => { clickRetour() }} />
+                            <Text style={styles.titre}>Modifier la recette </Text>
+                            <View />
+                        </View>
 
-                        <View style={{ backgroundColor: "white", opacity: 0.7, height: 50, width: "100%", alignItems: "center", flexDirection: "row", justifyContent: "center" }}>
+                        <ImageBackground source={require("../../../assets/images/tarte.jpg")} style={{ width: '100%', height: 200, marginTop: 25, flex: 1, justifyContent: "flex-end" }}>
 
-                            <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around" }}>
-                                <AppareilPhoto width={30} height={30} onPress={()=> {setPhoto(true)}}/>
-                                <Photo width={30} height={30}/>
-                                <Poubelle width={30} height={30} />
+                            <View style={{ backgroundColor: "white", opacity: 0.7, height: 50, width: "100%", alignItems: "center", flexDirection: "row", justifyContent: "center" }}>
+
+                                <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around" }}>
+                                    <AppareilPhoto width={30} height={30} onPress={() => { setPhoto(true) }} />
+                                    <Photo width={30} height={30} />
+                                    <Poubelle width={30} height={30} />
+                                </View>
+                            </View>
+                        </ImageBackground>
+
+                        <View style={{ marginTop: 20 }}>
+                            <Text style={styles.sousTitre}>Titre de la recette</Text>
+                            <Input inputContainerStyle={styles.input} value={titre} placeholder={recetteToDisplay.titre} rightIcon={<Poubelle height={30} width={30} />} onChangeText={text => setTitre(text)}></Input>
+                        </View>
+
+                        <View>
+                            <Text style={styles.sousTitre}>Préparation</Text>
+                            <Input onChangeText={text => setPreparation(text)} inputContainerStyle={styles.input} value={preparation} rightIcon={<Poubelle height={30} width={30} />}></Input>
+                        </View>
+
+                        <View>
+                            <Text style={styles.sousTitre}>Cuisson</Text>
+                            <Input onChangeText={text => setCuisson(text)} inputContainerStyle={styles.input} value={cuisson} rightIcon={<Poubelle height={30} width={30} />}></Input>
+                        </View>
+
+                        <View>
+                            <Text style={styles.sousTitre}>Quantité</Text>
+                            <Input onChangeText={text => setQuantite(text)} inputContainerStyle={styles.input} value={quantite} rightIcon={<Poubelle height={30} width={30} />}></Input>
+                        </View>
+
+                        <View>
+                            <Text style={styles.sousTitre}>Ingrédients</Text>
+                            {ingredientsTable}
+                            <View style={{alignItems: "center"}}>
+                                <Ajouter height={30} width={30} onPress={() => ajouterIng()}/>
+                                <Text style={{color: "white", fontFamily:"BarlowCondensed-Regular", fontSize: 20}}>Ajouter un ingrédient</Text>
                             </View>
                         </View>
-                    </ImageBackground>
 
-                    <View style={{ marginTop: 20 }}>
-                        <Text style={styles.sousTitre}>Titre de la recette</Text>
-                        <Input inputContainerStyle={styles.input} value={recetteToDisplay.titre} rightIcon={<Poubelle height={30} width={30}/>}></Input>
+                        <View>
+                            <Text style={styles.sousTitre}>Etapes</Text>
+                            {etapesTable}
+                            <View style={{alignItems: "center"}}>
+                                <Ajouter height={30} width={30} onPress={() => ajouterEtap()}/>
+                                <Text style={{color: "white", fontFamily:"BarlowCondensed-Regular", fontSize: 20}}>Ajouter un étape</Text>
+                            </View>
+                        </View>
+
+                    </ScrollView>
+
+                    <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 10 }}>
+                        <Button
+                            type='solid'
+                            title='Valider'
+                            buttonStyle={styles.validerBtn}
+                            titleStyle={{ fontFamily: "BarlowCondensed-SemiBold", fontSize: 20, color: '#FF5A5D' }}
+                            raised
+                            onPress={() => validerRecette()}
+                        />
+                        <View style={{ backgroundColor: 'white', borderRadius: 200, marginLeft: 40, alignItems: "center", justifyContent: "center" }}>
+                            <PoubelleBlanche height={30} width={40} />
+                        </View>
                     </View>
-
-                    <View>
-                        <Text style={styles.sousTitre}>Préparation</Text>
-                        <Input inputContainerStyle={styles.input} value={recetteToDisplay.preparation[0].preparation + " min"} rightIcon={<Poubelle height={30} width={30}/>}></Input>
-                    </View>
-
-                    <View>
-                        <Text style={styles.sousTitre}>Cuisson</Text>
-                        <Input inputContainerStyle={styles.input} value={recetteToDisplay.preparation[0].cuisson + " min"} rightIcon={<Poubelle height={30} width={30}/>}></Input>
-                    </View>
-
-                    <View>
-                        <Text style={styles.sousTitre}>Quantité</Text>
-                        <Input inputContainerStyle={styles.input} value={recetteToDisplay.preparation[0].personne + " personnes"} rightIcon={<Poubelle height={30} width={30}/>}></Input>
-                    </View>
-
-                    <View>
-                        <Text style={styles.sousTitre}>Ingrédients</Text>
-                        {ingredientsTable}
-                    </View>
-
-                    <View>
-                        <Text style={styles.sousTitre}>Etapes</Text>
-                        {etapesTable}
-                    </View>
-
-                </ScrollView>
-
-                <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 10 }}>
-                    <Button
-                        type='solid'
-                        title='Valider'
-                        buttonStyle={styles.validerBtn}
-                        titleStyle={{ fontFamily: "BarlowCondensed-SemiBold", fontSize: 20, color: '#FF5A5D' }}
-                        raised
-                    />
-                    <View style={{backgroundColor: 'white', borderRadius: 200, marginLeft: 40, alignItems: "center", justifyContent: "center"}}>
-                        <PoubelleBlanche height={30} width={40} />
-                    </View>
-                </View>
-            </SafeAreaView>
-        </View>
-    )
-}
+                </SafeAreaView>
+            </View>
+        )
+    }
 }
 
 const styles = StyleSheet.create({
@@ -142,8 +221,8 @@ const styles = StyleSheet.create({
     },
     input: {
         backgroundColor: "white",
-        borderRadius: 8, 
-        paddingLeft: 10, 
+        borderRadius: 8,
+        paddingLeft: 10,
         borderBottomWidth: 0
     }
 })
