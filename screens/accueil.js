@@ -110,25 +110,28 @@ function Accueil({ navigation, prenomToDisplay, sendCategoryToRedux }) {
                         </View>
                         <View style={{ flex: 1, backgroundColor: 'white' }} />
 
-                        <Overlay isVisible={visible}
+                        <Overlay    
+                            isVisible={visible} 
                             onBackdropPress={toggleOverlay}
                             transparent={true}
                         >
                             <Text style={styles.popUpQuestion}>Comment voulez-vous importer votre recette ?</Text>
-                            <Button
-                                onPress={() => RedirectManuellement()}
-                                title='Manuellement'
-                                titleStyle={{ fontFamily: "BarlowCondensed-Medium", fontSize: 20 }}
-                                containerStyle={{ alignItems: 'center', marginBottom: 15 }}
-                                buttonStyle={{ backgroundColor: "#FF5A5D", width: '80%' }}
-                            />
-                            <Button
-                                onPress={() => RedirectURL()}
-                                title='Avec une URL Marmiton'
-                                titleStyle={{ fontFamily: "BarlowCondensed-Medium", fontSize: 20 }}
-                                containerStyle={{ alignItems: 'center', marginBottom: 15 }}
-                                buttonStyle={{ backgroundColor: "#FF5A5D", width: '80%' }}
-                            />
+                            <View style={{alignItems: "center", marginBottom: 15}}>
+                                <Button 
+                                    onPress={() => RedirectManuellement()} 
+                                    title='Manuellement' 
+                                    titleStyle={{fontFamily: "BarlowCondensed-Medium", fontSize: 20}}
+                                    buttonStyle={styles.ajoutRecetteBtn}
+                                />
+                            </View>
+                            <View style={{alignItems: "center", marginBottom: 10}}>
+                                <Button 
+                                    onPress={() => RedirectURL()} 
+                                    title='Depuis Internet' 
+                                    titleStyle={{fontFamily: "BarlowCondensed-Medium", fontSize: 20}}
+                                    buttonStyle={styles.ajoutRecetteBtn}
+                                />
+                            </View>
                         </Overlay>
 
 
@@ -228,7 +231,8 @@ const styles = StyleSheet.create({
     // Overlay
     popUpQuestion: {
         fontFamily: "BarlowCondensed-SemiBold",
-        fontSize: 20,
+        color: '#666666',
+        fontSize: 18,
         paddingHorizontal: 40,
         marginVertical: 15,
         textAlign: 'center',
