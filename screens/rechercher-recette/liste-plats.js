@@ -53,7 +53,7 @@ function ListePlats({ navigation, catToDisplay, sendRecette }) {
         <View style={styles.global}>
             <SafeAreaView style={{ flex: 1 }}>
                 <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                    <FlecheRetour width={30} height={30} fill={"white"} onPress={() => { navigation.navigate('ListeCategories') }} />
+                    <FlecheRetour width={30} height={30} fill={"white"} onPress={() => { navigation.goBack() }} />
                     <Text style={styles.titre}> Choisir une recette </Text>
                     <View />
                 </View>
