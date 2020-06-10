@@ -4,8 +4,12 @@ import { StyleSheet } from 'react-native';
 
 export default function input(props) {
     const [texte, setTexte] = useState('');
+
+    const handleEditingEnd = (keyName, value) => {
+        props.handleEditingParent(keyName, value);
+    }
     return (
-        <Input 
+        <Input
             label={props.label}
             placeholderTextColor="#ADADAD" 
             onChangeText={(text) => setTexte(text)}
@@ -14,6 +18,7 @@ export default function input(props) {
             inputContainerStyle={styles.input}
             inputStyle={{ fontFamily: "BarlowCondensed-Regular", fontSize: 20 }}
             labelStyle={styles.label}
+            onEndEditing={() => handleEditingEnd(props.keyName, texte)}
         />
     )
 }

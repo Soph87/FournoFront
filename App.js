@@ -28,14 +28,16 @@ import Recap from './screens/ajouter-recette/recapitulatif';
 import prenom from './reducers/prenom';
 import category from './reducers/category';
 import recette from './reducers/recette';
-import ajoutCats from './reducers/ajout-cats';
+import ajoutCats from './reducers/ajout-categories.reducer';
+import ajoutTitre from './reducers/ajout-titre.reducer';
+import ajoutPrepa from './reducers/ajout-prepa.reducer';
 import {Provider} from 'react-redux';
 import {createStore, combineReducers} from 'redux';
 
 import { useFonts } from '@use-expo/font';
 import { AppLoading } from "expo";
 
-const store = createStore(combineReducers({prenom, category, recette, ajoutCats}))
+const store = createStore(combineReducers({prenom, category, recette, ajoutCats, ajoutTitre, ajoutPrepa}))
 
 var StackNavigator = createStackNavigator({
     Home: SignIn,
