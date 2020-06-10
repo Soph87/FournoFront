@@ -23,7 +23,17 @@ function Titre({ navigation }) {
                     <View style={styles.inputContainer}>
                         <Input placeholder='Tarte aux poireaux, charlotte aux fraises...' label='Nom de la recette' />
                     </View>
-                    
+                    <View style={styles.bottomNav}>
+                        <Button 
+                            onPress={() => handleValider()}
+                            type='solid'
+                            title='Valider' 
+                            buttonStyle={styles.validerBtn} 
+                            titleStyle={{fontFamily: "BarlowCondensed-SemiBold", fontSize: 20, color: '#FF5A5D'}}
+                            disabled
+                            raised
+                        />
+                    </View>
                 </View>
             </TouchableWithoutFeedback>
         </SafeAreaView>
@@ -31,31 +41,41 @@ function Titre({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-        global: {
-            flex: 1, 
-            backgroundColor: "#FF5A5D",
-            paddingHorizontal: 15,
-            paddingTop: 30,
-            position: 'relative'
-        },
-        //header
-        header: {
-            flexDirection: "row", 
-            justifyContent: "space-between", 
-            alignItems: "center", 
-            padding: 15
-        },
-        titre: {
-            fontFamily: "BarlowCondensed-SemiBold",
-            fontSize: 20,
-            color: "white"
-        },
-        //Input
-        inputContainer: {
-            flex: 1, 
-            justifyContent: 'center', 
-            alignItems: 'center', 
-        }
-    });
+    global: {
+        flex: 1, 
+        backgroundColor: "#FF5A5D",
+        paddingHorizontal: 15,
+        paddingTop: 30,
+        position: 'relative'
+    },
+    //header
+    header: {
+        flexDirection: "row", 
+        justifyContent: "space-between", 
+        alignItems: "center", 
+        padding: 15
+    },
+    titre: {
+        fontFamily: "BarlowCondensed-SemiBold",
+        fontSize: 20,
+        color: "white"
+    },
+    //Input
+    inputContainer: {
+        flex: 1, 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+    },
+    //Navigation bas de page
+    bottomNav: {
+        alignItems: 'center',
+        padding: 15
+    },
+    validerBtn: {
+        backgroundColor: 'white',
+        borderRadius: 150,
+        paddingHorizontal: 30,
+    }
+});
 
 export default Titre;

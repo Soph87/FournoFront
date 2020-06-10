@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Input } from 'react-native-elements';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export default function input(props) {
+    const [texte, setTexte] = useState('');
     return (
         <Input 
             label={props.label}
             placeholderTextColor="#ADADAD" 
-            //onChangeText={(text) => setPassword(text)} 
+            onChangeText={(text) => setTexte(text)}
+            value= {texte}
             placeholder={props.placeholder} 
             inputContainerStyle={styles.input}
             inputStyle={{ fontFamily: "BarlowCondensed-Regular", fontSize: 20 }}
