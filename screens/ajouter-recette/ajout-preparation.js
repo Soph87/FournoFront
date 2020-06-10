@@ -8,7 +8,7 @@ import Input from './components/inputs-ajout';
 import FlecheRetour from '../../assets/images/icones/fleche-retour.svg';
 import Home from '../../assets/images/icones/home.svg';
 
-function Titre({ navigation, sendPrepa }) {
+function Preparation({ navigation, sendPrepa }) {
     const [prepa, setPrepa] = useState('');
     const [cuisson, setCuisson] = useState('');
     const [quantite, setQuantite] = useState('');
@@ -111,4 +111,4 @@ function mapDispatchToProps(dispatch){
 export default connect(
     null,
     mapDispatchToProps
-) (Titre);
+) (Preparation);
