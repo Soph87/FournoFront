@@ -166,13 +166,14 @@ const styles = StyleSheet.create({
         flex: 1, 
         backgroundColor: 'white', 
         justifyContent: 'flex-end', 
-        alignItems:'center'
+        alignItems:'center',
+        paddingTop: 20,
     },
     pasInscrit: {
         color: "#666666", 
         marginBottom: 20, 
         fontFamily: "BarlowCondensed-Regular", 
-        fontSize: 18
+        fontSize: 18,
     },
     //Popup d'erreur
     popover: {

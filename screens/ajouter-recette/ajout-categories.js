@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 15,
         left: '50%',
-        transform: [{ translateX: '-50%' }],
+        transform: [{ translateX: -50 }],
     },
     validerBtn: {
         backgroundColor: 'white',

@@ -1,7 +1,7 @@
 console.disableYellowBox = true;
 import React from 'react';
 import {createAppContainer } from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
+import {createStackNavigator, TransitionSpecs, CardStyleInterpolators, TransitionPresets} from 'react-navigation-stack';
 
 //Screens users
 import SignIn from './screens/users/signin';
@@ -23,6 +23,7 @@ import Ingredients from './screens/ajouter-recette/ajout-ingredients';
 import Etapes from './screens/ajouter-recette/ajout-etapes';
 import Photo from './screens/ajouter-recette/ajout-photo';
 import Recap from './screens/ajouter-recette/recapitulatif';
+import AjoutURL from './screens/ajouter-recette/ajout-url';
 
 //Redux
 import prenom from './reducers/prenom';
@@ -36,6 +37,7 @@ import {createStore, combineReducers} from 'redux';
 
 import { useFonts } from '@use-expo/font';
 import { AppLoading } from "expo";
+import { Easing } from 'react-native-reanimated';
 
 const store = createStore(combineReducers({prenom, category, recette, ajoutCats, ajoutTitre, ajoutPrepa}))
 
@@ -44,6 +46,7 @@ var StackNavigator = createStackNavigator({
     SignUp: SignUp,
     Menu: Menu,
     Accueil: Accueil,
+    AjoutURL: AjoutURL,
     ListeCategories: ListeCategories,
     ListePlats: ListePlats,
     Recette: Recette,
@@ -56,7 +59,9 @@ var StackNavigator = createStackNavigator({
     Recap: Recap
 }, 
 {
-  headerMode: "none"
+  headerMode: "none",
+  gestureEnabled: true,
+  gestureDirection: 'horizontal',
 });
 
 const Navigation = createAppContainer(StackNavigator);
@@ -75,7 +80,8 @@ export default function App() {
 
   return (
     <Provider store={store}>
-        <Navigation />
+      <Navigation />
     </Provider>
   )
 }
+

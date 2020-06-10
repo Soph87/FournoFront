@@ -1,11 +1,28 @@
-import React from 'react';
-import { Text, View, Keyboard, StyleSheet, Image, KeyboardAvoidingView, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
-import { Input, Button } from 'react-native-elements';
+import React, {useState} from 'react';
+import { Text, View, Keyboard, StyleSheet, Image, KeyboardAvoidingView, SafeAreaView, TouchableWithoutFeedback} from 'react-native';
+import { Input, Button, Overlay } from 'react-native-elements';
 import Burger from '../assets/images/icones/burger.svg';
-import Loupe from '../assets/images/icones/loupe.svg'
-import {connect} from 'react-redux'
+import Loupe from '../assets/images/icones/loupe.svg';
+import {connect} from 'react-redux';
+
 
 function Accueil({navigation, prenomToDisplay}) {
+    const [visible, setVisible] = useState(false);
+
+    const toggleOverlay = () => {
+        setVisible(!visible);
+    };
+
+    var RedirectManuellement = () => {
+        navigation.navigate('AjoutCategorie');
+        setVisible(false)
+    }
+
+    var RedirectURL = () => {
+        navigation.navigate('AjoutURL');
+        setVisible(false)
+    }
+
     return (
         <KeyboardAvoidingView style={{flex: 1, backgroundColor: "#FF5A5D"}} behavior={Platform.OS == "ios" ? "padding" : "height"}>
             <SafeAreaView style={{flex: 1}}>
@@ -68,15 +85,40 @@ function Accueil({navigation, prenomToDisplay}) {
                             </View>
                             <View style={{ alignItems: 'center', marginBottom: 20 }}>
                                 <Button 
-                                    onPress={() => navigation.navigate('AjoutCategorie')} 
+                                    onPress={toggleOverlay}
                                     title='Ajouter une recette' 
                                     buttonStyle={styles.ajoutRecetteBtn} 
                                     titleStyle={{fontFamily: "BarlowCondensed-SemiBold", fontSize: 20}} 
                                 />
                             </View>
                         </View>
-                        <View style={{ flex : 1, backgroundColor: 'white' }} />
+                        <View style={{ flex : 1, backgroundColor: 'white' }} />   
+
+                        <Overlay    isVisible={visible} 
+                                    onBackdropPress={toggleOverlay}
+                                    transparent={true} 
+                                   >
+                            <Text style={styles.popUpQuestion}>Comment voulez-vous importer votre recette ?</Text>
+                            <Button 
+                                    onPress={() => RedirectManuellement()} 
+                                    title='Manuellement' 
+                                    titleStyle={{fontFamily: "BarlowCondensed-Medium", fontSize: 20}}
+                                    containerStyle={{alignItems: 'center', marginBottom: 15}}
+                                    buttonStyle={{backgroundColor: "#FF5A5D", width: '80%' }}
+                                />
+                            <Button 
+                                onPress={() => RedirectURL()} 
+                                title='Avec une URL Marmiton' 
+                                titleStyle={{fontFamily: "BarlowCondensed-Medium", fontSize: 20}} 
+                                containerStyle={{alignItems: 'center', marginBottom: 15}}
+                                buttonStyle={{backgroundColor: "#FF5A5D", width: '80%' }}
+                            />
+                        </Overlay>
+
+
                     </View>
+
+
                 </TouchableWithoutFeedback>
             </SafeAreaView>
         </KeyboardAvoidingView>
@@ -166,7 +208,16 @@ const styles = StyleSheet.create({
         backgroundColor: "#FF5A5D",
         borderRadius: 150,
         paddingHorizontal: 30,
-    }
+    },
+    // Overlay
+    popUpQuestion: {
+        fontFamily: "BarlowCondensed-SemiBold",
+        fontSize: 20,
+        paddingHorizontal: 40,
+        marginVertical: 15,
+        textAlign: 'center',
+    },
+
 });
 
 

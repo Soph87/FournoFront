@@ -96,7 +96,12 @@ const styles = StyleSheet.create({
     },
     cardTexte: {
         flex: 1,
+<<<<<<< HEAD
         width: "100%",
+=======
+        width: "90%",
+        height: 60,
+>>>>>>> ajoutRecette
         paddingHorizontal: 10,
         fontFamily: "BarlowCondensed-Regular",
         color: "#666666",
