@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { View, StyleSheet, ScrollView, Image, Text, SafeAreaView } from 'react-native';
-import FlecheRetour from '../../assets/images/icones/fleche-retour.svg';
 import { connect } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import FlecheRetour from '../assets/images/icones/fleche-retour.svg';
 
-
-function ListePlats({ navigation, catToDisplay, sendRecette,photoToDisplay }) {
+function ListeRecherche({ navigation, searchText, sendRecette }) {
 
     const [recettes, setRecettes] = useState([])
 
     useEffect(() => {
 
-        var retrieveRecettes = async () => {
-            var response = await fetch(`https://protected-anchorage-65968.herokuapp.com/getRecette?category=${catToDisplay}`)
+        retreiveRecette = async () => {
+            console.log(searchText)
+            var response = await fetch(`http://192.168.1.25:3000/searchRecette?searchText=${searchText}`)
+
             response = await response.json()
+
             setRecettes(response.recettes)
         }
 
-        retrieveRecettes()
+        retreiveRecette()
 
     }, [])
 
@@ -28,16 +30,13 @@ function ListePlats({ navigation, catToDisplay, sendRecette,photoToDisplay }) {
 
 
     var recettesTab = recettes.map((recette, i) => {
-       
-     
-        
-        
+
         return (
             <TouchableOpacity onPress={() => clickRecette(recette)}>
                 < View style={styles.cards} >
                     <View style={{ width: 84, height: 60 }}>
 
-                        <Image source={{uri: recette.image}} style={styles.cardImages} />
+                        <Image source={{ uri: recette.image }} style={styles.cardImages} />
 
                     </View>
 
@@ -49,7 +48,6 @@ function ListePlats({ navigation, catToDisplay, sendRecette,photoToDisplay }) {
             </TouchableOpacity>
         )
     })
-
 
 
     return (
@@ -111,10 +109,10 @@ const styles = StyleSheet.create({
 });
 
 
+
 function mapStateToProps(state) {
     return {
-        catToDisplay: state.category,
-        photoToDisplay: state.photo
+        searchText: state.searchText
     }
 }
 
@@ -126,7 +124,8 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
+
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(ListePlats)
+)(ListeRecherche)

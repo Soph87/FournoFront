@@ -7,8 +7,9 @@ import { connect } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
-function Accueil({ navigation, prenomToDisplay, sendCategoryToRedux }) {
+function Accueil({ navigation, prenomToDisplay, sendCategoryToRedux, sendSearchToRedux }) {
     const [visible, setVisible] = useState(false);
+    const [recherche, setRecherche] = useState("")
 
     const toggleOverlay = () => {
         setVisible(!visible);
@@ -27,6 +28,11 @@ function Accueil({ navigation, prenomToDisplay, sendCategoryToRedux }) {
     var RedirectURL = () => {
         navigation.navigate('AjoutURL');
         setVisible(false)
+    }
+
+    var searchRecette = () => {
+        sendSearchToRedux(recherche)
+        navigation.navigate("ListeRecherche")
     }
 
     return (
@@ -92,11 +98,13 @@ function Accueil({ navigation, prenomToDisplay, sendCategoryToRedux }) {
                                     placeholder='Chercher une recette par mot clé'
                                     containerStyle={{ paddingHorizontal: 0 }}
                                     inputStyle={{ fontFamily: "BarlowCondensed-Regular", fontSize: 20 }}
+                                    onChangeText={text => setRecherche(text)}
                                 />
                                 <Button
                                     icon={<Loupe width={30} height={30} />}
                                     buttonStyle={styles.inputButton}
                                     containerStyle={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
+                                    onPress={()=> searchRecette()}
                                 />
                             </View>
                             <View style={{ alignItems: 'center', marginBottom: 20 }}>
@@ -253,6 +261,9 @@ function mapDispatchToProps(dispatch) {
     return {
         sendCategoryToRedux: function (category) {
             dispatch({ type: 'selectCat', category })
+        },
+        sendSearchToRedux: function(searchText){
+            dispatch({type: 'sendSearch', searchText})
         }
     }
 }

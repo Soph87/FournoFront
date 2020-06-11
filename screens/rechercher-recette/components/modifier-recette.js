@@ -8,10 +8,10 @@ import FlecheRetour from '../../../assets/images/icones/fleche-retour.svg'
 import PoubelleBlanche from '../../../assets/images/icones/poubelleBlanche.svg'
 import PhotoCamera from '../../rechercher-recette/components/photo'
 import Ajouter from '../../../assets/images/icones/ajouter.svg'
+import { connect } from 'react-redux';
 
 
-
-function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent }) {
+function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photoToDisplay,killPhotoRedux }) {
 
     const [photo, setPhoto] = useState(false)
     const [titre, setTitre] = useState(recetteToDisplay.titre)
@@ -19,7 +19,7 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent }) {
     const [cuisson, setCuisson] = useState(recetteToDisplay.preparation[0].cuisson)
     const [total, setTotal] = useState(recetteToDisplay.preparation[0].total)
     const [preparation, setPreparation] = useState(recetteToDisplay.preparation[0].preparation)
-    const [quantite, setQuantite] = useState(recetteToDisplay.preparation[0].personne)
+    const [quantite, setQuantite] = useState(recetteToDisplay.preparation[0].quantite)
     const [etapes, setEtapes] = useState(recetteToDisplay.etapes)
 
 
@@ -38,7 +38,9 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent }) {
         recette.preparation[0].preparation = preparation
         recette.preparation[0].cuisson = cuisson
         recette.preparation[0].quantite = quantite
+        recette.preparation[0].total = total
         recette.etapes = etapes
+        recette.image = photoToDisplay
         console.log(recette)
 
         var body = JSON.stringify(recette)
@@ -50,7 +52,8 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent }) {
 
         })
         if (response) {
-            navigation.navigate('Accueil')
+            killPhotoRedux()
+            navigation.navigate("ListePlats")
         }
 
     }
@@ -112,9 +115,7 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent }) {
             <PhotoCamera navigation={navigation} clickCancelPhoto={cancelPhoto} />
         )
     } else {
-
-
-
+     
 
         return (
 
@@ -128,7 +129,7 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent }) {
                             <View />
                         </View>
 
-                        <ImageBackground source={require("../../../assets/images/tarte.jpg")} style={{ width: '100%', height: 200, marginTop: 25, flex: 1, justifyContent: "flex-end" }}>
+                        <ImageBackground source={{uri : photoToDisplay}} style={{ width: '100%', height: 200, marginTop: 25, flex: 1, justifyContent: "flex-end" }}>
 
                             <View style={{ backgroundColor: "white", opacity: 0.7, height: 50, width: "100%", alignItems: "center", flexDirection: "row", justifyContent: "center" }}>
 
@@ -147,34 +148,41 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent }) {
 
                         <View>
                             <Text style={styles.sousTitre}>Préparation</Text>
-                            <Input onChangeText={text => setPreparation(text)} inputContainerStyle={styles.input} value={preparation} rightIcon={<Poubelle height={30} width={30} />}></Input>
+                            <Input onChangeText={text => setPreparation(text)} inputContainerStyle={styles.input} value={preparation} rightIcon={<Poubelle height={30} width={30} onPress={() => setPreparation("")} />}></Input>
                         </View>
 
                         <View>
                             <Text style={styles.sousTitre}>Cuisson</Text>
-                            <Input onChangeText={text => setCuisson(text)} inputContainerStyle={styles.input} value={cuisson} rightIcon={<Poubelle height={30} width={30} />}></Input>
+                            <Input onChangeText={text => setCuisson(text)} inputContainerStyle={styles.input} value={cuisson} rightIcon={<Poubelle height={30} width={30} onPress={() => setCuisson("")} />}></Input>
+                        </View>
+
+                        <View>
+                            <Text style={styles.sousTitre}>Total</Text>
+                            <Input onChangeText={text => setTotal(text)} inputContainerStyle={styles.input} value={total} rightIcon={<Poubelle height={30} width={30} onPress={() => setTotal("")} />}></Input>
                         </View>
 
                         <View>
                             <Text style={styles.sousTitre}>Quantité</Text>
-                            <Input onChangeText={text => setQuantite(text)} inputContainerStyle={styles.input} value={quantite} rightIcon={<Poubelle height={30} width={30} />}></Input>
+                            <Input onChangeText={text => setQuantite(text)} inputContainerStyle={styles.input} value={quantite} rightIcon={<Poubelle height={30} width={30} onPress={() => setQuantite("")} />}></Input>
                         </View>
+
+
 
                         <View>
                             <Text style={styles.sousTitre}>Ingrédients</Text>
                             {ingredientsTable}
-                            <View style={{alignItems: "center"}}>
-                                <Ajouter height={30} width={30} onPress={() => ajouterIng()}/>
-                                <Text style={{color: "white", fontFamily:"BarlowCondensed-Regular", fontSize: 20}}>Ajouter un ingrédient</Text>
+                            <View style={{ alignItems: "center" }}>
+                                <Ajouter height={30} width={30} onPress={() => ajouterIng()} />
+                                <Text style={{ color: "white", fontFamily: "BarlowCondensed-Regular", fontSize: 20 }}>Ajouter un ingrédient</Text>
                             </View>
                         </View>
 
                         <View>
                             <Text style={styles.sousTitre}>Etapes</Text>
                             {etapesTable}
-                            <View style={{alignItems: "center"}}>
-                                <Ajouter height={30} width={30} onPress={() => ajouterEtap()}/>
-                                <Text style={{color: "white", fontFamily:"BarlowCondensed-Regular", fontSize: 20}}>Ajouter un étape</Text>
+                            <View style={{ alignItems: "center" }}>
+                                <Ajouter height={30} width={30} onPress={() => ajouterEtap()} />
+                                <Text style={{ color: "white", fontFamily: "BarlowCondensed-Regular", fontSize: 20 }}>Ajouter un étape</Text>
                             </View>
                         </View>
 
@@ -227,4 +235,22 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ModifierRecette
+
+function mapStateToProps(state) {
+    return {
+        photoToDisplay: state.photo
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return {
+        killPhotoRedux: function(){
+            dispatch({type: 'killPhoto'})
+        }
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ModifierRecette)
