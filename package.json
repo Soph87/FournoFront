@@ -13,6 +13,7 @@
     "@react-navigation/native": "^5.5.1",
     "@use-expo/font": "^2.0.0",
     "expo": "^37.0.0",
+    "expo-camera": "~8.2.0",
     "expo-cli": "^3.21.5",
     "react": "16.9.0",
     "react-dom": "16.9.0",
@@ -31,7 +32,6 @@
     "react-navigation-tabs": "^2.8.13",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
-    "expo-camera": "~8.2.0",
     "expo-media-library": "~8.1.0"
   },
   "devDependencies": {

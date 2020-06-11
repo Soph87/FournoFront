@@ -34,6 +34,9 @@ import searchText from './reducers/search'
 import ajoutCats from './reducers/ajout-categories.reducer';
 import ajoutTitre from './reducers/ajout-titre.reducer';
 import ajoutPrepa from './reducers/ajout-prepa.reducer';
+import ajoutIngredients from './reducers/ajout-ingredients.reducer';
+import ajoutEtapes from './reducers/ajout-etapes.reducer';
+import ajoutUrl from './reducers/marmiton.reducer';
 import {Provider} from 'react-redux';
 import {createStore, combineReducers} from 'redux';
 
@@ -41,7 +44,21 @@ import { useFonts } from '@use-expo/font';
 import { AppLoading } from "expo";
 import { Easing } from 'react-native-reanimated';
 
-const store = createStore(combineReducers({prenom, category, recette, ajoutCats, ajoutTitre, ajoutPrepa,photo, searchText}))
+const store = createStore(combineReducers(
+    {
+        prenom, 
+        category, 
+        recette, 
+        ajoutCats, 
+        ajoutTitre, 
+        ajoutPrepa,
+        photo, 
+        searchText, 
+        ajoutUrl, 
+        ajoutIngredients,
+        ajoutEtapes
+    }
+))
 
 var StackNavigator = createStackNavigator({
     Home: SignIn,

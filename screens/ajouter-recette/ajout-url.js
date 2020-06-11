@@ -2,12 +2,26 @@ import React, {useState} from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import FlecheRetour from '../../assets/images/icones/fleche-retour.svg';
+import { connect } from 'react-redux';
 
-function Import({navigation}) {
+function ImportUrl({navigation}) {
 
     const [isEnabled, setIsEnabled] = useState(false);
+    const [urlMarmiton, setUrlMarmiton] = useState('');
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
+    var addUrl = async () => {
+        const url = await fetch('http://172.17.189.64:3000/saveMarmiton', {
+          method:"POST",
+          headers : {'Content-Type': 'application/x-www-form-urlencoded'},
+          body: `lienMarmiton=${urlMarmiton}`
+        });
+        const body = await url.json();
+        console.log(body);
+
+    }
+    
+{/*navigation.navigate('Recap') */}
     return (
 
         <View style={styles.global}>
@@ -27,10 +41,12 @@ function Import({navigation}) {
                                 placeholder='URL de la recette'
                                 containerStyle={{ paddingHorizontal: 0 }}
                                 inputStyle={{ fontFamily: "BarlowCondensed-Regular", fontSize: 20 }}
+                                onChangeText={(e) => setUrlMarmiton(e)} 
+                                value={urlMarmiton}
                             />
                     </View>
                     <Button 
-                        onPress={() => navigation.navigate('Recap')}
+                        onPress={() => {addUrl(); navigation.navigate('Recap')} }
                         type='solid'
                         title='Valider' 
                         buttonStyle={styles.validerBtn} 
@@ -100,4 +116,12 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Import;
+function mapDispatchToProps(dispatch){
+    return{
+        sendUrlToRedux: function(newRecette){
+            dispatch({type: 'addMarmiton', newRecette})
+        }
+    }
+}
+
+export default connect(null, mapDispatchToProps) (ImportUrl);
