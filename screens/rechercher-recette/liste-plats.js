@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
-function ListePlats({ navigation, catToDisplay, sendRecette }) {
+function ListePlats({ navigation, catToDisplay, sendRecette,photoToDisplay }) {
 
     const [recettes, setRecettes] = useState([])
 
@@ -28,13 +28,16 @@ function ListePlats({ navigation, catToDisplay, sendRecette }) {
 
 
     var recettesTab = recettes.map((recette, i) => {
-
+       
+     
+        
+        
         return (
             <TouchableOpacity onPress={() => clickRecette(recette)}>
                 < View style={styles.cards} >
                     <View style={{ width: 84, height: 60 }}>
 
-                        <Image source={require('../../assets/images/tarte.jpg')} style={styles.cardImages} />
+                        <Image source={{uri: recette.image}} style={styles.cardImages} />
 
                     </View>
 
@@ -110,7 +113,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     return {
-        catToDisplay: state.category
+        catToDisplay: state.category,
+        photoToDisplay: state.photo
     }
 }
 

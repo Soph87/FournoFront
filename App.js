@@ -29,6 +29,7 @@ import AjoutURL from './screens/ajouter-recette/ajout-url';
 import prenom from './reducers/prenom';
 import category from './reducers/category';
 import recette from './reducers/recette';
+import photo from './reducers/photo'
 import ajoutCats from './reducers/ajout-categories.reducer';
 import ajoutTitre from './reducers/ajout-titre.reducer';
 import ajoutPrepa from './reducers/ajout-prepa.reducer';
@@ -39,7 +40,7 @@ import { useFonts } from '@use-expo/font';
 import { AppLoading } from "expo";
 import { Easing } from 'react-native-reanimated';
 
-const store = createStore(combineReducers({prenom, category, recette, ajoutCats, ajoutTitre, ajoutPrepa}))
+const store = createStore(combineReducers({prenom, category, recette, ajoutCats, ajoutTitre, ajoutPrepa,photo}))
 
 var StackNavigator = createStackNavigator({
     Home: SignIn,

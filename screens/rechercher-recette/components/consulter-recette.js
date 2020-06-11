@@ -9,6 +9,7 @@ import CroixBlanche from '../../../assets/images/icones/croixblanche.svg'
 import CroixRose from '../../../assets/images/icones/croixrose.svg'
 import Diviser from '../../../assets/images/icones/diviser.svg'
 import DiviserBlanc from '../../../assets/images/icones/diviserblanc'
+import recette from '../../../reducers/recette';
 
 function ConsulterRecette({ navigation, recetteToDisplay, clickModifierParent }) {
 
@@ -23,7 +24,7 @@ function ConsulterRecette({ navigation, recetteToDisplay, clickModifierParent })
 
     var appliquerDivMult = () => {
 
-       
+
     }
 
     let ingredientTable = recetteToDisplay.ingredients.map((ing, i) => {
@@ -71,76 +72,106 @@ function ConsulterRecette({ navigation, recetteToDisplay, clickModifierParent })
         </View>
 
 
+    let preparation;
+    let cuisson;
+    let quantite;
+    let total;
+    let vide;
 
-    return (
+    if (recetteToDisplay.preparation[0].preparation != "") {
+        preparation = <Text style={styles.preparation}> <Text style={styles.sousTitre}>Préparation :</Text> {recetteToDisplay.preparation[0].preparation} min</Text>
+    }
 
-        <View style={{ flex: 1, backgroundColor: "#FF5A5B" }}>
-            <SafeAreaView style={{ flex: 1 }}>
-                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingLeft: 15, paddingRight: 15, marginBottom: 10 }}>
-                    <FlecheRetour width={30} height={30} onPress={() => { navigation.navigate('ListePlats') }} />
-                    <Modifier width={30} height={30} onPress={() => { clickModifier() }} />
+    if (recetteToDisplay.preparation[0].cuisson != "") {
+        cuisson = <Text style={styles.preparation}> <Text style={styles.sousTitre}>Cuisson :</Text> {recetteToDisplay.preparation[0].cuisson} min </Text>
+    }
 
-                </View>
-                <ScrollView style={{ flex: 1, width: "100%" }}>
-                    <View>
-                        <Image source={require('../../../assets/images/tarte.jpg')} style={{ width: '100%', height: 200, marginTop: 25 }}></Image>
+    if (recetteToDisplay.preparation[0].quantite != "") {
+        quantite = <Text style={styles.preparation}> <Text style={styles.sousTitre}>Quantité :</Text> {recetteToDisplay.preparation[0].quantite} personnes </Text>
+    }
+
+    if (recetteToDisplay.preparation[0].total != "") {
+        total = <Text style={styles.preparation}> <Text style={styles.sousTitre}>Total :</Text> {recetteToDisplay.preparation[0].total} min</Text>
+    }
+
+    if (recetteToDisplay.preparation[0].preparation === "" 
+        && recetteToDisplay.preparation[0].cuisson === "" 
+        && recetteToDisplay.preparation[0].quantite === "" 
+        && recetteToDisplay.preparation[0].total === "")
+        {
+            vide = <Text style={styles.vide}>Vous n'avez pas défini de temps de préparation</Text>
+        }
+
+        return (
+
+            <View style={{ flex: 1, backgroundColor: "#FF5A5B" }}>
+                <SafeAreaView style={{ flex: 1 }}>
+                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingLeft: 15, paddingRight: 15, marginBottom: 10 }}>
+                        <FlecheRetour width={30} height={30} onPress={() => { navigation.navigate('ListePlats') }} />
+                        <Modifier width={30} height={30} onPress={() => { clickModifier() }} />
+
                     </View>
-                    <Text style={styles.titre}>{recetteToDisplay.titre}</Text>
-                    <View style={{ padding: 15 }}>
-                        <View style={{ backgroundColor: "#FFF", borderRadius: 10, padding: 10, flexDirection: "column", justifyContent: "space-between", height: 100 }}>
-                            <Text style={styles.preparation}> <Text style={styles.sousTitre}>Préparation :</Text> {recetteToDisplay.preparation[0].preparation} min</Text>
-                            <Text style={styles.preparation}> <Text style={styles.sousTitre}>Cuisson :</Text> {recetteToDisplay.preparation[0].cuisson} min </Text>
-                            <Text style={styles.preparation}> <Text style={styles.sousTitre}>Total :</Text> {recetteToDisplay.preparation[0].total} min</Text>
-                            <Text style={styles.preparation}> <Text style={styles.sousTitre}>Quantité :</Text> {recetteToDisplay.preparation[0].personne} personnes </Text>
+                    <ScrollView style={{ flex: 1, width: "100%" }}>
+                        <View>
+                            <Image source={{uri : recetteToDisplay.image}} style={{ width: '100%', height: 200, marginTop: 25 }}></Image>
                         </View>
-
-                        <View style={{ backgroundColor: "#FFF", borderRadius: 10, padding: 10, flexDirection: "column", justifyContent: "space-between", marginTop: 15 }}>
-                            <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between" }}>
-                                <Text style={styles.sousLigne}>Ingrédients</Text>
-                                <Balance width={30} height={30} onPress={() => setIsVisible(true)} />
+                        <Text style={styles.titre}>{recetteToDisplay.titre}</Text>
+                        <View style={{ padding: 15 }}>
+                            <View style={{ backgroundColor: "#FFF", borderRadius: 10, padding: 10, flexDirection: "column", justifyContent: "flex-start", height: 100 }}>
+                                {preparation}
+                                {cuisson}
+                                {total}
+                                {quantite}
+                                {vide}
                             </View>
-                            <View>
-                                {ingredientTable}
+
+                            <View style={{ backgroundColor: "#FFF", borderRadius: 10, padding: 10, flexDirection: "column", justifyContent: "space-between", marginTop: 15 }}>
+                                <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between" }}>
+                                    <Text style={styles.sousLigne}>Ingrédients</Text>
+                                    <Balance width={30} height={30} onPress={() => setIsVisible(true)} />
+                                </View>
+                                <View>
+                                    {ingredientTable}
+                                </View>
+
                             </View>
 
-                        </View>
+                            <View style={{ backgroundColor: "#FFF", borderRadius: 10, padding: 10, flexDirection: "column", justifyContent: "space-between", marginTop: 15 }}>
+                                <Text style={styles.sousLigne}>Préparation</Text>
 
-                        <View style={{ backgroundColor: "#FFF", borderRadius: 10, padding: 10, flexDirection: "column", justifyContent: "space-between", marginTop: 15 }}>
-                            <Text style={styles.sousLigne}>Préparation</Text>
-
-                            <View style={{ paddingLeft: 5 }}>
-                                {preparationTable}
+                                <View style={{ paddingLeft: 5 }}>
+                                    {preparationTable}
+                                </View>
                             </View>
                         </View>
-                    </View>
-                </ScrollView>
-                <Overlay isVisible={isVisible} onBackdropPress={() => setIsVisible(false)} overlayStyle={{ borderRadius: 10 }} >
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", width: "70%" }}>
-                        <View />
-                        <Text style={{ fontSize: 20, color: "#FF5A5B", fontWeight: "bold", marginLeft: 40 }}>Changer les quantités</Text>
-                        <Croix height={30} width={30} style={{ marginLeft: 40 }} onPress={() => setIsVisible(false)} />
-                    </View>
-                    <View style={{ flexDirection: "row", justifyContent: "space-around", marginTop: 20 }}>
-                        <Text style={{ color: "#FF5A5B" }}>Multiplier par</Text>
-                        <Text style={{ color: "#FF5A5B" }}>Diviser par</Text>
-                    </View>
-                    <View style={{ flexDirection: "row", justifyContent: "space-around", marginTop: 10 }}>
-                        {buttonMult}
-                        {buttonDiviser}
-                    </View>
-                    <View style={{ alignItems: "center" }}>
-                        <View style={{ marginTop: 30, justifyContent: "center", alignItems: "center", width: 200 }}>
-                            <Input onChangeText={text => setNombre(text)} inputContainerStyle={{ borderWidth: "1px", borderColor: "black" }} keyboardType="number-pad" />
+                    </ScrollView>
+                    <Overlay isVisible={isVisible} onBackdropPress={() => setIsVisible(false)} overlayStyle={{ borderRadius: 10 }} >
+                        <View style={{ flexDirection: "row", justifyContent: "space-between", width: "70%" }}>
+                            <View />
+                            <Text style={{ fontSize: 20, color: "#FF5A5B", fontWeight: "bold", marginLeft: 40 }}>Changer les quantités</Text>
+                            <Croix height={30} width={30} style={{ marginLeft: 40 }} onPress={() => setIsVisible(false)} />
                         </View>
-                    </View>
+                        <View style={{ flexDirection: "row", justifyContent: "space-around", marginTop: 20 }}>
+                            <Text style={{ color: "#FF5A5B" }}>Multiplier par</Text>
+                            <Text style={{ color: "#FF5A5B" }}>Diviser par</Text>
+                        </View>
+                        <View style={{ flexDirection: "row", justifyContent: "space-around", marginTop: 10 }}>
+                            {buttonMult}
+                            {buttonDiviser}
+                        </View>
+                        <View style={{ alignItems: "center" }}>
+                            <View style={{ marginTop: 30, justifyContent: "center", alignItems: "center", width: 200 }}>
+                                <Input onChangeText={text => setNombre(text)} inputContainerStyle={{ borderWidth: "1px", borderColor: "black" }} keyboardType="number-pad" />
+                            </View>
+                        </View>
 
-                    <View style={{ justifyContent: "center", alignItems: "center" }}>
-                        <Button onPress={() => { appliquerDivMult() }} title="Valider" buttonStyle={{ backgroundColor: "#FF5A5B", borderRadius: 20, width: 100 }} />
-                    </View>
-                </Overlay>
-            </SafeAreaView>
-        </View>
-    )
+                        <View style={{ justifyContent: "center", alignItems: "center" }}>
+                            <Button onPress={() => { appliquerDivMult() }} title="Valider" buttonStyle={{ backgroundColor: "#FF5A5B", borderRadius: 20, width: 100 }} />
+                        </View>
+                    </Overlay>
+                </SafeAreaView>
+            </View>
+        )
 }
 
 const styles = StyleSheet.create({
@@ -191,6 +222,11 @@ const styles = StyleSheet.create({
     preparation: {
         fontFamily: "BarlowCondensed-Regular",
         fontSize: 16
+    },
+    vide: {
+        fontFamily: "BarlowCondensed-Regular",
+        fontSize: 16,
+        textAlign: "center"
     },
     sousLigne: {
         fontFamily: "BarlowCondensed-Medium",
