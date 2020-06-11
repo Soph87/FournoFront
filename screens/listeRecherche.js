@@ -7,16 +7,21 @@ import FlecheRetour from '../assets/images/icones/fleche-retour.svg';
 function ListeRecherche({ navigation, searchText, sendRecette }) {
 
     const [recettes, setRecettes] = useState([])
+    const [search, setSearch] = useState([])
 
     useEffect(() => {
 
         retreiveRecette = async () => {
-            console.log(searchText)
-            var response = await fetch(`http://192.168.1.25:3000/searchRecette?searchText=${searchText}`)
+
+            var searchArray = searchText.split(" ")
+            console.log(searchArray)
+            searchArray = JSON.stringify(searchArray)
+            var response = await fetch(`http://192.168.1.25:3000/searchRecette?searchArray=${searchArray}`)
 
             response = await response.json()
-
+            console.log(response.recettes)
             setRecettes(response.recettes)
+
         }
 
         retreiveRecette()
