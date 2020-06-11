@@ -143,11 +143,7 @@ function Accueil({ navigation, prenomToDisplay, sendCategoryToRedux, sendSearchT
                                 </View>
                             </View>
                         </Overlay>
-
-
                     </View>
-
-
                 </TouchableWithoutFeedback>
             </SafeAreaView>
         </KeyboardAvoidingView>

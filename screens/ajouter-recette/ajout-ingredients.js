@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Text, View, StyleSheet, SafeAreaView, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, StyleSheet, SafeAreaView, TouchableWithoutFeedback, Keyboard, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { Button } from 'react-native-elements';
 
 import { connect } from 'react-redux';
@@ -9,54 +9,85 @@ import FlecheRetour from '../../assets/images/icones/fleche-retour.svg';
 import Home from '../../assets/images/icones/home.svg';
 
 function Ingredients({ navigation, sendPrepa }) {
+    const [aDesIngredients, setADesIngredients] = useState(false)
+    const [ingredients, setIngredients] = useState(['']);
 
-    const handleEditing = (key, value) => {
-        console.log(typeof value)
-        if(value) {
-            ingredientsListe.push(<Input placeholder='3 oeufs, 100g de beurre...' handleEditingParent={handleEditing} keyName='affichePoubelle' />)
+    useEffect(() => {
+        if(ingredients.length >= 2) {
+            setADesIngredients(true);
+        } else {
+            setADesIngredients(false);
+        }
+    }, [ingredients])
+
+    const handleEditing = (key, value, index) => {
+        if(value.length >= 1 && index === ingredients.length-1) {
+            let newIngredients = [...ingredients];
+            newIngredients.push(value)
+            setIngredients(newIngredients);
+        } else {
+            let newIngredients = [...ingredients];
+            newIngredients.splice(index, 1, value)
         }
     }
 
-    const ingredientsListe = [
-        <Input placeholder='3 oeufs, 100g de beurre...' handleEditingParent={handleEditing} keyName='affichePoubelle' />
-    ]
-
-    
-
-    const handleValider = () => {
-        sendPrepa({preparation: prepa, cuisson: cuisson, personne: quantite})
-        navigation.navigate('Ingredients');
+    const handleSUpp = index => {
+        let ingredientsSupp = [...ingredients];
+        ingredientsSupp.splice(index, 1);
+        setIngredients(ingredientsSupp) 
     }
 
-    console.log(ingredientsListe.length)
-    return (
-        <SafeAreaView style={styles.global}>
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <View style={{flex: 1}}>
+    let ingredientsListe = ingredients.map((ingre, index) => {
+        return(
+            <Input 
+                key={ingre} 
+                value={ingre} 
+                placeholder='3 oeufs, 100g de beurre...' 
+                handleEditingParent={handleEditing} 
+                keyName='affichePoubelle'
+                index= {index}
+                handleSuppParent = {handleSUpp}
+            />
+        )
+    })
 
-                    <View style={styles.header}>
-                        <FlecheRetour width={30} height={30} onPress={() => navigation.goBack()} />
-                        <Text style={styles.titre}>Ingrédients</Text>
-                        <Home width={30} height={30} onPress={() => navigation.navigate('Accueil')} />
-                    </View>
-                    <ScrollView>
-                        <View style={styles.inputContainer}>
-                            {ingredientsListe}
+    const handleValider = () => {
+        const ingredientsFinal = ingredients;
+        ingredientsFinal.shift();
+        sendPrepa(ingredientsFinal);
+        navigation.navigate('Etapes')
+    }
+
+    return (
+            <SafeAreaView style={styles.global}>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <View style={{flex: 1}}>
+                        <KeyboardAvoidingView style={{flex: 1}} behavior={Platform.OS == "ios" ? "padding" : "height"}>
+                            <View style={styles.header}>
+                                <FlecheRetour width={30} height={30} onPress={() => navigation.goBack()} />
+                                <Text style={styles.titre}>Ingrédients</Text>
+                                <Home width={30} height={30} onPress={() => navigation.navigate('Accueil')} />
+                            </View>
+                            <ScrollView contentContainerStyle={{flex: 1, paddingBottom: 20}}>
+                                <View style={styles.inputContainer}>
+                                    {ingredientsListe}
+                                </View>
+                            </ScrollView>
+                        </KeyboardAvoidingView>
+                        <View style={styles.bottomNav}>
+                            <Button 
+                                onPress={() => handleValider()}
+                                type='solid'
+                                title='Valider' 
+                                buttonStyle={styles.validerBtn} 
+                                titleStyle={{fontFamily: "BarlowCondensed-SemiBold", fontSize: 20, color: '#FF5A5D'}}
+                                disabled = {!aDesIngredients}
+                            />
                         </View>
-                    </ScrollView>
-                    <View style={styles.bottomNav}>
-                        <Button 
-                            onPress={() => handleValider()}
-                            type='solid'
-                            title='Valider' 
-                            buttonStyle={styles.validerBtn} 
-                            titleStyle={{fontFamily: "BarlowCondensed-SemiBold", fontSize: 20, color: '#FF5A5D'}}
-                            raised
-                        />
                     </View>
-                </View>
-            </TouchableWithoutFeedback>
-        </SafeAreaView>
+                </TouchableWithoutFeedback>
+            </SafeAreaView>
+        
     )
 }
 
@@ -83,11 +114,12 @@ const styles = StyleSheet.create({
     //Input
     inputContainer: {
         flex: 1, 
+        justifyContent: 'flex-end'
     },
     //Navigation bas de page
     bottomNav: {
         alignItems: 'center',
-        padding: 15
+        paddingBottom: 15
     },
     validerBtn: {
         backgroundColor: 'white',
@@ -99,8 +131,8 @@ const styles = StyleSheet.create({
 
 function mapDispatchToProps(dispatch){
     return {
-        sendPrepa: function(prepa){
-            dispatch({type: 'ajoutPrepa', prepa})
+        sendIngredients: function(ingredients){
+            dispatch({type: 'ajoutIngredients', ingredients})
         },
     }
 }
