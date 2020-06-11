@@ -1,13 +1,25 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { useState } from 'react';
+import { connect } from 'react-redux'
+import CheckRecette from '../rechercher-recette/components/check-recette'
+// import ModifierRecette from './components/modifier-recette';
 
-function Preparation({navigation}) {
+
+function Recapitulatif({navigation, marmitonToDisplay}) {
+
     return (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text>Page récapitulative de l'ajout de recette</Text>
-        </View>
+        <CheckRecette marmitonToDisplay={marmitonToDisplay} navigation={navigation} />
     )
 }
 
 
-export default Preparation;
+function mapStateToProps(state) {
+    return {
+        marmitonToDisplay: state.newRecette
+    }
+}
+
+
+export default connect(
+    mapStateToProps,
+    null
+)(Recapitulatif)
