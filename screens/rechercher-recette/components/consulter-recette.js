@@ -107,7 +107,7 @@ function ConsulterRecette({ navigation, recetteToDisplay, clickModifierParent })
             <View style={{ flex: 1, backgroundColor: "#FF5A5B" }}>
                 <SafeAreaView style={{ flex: 1 }}>
                     <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingLeft: 15, paddingRight: 15, marginBottom: 10 }}>
-                        <FlecheRetour width={30} height={30} onPress={() => { navigation.navigate('ListePlats') }} />
+                        <FlecheRetour width={30} height={30} onPress={() => { navigation.goBack() }} />
                         <Modifier width={30} height={30} onPress={() => { clickModifier() }} />
 
                     </View>

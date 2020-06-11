@@ -24,12 +24,13 @@ import Etapes from './screens/ajouter-recette/ajout-etapes';
 import Photo from './screens/ajouter-recette/ajout-photo';
 import Recap from './screens/ajouter-recette/recapitulatif';
 import AjoutURL from './screens/ajouter-recette/ajout-url';
-
+import ListeRecherche from './screens/listeRecherche'
 //Redux
 import prenom from './reducers/prenom';
 import category from './reducers/category';
 import recette from './reducers/recette';
 import photo from './reducers/photo'
+import searchText from './reducers/search'
 import ajoutCats from './reducers/ajout-categories.reducer';
 import ajoutTitre from './reducers/ajout-titre.reducer';
 import ajoutPrepa from './reducers/ajout-prepa.reducer';
@@ -40,7 +41,7 @@ import { useFonts } from '@use-expo/font';
 import { AppLoading } from "expo";
 import { Easing } from 'react-native-reanimated';
 
-const store = createStore(combineReducers({prenom, category, recette, ajoutCats, ajoutTitre, ajoutPrepa,photo}))
+const store = createStore(combineReducers({prenom, category, recette, ajoutCats, ajoutTitre, ajoutPrepa,photo, searchText}))
 
 var StackNavigator = createStackNavigator({
     Home: SignIn,
@@ -57,7 +58,8 @@ var StackNavigator = createStackNavigator({
     Ingredients: Ingredients,
     Etapes: Etapes,
     Photo: Photo,
-    Recap: Recap
+    Recap: Recap,
+    ListeRecherche: ListeRecherche
 }, 
 {
   headerMode: "none",
