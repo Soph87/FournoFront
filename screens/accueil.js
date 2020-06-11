@@ -135,11 +135,7 @@ function Accueil({ navigation, prenomToDisplay, sendCategoryToRedux }) {
                                 </View>
                             </View>
                         </Overlay>
-
-
                     </View>
-
-
                 </TouchableWithoutFeedback>
             </SafeAreaView>
         </KeyboardAvoidingView>
