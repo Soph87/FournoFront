@@ -16,7 +16,7 @@ function ListeRecherche({ navigation, searchText, sendRecette }) {
             var searchArray = searchText.split(" ")
             console.log(searchArray)
             searchArray = JSON.stringify(searchArray)
-            var response = await fetch(`http://192.168.1.25:3000/searchRecette?searchArray=${searchArray}`)
+            var response = await fetch(`https://protected-anchorage-65968.herokuapp.com/searchRecette?searchArray=${searchArray}`)
 
             response = await response.json()
             console.log(response.recettes)
