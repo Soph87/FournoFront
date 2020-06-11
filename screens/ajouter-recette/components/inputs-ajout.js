@@ -40,6 +40,7 @@ export default function input(props) {
             onEndEditing={() => handleEditingEnd(props.keyName, texte, props.index)}
             rightIcon={ icone }
             renderErrorMessage={false}
+            multiline
         />
     )
 }
@@ -50,7 +51,9 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingHorizontal: 10,
         borderBottomWidth: 0,
-        marginBottom: 10
+        marginBottom: 10,
+        textAlignVertical: 'top',
+        //paddingBottom: 8
     },
     label: {
         color: 'white',

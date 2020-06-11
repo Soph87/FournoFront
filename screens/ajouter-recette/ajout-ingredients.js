@@ -8,7 +8,7 @@ import Input from './components/inputs-ajout';
 import FlecheRetour from '../../assets/images/icones/fleche-retour.svg';
 import Home from '../../assets/images/icones/home.svg';
 
-function Ingredients({ navigation, sendPrepa }) {
+function Ingredients({ navigation, sendIngredients }) {
     const [aDesIngredients, setADesIngredients] = useState(false)
     const [ingredients, setIngredients] = useState(['']);
 
@@ -54,7 +54,7 @@ function Ingredients({ navigation, sendPrepa }) {
     const handleValider = () => {
         const ingredientsFinal = ingredients;
         ingredientsFinal.shift();
-        sendPrepa(ingredientsFinal);
+        sendIngredients(ingredientsFinal);
         navigation.navigate('Etapes')
     }
 
