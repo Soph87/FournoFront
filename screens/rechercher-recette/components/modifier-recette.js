@@ -9,7 +9,7 @@ import PoubelleBlanche from '../../../assets/images/icones/poubelleBlanche.svg'
 import PhotoCamera from '../../rechercher-recette/components/photo'
 import Ajouter from '../../../assets/images/icones/ajouter.svg'
 import { connect } from 'react-redux';
-import CatCard from '../../ajouter-recette/components/cat-card';
+import CatCard from '../../../components/cat-card';
 
 function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photoToDisplay, killPhotoRedux }) {
 
@@ -22,7 +22,30 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
     const [quantite, setQuantite] = useState(recetteToDisplay.preparation[0].quantite)
     const [etapes, setEtapes] = useState(recetteToDisplay.etapes)
     const [category, setCategory] = useState(recetteToDisplay.category)
+    const [overlayVisible, setOverlayVisible] = useState(false)
 
+
+    let listeCategories = [
+        { titre: 'Entrées', image: require('../../../assets/images/categories/entrees.png') },
+        { titre: 'Plats', image: require('../../../assets/images/categories/Plat.png') },
+        { titre: 'Desserts', image: require('../../../assets/images/categories/Dessert.png') },
+        { titre: 'Petits-déj', image: require('../../../assets/images/categories/Petit-dej.png') },
+        { titre: 'Salades', image: require('../../../assets/images/categories/Salade.png') },
+        { titre: 'Soupes', image: require('../../../assets/images/categories/Soupe.png') },
+        { titre: 'Viandes', image: require('../../../assets/images/categories/Viande.png') },
+        { titre: 'Volailles', image: require('../../../assets/images/categories/Volaille.png') },
+        { titre: 'Poissons', image: require('../../../assets/images/categories/Poisson.png') },
+        { titre: 'Légumes', image: require('../../../assets/images/categories/Legumes.png') },
+        { titre: 'Pâtes', image: require('../../../assets/images/categories/Pates.png') },
+        { titre: 'Sauces', image: require('../../../assets/images/categories/Sauce.png') },
+        { titre: 'Gâteaux', image: require('../../../assets/images/categories/Gateaux.png') },
+        { titre: 'En-cas', image: require('../../../assets/images/categories/En-cas.png') },
+        { titre: 'Confitures', image: require('../../../assets/images/categories/Confiture.png') },
+        { titre: 'Boulangerie', image: require('../../../assets/images/categories/Boulangerie.png') },
+        { titre: 'Apéritifs', image: require('../../../assets/images/categories/Apero.png') },
+        { titre: 'Boissons', image: require('../../../assets/images/categories/Boisson.png') },
+        { titre: 'Autres', image: require('../../../assets/images/categories/Autre.png') },
+    ]
 
 
 
@@ -47,7 +70,7 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
         recette.preparation[0].total = total
         recette.etapes = etapes
         recette.category = category
-        if (photoToDisplay != ""){
+        if (photoToDisplay != "") {
             recette.image = photoToDisplay
         }
 
@@ -65,6 +88,12 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
         }
 
     }
+
+    let categoryMap = listeCategories.map((cat) => {
+        return (
+            <CatCard key={cat.titre} titre={cat.titre} image={cat.image} />
+        )
+    });
 
 
     var updateIngredients = (index, text) => {
@@ -166,7 +195,23 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
                                 <Text style={styles.sousTitre}>Catégories</Text>
                             </View>
                             {categories}
+                            <View style={{ alignItems: "center" }}>
+                                <Button
+                                    type='solid'
+                                    title='Ajouter catégorie'
+                                    buttonStyle={styles.validerBtn}
+                                    titleStyle={{ fontFamily: "BarlowCondensed-SemiBold", fontSize: 20, color: '#FF5A5D' }}
+                                    raised
+                                    onPress={() => setOverlayVisible(true)}
+                                />
+                            </View>
                         </View>
+
+                        <Overlay isVisible={overlayVisible} onBackdropPress={() => setOverlayVisible(false)}>
+                           <ScrollView>
+                            {categoryMap}
+                            </ScrollView>
+                        </Overlay>
 
                         <View>
                             <Text style={styles.sousTitre}>Préparation</Text>
