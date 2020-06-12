@@ -23,6 +23,7 @@ import Ingredients from './screens/ajouter-recette/ajout-ingredients';
 import Etapes from './screens/ajouter-recette/ajout-etapes';
 import Photo from './screens/ajouter-recette/ajout-photo';
 import Recap from './screens/ajouter-recette/recapitulatif';
+import RecapManuel from './screens/ajouter-recette/recapManuel';
 import AjoutURL from './screens/ajouter-recette/ajout-url';
 import ListeRecherche from './screens/listeRecherche'
 //Redux
