@@ -4,7 +4,7 @@ import { Input, Button } from 'react-native-elements';
 import FlecheRetour from '../../assets/images/icones/fleche-retour.svg';
 import { connect } from 'react-redux';
 
-function ImportUrl({navigation}) {
+function ImportUrl({navigation, sendUrlToRedux}) {
 
     const [isEnabled, setIsEnabled] = useState(false);
     const [urlMarmiton, setUrlMarmiton] = useState('');
@@ -16,12 +16,14 @@ function ImportUrl({navigation}) {
           headers : {'Content-Type': 'application/x-www-form-urlencoded'},
           body: `lienMarmiton=${urlMarmiton}`
         });
-        const body = await url.json();
-        console.log(body);
-
+        const newRecette = await url.json();
+        console.log(newRecette)
+        if(newRecette){
+            sendUrlToRedux(newRecette);
+            navigation.navigate('Recap');
+        }
     }
     
-{/*navigation.navigate('Recap') */}
     return (
 
         <View style={styles.global}>
@@ -46,7 +48,7 @@ function ImportUrl({navigation}) {
                             />
                     </View>
                     <Button 
-                        onPress={() => {addUrl(); navigation.navigate('Recap')} }
+                        onPress={() => addUrl() }
                         type='solid'
                         title='Valider' 
                         buttonStyle={styles.validerBtn} 
