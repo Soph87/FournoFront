@@ -101,7 +101,7 @@ function RecapManuel({navigation, titreDisplay,categoryDisplay,etapesDisplay, pr
 
         var body = JSON.stringify(recette)
 
-        var response = await fetch("http://192.168.1.23:3000/users/saveRecette", {
+        var response = await fetch("https://protected-anchorage-65968.herokuapp.com/users/saveRecette", {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: body,
