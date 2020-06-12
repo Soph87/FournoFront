@@ -6,11 +6,8 @@ export default function CatCard(props) {
     const [isSelected, setIsSelected] = useState(false);
     
     useEffect(() => {
-        if(props.selection) {
-            let titre = props.titre.toLowerCase();
-            titre = titre.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-
-            if(props.selection.indexOf(titre) != -1) {
+        if(props.catListe) {
+            if(props.catListe.indexOf(props.titre) != -1) {
                 setIsSelected(true)
             }
         }
@@ -18,9 +15,10 @@ export default function CatCard(props) {
     
     
     const handlePress = () => {
-        setIsSelected(!isSelected);
-        props.handlePressParent(props.titre);
-        
+        if(props.selection){
+            setIsSelected(!isSelected);
+        }
+        props.handlePressParent(props.titre);        
     }
 
 

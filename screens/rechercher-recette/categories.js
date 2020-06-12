@@ -1,126 +1,72 @@
-import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, Image, SafeAreaView } from 'react-native';
-import FlecheRetour from '../../assets/images/icones/fleche-retour.svg'
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import React from 'react';
+import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+//Components
+import CatCard from '../../components/cat-card';
+//Images SVG
+import FlecheRetour from '../../assets/images/icones/fleche-retour.svg';
+//Redux
 import {connect} from 'react-redux'
 
 function ListeCategories({ navigation, sendCategoryToRedux }) {
 
    const categoryList= [
-        {
-           nom : "Entrees",
-           image : require('../../assets/images/categories/Entree.png')
-        },
-        {
-            nom : "Plats",
-            image : require('../../assets/images/categories/Plat.png')
-         },
-         {
-            nom : "Desserts",
-            image : require('../../assets/images/categories/Dessert.png')
-         },
-         {
-            nom : "Salades",
-            image : require('../../assets/images/categories/Salade.png')
-         },
-         {
-            nom : "Soupes",
-            image : require('../../assets/images/categories/Soupe.png')
-         },
-         {
-            nom : "Volailles",
-            image : require('../../assets/images/categories/Volaille.png')
-         },
-         {
-            nom : "Sauces",
-            image : require('../../assets/images/categories/Sauce.png')
-         },
-         {
-            nom : "Poissons",
-            image : require('../../assets/images/categories/Poisson.png')
-         },
-         {
-            nom : "Viandes",
-            image : require('../../assets/images/categories/Viande.png')
-         },
-         {
-            nom : "Legumes",
-            image : require('../../assets/images/categories/Legumes.png')
-         },
-         {
-            nom : "Boulangerie",
-            image : require('../../assets/images/categories/Boulangerie.png')
-         },
-         {
-            nom : "Gateaux",
-            image : require('../../assets/images/categories/Gateaux.png')
-         },
-         {
-            nom : "Confitures",
-            image : require('../../assets/images/categories/Confiture.png')
-         },
-         {
-            nom : "Aperitifs",
-            image : require('../../assets/images/categories/Apero.png')
-         },
-         {
-            nom : "Boissons",
-            image : require('../../assets/images/categories/Boisson.png')
-         },
-         {
-            nom : "Encas",
-            image : require('../../assets/images/categories/En-cas.png')
-         },
-         {
-            nom : "Pates",
-            image : require('../../assets/images/categories/Pates.png')
-         },
-         {
-            nom : "Petits-dej",
-            image : require('../../assets/images/categories/Petit-dej.png')
-         },
-         {
-            nom : "Autres",
-            image : require('../../assets/images/categories/Autre.png')
-         },
-   ]
+        { titre: 'Entrées', image: require('../../assets/images/categories/entrees.png') },
+        { titre: 'Plats', image: require('../../assets/images/categories/Plat.png') },
+        { titre: 'Desserts', image: require('../../assets/images/categories/Dessert.png') },
+        { titre: 'Petits-déj', image: require('../../assets/images/categories/Petit-dej.png') },
+        { titre: 'Salades', image: require('../../assets/images/categories/Salade.png') },
+        { titre: 'Soupes', image: require('../../assets/images/categories/Soupe.png') },
+        { titre: 'Viandes', image: require('../../assets/images/categories/Viande.png') },
+        { titre: 'Volailles', image: require('../../assets/images/categories/Volaille.png') },
+        { titre: 'Poissons', image: require('../../assets/images/categories/Poisson.png') },
+        { titre: 'Légumes', image: require('../../assets/images/categories/Legumes.png') },
+        { titre: 'Pâtes', image: require('../../assets/images/categories/Pates.png') },
+        { titre: 'Sauces', image: require('../../assets/images/categories/Sauce.png') },
+        { titre: 'Gâteaux', image: require('../../assets/images/categories/Gateaux.png') },
+        { titre: 'En-cas', image: require('../../assets/images/categories/En-cas.png') },
+        { titre: 'Confitures', image: require('../../assets/images/categories/Confiture.png') },
+        { titre: 'Boulangerie', image: require('../../assets/images/categories/Boulangerie.png') },
+        { titre: 'Apéritifs', image: require('../../assets/images/categories/Apero.png') },
+        { titre: 'Boissons', image: require('../../assets/images/categories/Boisson.png') },
+        { titre: 'Autres', image: require('../../assets/images/categories/Autre.png') },
+    ]
 
-   var clickCategory = (category) => {
+    const clickCategory = (category) => {
+        sendCategoryToRedux(category)
+        navigation.navigate('ListePlats')
+    }
 
-    sendCategoryToRedux(category)
-    navigation.navigate('ListePlats')
-   }
-
-
-    let categoryMap = categoryList.map((cat, i) => {
-        
+    /* let categoryMap = categoryList.map((cat, i) => {
         return (
-           
-            <View style={styles.categories} key={i}>
-                 <TouchableOpacity onPress={() => {clickCategory(cat.nom)}}>
+            <View style={styles.categories} key={cat.titre}>
+                 <TouchableOpacity onPress={() => {clickCategory(cat.titre)}}>
                 <Image
-                
                     source={cat.image}
                     style={{ width: '100%' }}
                     resizeMode='contain'
-                    
                 />
-                <Text style={styles.texteCat} >{cat.nom}</Text>
+                <Text style={styles.texteCat} >{cat.titre}</Text>
                 </TouchableOpacity>
             </View>
-           
         )
-    })
+    }) */
 
+
+    let categoryMap = categoryList.map((cat) => {
+        return (
+            <CatCard key={cat.titre} titre={cat.titre} image={cat.image} maxwidth={120} handlePressParent={clickCategory} selection={false} />
+        )
+    });
 
     return (
         <View style={styles.global}>
             <SafeAreaView style={{ flex: 1 }}>
-                <View>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                        <FlecheRetour width={30} height={30} fill={"white"} onPress={() => { navigation.navigate('Accueil') }} />
+                <View style={{ flex: 1 }}>
+                    <View style={styles.header}>
+                        <FlecheRetour width={30} height={30} onPress={() => { navigation.navigate('Accueil') }} />
                         <Text style={styles.titre}> Choisir une catégorie </Text>
-                        <View/>
+                        <View width={30} height={30} />
                     </View>
                     <ScrollView>
                         <View style={styles.catContainer}>
@@ -137,9 +83,16 @@ const styles = StyleSheet.create({
     global: {
         flex: 1, 
         backgroundColor: "#FF5A5D",
-        padding: 15
+        paddingHorizontal: 15,
+        paddingTop: 30,
     },
     //header
+    header: {
+        flexDirection: "row", 
+        justifyContent: "space-between", 
+        alignItems: "center", 
+        paddingBottom: 10
+    },
     titre: {
         fontFamily: "BarlowCondensed-SemiBold",
         fontSize: 20,
