@@ -157,10 +157,11 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
     //Affichage des Cards de catégorie
     let categoryMap = listeCategories.map((cat) => {
         return (
-            <CatCard key={cat.titre} titre={cat.titre} image={cat.image} maxwidth={115} />
+            <CatCard key={cat.titre} titre={cat.titre} image={cat.image} maxwidth={115} selection={category} />
         )
     });
 
+    //Affichage des catégories de la recette
     var categories = category.map((cat, i) => {
         return (
             <View style={styles.catRound}>
@@ -295,16 +296,27 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
                         />
                     </View>
                     <Overlay isVisible={overlayVisible} onBackdropPress={() => setOverlayVisible(false)} overlayStyle={styles.overlay}>
-                        <ScrollView contentContainerStyle={styles.catContainer}>
-                            {categoryMap}
-                        </ScrollView>
+                        <View style={{flex:1}}>
+                            <ScrollView contentContainerStyle={styles.catContainer}>
+                                {categoryMap}
+                            </ScrollView>
+                            <View style={{alignItems: 'center'}}>
+                                <Button
+                                    type='solid'
+                                    title='Valider'
+                                    buttonStyle={styles.overlayBtn}
+                                    titleStyle={{ fontFamily: "BarlowCondensed-SemiBold", fontSize: 20, color: '#fff' }}
+                                    containerStyle= {styles.overlayBtnContainer}
+                                />
+                            </View>
+                        </View>
                     </Overlay>
                 </SafeAreaView>
             </View>
         )
     }
 }
-//Définition de la hauteur de l'overlay
+//Définition de la hauteur de l'overlay à 80% de la hauteur de l'écran :
 const win = Dimensions.get('window');
 const height = 80 * win.height / 100
 
@@ -399,6 +411,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around', 
         flexWrap: "wrap",
+    },
+    overlayBtnContainer: {
+        marginTop: 10
+    },
+    overlayBtn: {
+        backgroundColor: '#FF5A5D',
+        borderRadius: 150,
+        paddingHorizontal: 20,
     }
 })
 

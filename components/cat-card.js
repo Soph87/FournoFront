@@ -1,36 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Image, TouchableHighlight } from 'react-native';
 import Selection from '../assets/images/icones/selection.svg';
 
 export default function CatCard(props) {
-    const styles = StyleSheet.create({
-        categories: {
-            width: props.maxwidth,
-            marginBottom: 15,
-            position: 'relative',
-            paddingHorizontal: 3       
-        },
-        catInner: {
-            padding: 10,
-            backgroundColor: '#FFC830',
-            borderRadius: 8,
-        },
-        texteCat: {
-            textAlign: 'center',
-            color: '#DB0A5B',
-            marginTop: 0,
-            fontFamily: "BarlowCondensed-SemiBold",
-            fontSize: 20
-        },
-    });
-
     const [isSelected, setIsSelected] = useState(false);
-
+    
+    useEffect(() => {
+        if(props.selection) {
+            if(props.selection.indexOf(props.titre.toLowerCase()) != -1) {
+                setIsSelected(true)
+            }
+        }
+    }, [])
+    
+    
     const handlePress = () => {
         setIsSelected(!isSelected);
         props.handlePressParent(props.titre);
         
     }
+
 
     let valide;
     if(isSelected) {
@@ -41,7 +30,7 @@ export default function CatCard(props) {
     
     return (
         <TouchableHighlight 
-            style={styles.categories} 
+            style={[styles.categories, {width: props.maxwidth}]} 
             onPress={() => handlePress()}
             activeOpacity={0.6}
             underlayColor= '#EC9400'
@@ -58,3 +47,23 @@ export default function CatCard(props) {
         </TouchableHighlight>
     )
 }
+
+const styles = StyleSheet.create({
+    categories: {
+        marginBottom: 15,
+        position: 'relative',
+        paddingHorizontal: 3       
+    },
+    catInner: {
+        padding: 10,
+        backgroundColor: '#FFC830',
+        borderRadius: 8,
+    },
+    texteCat: {
+        textAlign: 'center',
+        color: '#DB0A5B',
+        marginTop: 0,
+        fontFamily: "BarlowCondensed-SemiBold",
+        fontSize: 20
+    },
+});
