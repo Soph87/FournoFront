@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Button } from 'react-native-elements';
-
+//Redux
 import { connect } from 'react-redux';
-
-import Input from './components/inputs-ajout';
+//Composants
+import Input from '../../components/inputs-ajout';
+//Images SVG
 import FlecheRetour from '../../assets/images/icones/fleche-retour.svg';
 import Home from '../../assets/images/icones/home.svg';
 

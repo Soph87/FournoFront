@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { Text, View, Keyboard, StyleSheet, Image, KeyboardAvoidingView, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
+import { Text, View, Keyboard, StyleSheet, Image, KeyboardAvoidingView, SafeAreaView, TouchableWithoutFeedback, Dimensions } from 'react-native';
 import { Input, Button, Overlay } from 'react-native-elements';
+//Images SVG
 import Burger from '../assets/images/icones/burger.svg';
 import Loupe from '../assets/images/icones/loupe.svg';
+import Logo from '../assets/images/logo-fourno.svg';
+//Redux
 import { connect } from 'react-redux';
+//Pas besoin ?
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
@@ -44,11 +48,11 @@ function Accueil({ navigation, prenomToDisplay, sendCategoryToRedux, sendSearchT
                             <Burger width={30} height={30} onPress={() => { navigation.navigate('Menu') }} />
                         </View>
                         <View style={styles.titreContainer} >
-                            <Image
-                                source={require('../assets/images/logo-caca.png')}
-                                style={{ margin: 10, height: 80 }}
-                                resizeMode='contain'
-                            />
+                            <View style={{alignItems: 'center'}}>
+                                <View style={styles.logoContainer}>
+                                    <Logo height='100%' width='100%' />
+                                </View>
+                            </View>
                             <Text style={styles.sousTitre}>Bonjour {prenomToDisplay}, quelle recette allez-vous préparer aujourd'hui ?</Text>
                         </View>
                         <View style={{ backgroundColor: 'white', paddingHorizontal: 15 }}>
@@ -150,16 +154,27 @@ function Accueil({ navigation, prenomToDisplay, sendCategoryToRedux, sendSearchT
     )
 }
 
+//Calcul des dimensions du container du logo
+const win = Dimensions.get('window');
+const logoWidth = 45 * win.width / 100;
+const logoHeight = (logoWidth * 300) / 520
+
 const styles = StyleSheet.create({
     global: {
         flex: 1,
         justifyContent: 'flex-end',
     },
+    //Logo et texte bonjour
     titreContainer: {
-        //flex: 0.7, 
         paddingHorizontal: 20,
         justifyContent: 'flex-start',
         alignItems: 'center'
+    },
+    logoContainer: {
+        width: logoWidth,
+        height: logoHeight,
+        marginBottom: 10,
+        marginTop: 10,
     },
     sousTitre: {
         fontSize: 20,
@@ -168,6 +183,7 @@ const styles = StyleSheet.create({
         fontFamily: "BarlowCondensed-SemiBold",
         marginBottom: 80
     },
+    //Catégories préférées
     catContainer: {
         display: 'flex',
         flexDirection: 'row',
@@ -204,6 +220,7 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         fontFamily: "BarlowCondensed-Regular"
     },
+    //Barre de recherche par mot clé
     inputContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
@@ -229,6 +246,7 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 0,
         padding: 8,
     },
+    //Bouton ajout de recette
     ajoutRecetteBtn: {
         backgroundColor: "#FF5A5D",
         borderRadius: 150,

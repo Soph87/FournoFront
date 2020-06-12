@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, AsyncStorage, KeyboardAvoidingView, Keyboard, SafeAreaView, TouchableWithoutFeedback, Image, Dimensions } from 'react-native';
+import { View, StyleSheet, AsyncStorage, KeyboardAvoidingView, Keyboard, SafeAreaView, TouchableWithoutFeedback, Dimensions } from 'react-native';
 import { Text, Input, Button, Overlay } from 'react-native-elements';
-import FlecheRetour from '../../assets/images/icones/fleche-retour.svg'
+//Images SVG
+import FlecheRetour from '../../assets/images/icones/fleche-retour.svg';
+import Logo from '../../assets/images/logo-fourno.svg';
+//Redux
 import { connect } from 'react-redux'
 
 function SignUp({ navigation, sendPrenomToRedux }) {
@@ -57,12 +60,10 @@ function SignUp({ navigation, sendPrenomToRedux }) {
                         <View style={{paddingHorizontal: 15, paddingTop: 10}}>
                             <FlecheRetour width={30} height={30} onPress={() => { navigation.navigate('Home') }} />
                         </View>
-                        <View style={styles.logoContainer}>
-                            <Image
-                                source={require('../../assets/images/logo-caca.png')}
-                                style={styles.logo}
-                                resizeMode='contain'
-                            />
+                        <View style={{alignItems: 'center'}}>
+                            <View style={styles.logoContainer}>
+                                <Logo height='100%' width='100%' />
+                            </View>
                         </View>
                         <View style={styles.connect}>
                             <Input 
@@ -106,8 +107,10 @@ function SignUp({ navigation, sendPrenomToRedux }) {
     )
 }
 
+//Calcul des dimensions du container du logo
 const win = Dimensions.get('window');
-const ratio = 70 * win.width / (500 * 100);
+const logoWidth = 90 * win.width / 100;
+const logoHeight = (logoWidth * 300) / 520
 
 const styles = StyleSheet.create({
     global: {
@@ -116,12 +119,10 @@ const styles = StyleSheet.create({
     },
     //Logo
     logoContainer: {
-        alignItems: 'center', 
-        paddingVertical: 40
-    },
-    logo: {
-        width: 70 * win.width / 100,
-        height: 341 * ratio,
+        width: logoWidth,
+        height: logoHeight,
+        marginBottom: 40,
+        marginTop: 10
     },
     // Inputs de connection
     connect: {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Input } from 'react-native-elements';
 import { StyleSheet } from 'react-native';
-import Poubelle from '../../../assets/images/icones/poubelle.svg';
+import Poubelle from '../assets/images/icones/poubelle.svg';
 
 export default function input(props) {
     const [texte, setTexte] = useState('');

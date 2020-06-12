@@ -5,7 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 
 import FlecheRetour from '../../assets/images/icones/fleche-retour.svg';
-import CatCard from './components/cat-card';
+import CatCard from '../../components/cat-card';
 
 
 function AjoutCategorie({ navigation, sendCategories, suppCategorie }) {
@@ -122,9 +122,9 @@ const styles = StyleSheet.create({
     catContainer: {
         marginBottom: 70,
         flexDirection: "row",
-        justifyContent: 'space-between', 
+        justifyContent: 'space-evenly', 
         flexWrap: "wrap",
-        width: '100%'
+        width: '100%',
     },
     //Navigation bas de page
     bottomNav: {
