@@ -37,6 +37,7 @@ import ajoutPrepa from './reducers/ajout-prepa.reducer';
 import ajoutIngredients from './reducers/ajout-ingredients.reducer';
 import ajoutEtapes from './reducers/ajout-etapes.reducer';
 import ajoutUrl from './reducers/marmiton.reducer';
+import RecapManuel from './screens/ajouter-recette/recapManuel'
 import {Provider} from 'react-redux';
 import {createStore, combineReducers} from 'redux';
 
@@ -76,7 +77,8 @@ var StackNavigator = createStackNavigator({
     Etapes: Etapes,
     Photo: Photo,
     Recap: Recap,
-    ListeRecherche: ListeRecherche
+    ListeRecherche: ListeRecherche,
+    RecapManuel: RecapManuel
 }, 
 {
   headerMode: "none",

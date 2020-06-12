@@ -8,79 +8,79 @@ function ListeCategories({ navigation, sendCategoryToRedux }) {
 
    const categoryList= [
         {
-           nom : "entrees",
+           nom : "Entrees",
            image : require('../../assets/images/categories/Entree.png')
         },
         {
-            nom : "plats",
+            nom : "Plats",
             image : require('../../assets/images/categories/Plat.png')
          },
          {
-            nom : "desserts",
+            nom : "Desserts",
             image : require('../../assets/images/categories/Dessert.png')
          },
          {
-            nom : "salades",
+            nom : "Salades",
             image : require('../../assets/images/categories/Salade.png')
          },
          {
-            nom : "soupes",
+            nom : "Soupes",
             image : require('../../assets/images/categories/Soupe.png')
          },
          {
-            nom : "volailles",
+            nom : "Volailles",
             image : require('../../assets/images/categories/Volaille.png')
          },
          {
-            nom : "sauces",
+            nom : "Sauces",
             image : require('../../assets/images/categories/Sauce.png')
          },
          {
-            nom : "poisson",
+            nom : "Poissons",
             image : require('../../assets/images/categories/Poisson.png')
          },
          {
-            nom : "viandes",
+            nom : "Viandes",
             image : require('../../assets/images/categories/Viande.png')
          },
          {
-            nom : "legumes",
+            nom : "Legumes",
             image : require('../../assets/images/categories/Legumes.png')
          },
          {
-            nom : "boulangerie",
+            nom : "Boulangerie",
             image : require('../../assets/images/categories/Boulangerie.png')
          },
          {
-            nom : "gateaux",
+            nom : "Gateaux",
             image : require('../../assets/images/categories/Gateaux.png')
          },
          {
-            nom : "confitures",
+            nom : "Confitures",
             image : require('../../assets/images/categories/Confiture.png')
          },
          {
-            nom : "aperitifs",
+            nom : "Aperitifs",
             image : require('../../assets/images/categories/Apero.png')
          },
          {
-            nom : "boissons",
+            nom : "Boissons",
             image : require('../../assets/images/categories/Boisson.png')
          },
          {
-            nom : "encas",
+            nom : "Encas",
             image : require('../../assets/images/categories/En-cas.png')
          },
          {
-            nom : "pates",
+            nom : "Pates",
             image : require('../../assets/images/categories/Pates.png')
          },
          {
-            nom : "petits-dej",
+            nom : "Petits-dej",
             image : require('../../assets/images/categories/Petit-dej.png')
          },
          {
-            nom : "autres",
+            nom : "Autres",
             image : require('../../assets/images/categories/Autre.png')
          },
    ]
