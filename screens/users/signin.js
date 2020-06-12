@@ -1,7 +1,21 @@
-import React, { useState, useEffect } from 'react'
-import { Text, View, StyleSheet, AsyncStorage, StatusBar, KeyboardAvoidingView, Keyboard, SafeAreaView, TouchableWithoutFeedback, Image, Dimensions} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { 
+    Text, 
+    View, 
+    StyleSheet, 
+    AsyncStorage, 
+    StatusBar, 
+    KeyboardAvoidingView, 
+    Keyboard, 
+    SafeAreaView, 
+    TouchableWithoutFeedback, 
+    Dimensions
+} from 'react-native';
 import { Input, Button, Overlay } from 'react-native-elements';
-import {connect} from 'react-redux'
+//Redux
+import {connect} from 'react-redux';
+//Images SVG
+import Logo from '../../assets/images/logo-fourno.svg';
 
 function SignIn({ navigation, sendPrenomToRedux }) {
 
@@ -75,11 +89,7 @@ function SignIn({ navigation, sendPrenomToRedux }) {
                             <Text>{error}</Text>
                         </Overlay>
                         <View style={styles.logoContainer}>
-                            <Image
-                                source={require('../../assets/images/logo-caca.png')}
-                                style={styles.logo}
-                                resizeMode='contain'
-                            />
+                            <Logo height='100%' width='100%' />
                         </View>
                         <View style={styles.connect}>
                             <Input 
@@ -126,22 +136,23 @@ function SignIn({ navigation, sendPrenomToRedux }) {
     )
 }
 
+//Calcul des dimensions du container du logo
 const win = Dimensions.get('window');
-const ratio = 70 * win.width / (500 * 100);
+const logoWidth = 90 * win.width / 100;
+const logoHeight = (logoWidth * 300) / 520
+
 
 const styles = StyleSheet.create({
     global: {
         flex: 1,
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        alignItems: 'center'
     },
     //Logo
     logoContainer: {
-        alignItems: 'center', 
-        paddingVertical: 40
-    },
-    logo: {
-        width: 70 * win.width / 100,
-        height: 341 * ratio,
+        width: logoWidth,
+        height: logoHeight,
+        marginVertical: 40
     },
     // Inputs de connection
     connect: {
@@ -168,6 +179,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end', 
         alignItems:'center',
         paddingTop: 20,
+        width: '100%'
     },
     pasInscrit: {
         color: "#666666", 

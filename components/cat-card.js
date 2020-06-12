@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, Image, TouchableHighlight } from 'react-native';
-import Selection from '../../../assets/images/icones/selection.svg';
+import Selection from '../assets/images/icones/selection.svg';
 
 export default function CatCard(props) {
     const [isSelected, setIsSelected] = useState(false);
@@ -40,16 +40,15 @@ export default function CatCard(props) {
 
 const styles = StyleSheet.create({
     categories: {
-        backgroundColor: '#FFC830',
-        borderRadius: 8,
-        width: "33%",
-        maxWidth: 120,
+        width: 120,
         marginBottom: 15,
         position: 'relative',
-        
+        paddingHorizontal: 3       
     },
     catInner: {
-        padding: 10
+        padding: 10,
+        backgroundColor: '#FFC830',
+        borderRadius: 8,
     },
     texteCat: {
         textAlign: 'center',
