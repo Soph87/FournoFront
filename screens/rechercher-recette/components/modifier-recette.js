@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, StyleSheet, ScrollView, Image, ImageBackground, Text, SafeAreaView, TextInput } from 'react-native';
-import { Input, Button } from 'react-native-elements'
+import { Input, Button, Overlay } from 'react-native-elements'
 import AppareilPhoto from '../../../assets/images/icones/photo.svg'
 import Poubelle from '../../../assets/images/icones/poubelle.svg'
 import Photo from '../../../assets/images/icones/appareil-photo.svg'
@@ -9,9 +9,9 @@ import PoubelleBlanche from '../../../assets/images/icones/poubelleBlanche.svg'
 import PhotoCamera from '../../rechercher-recette/components/photo'
 import Ajouter from '../../../assets/images/icones/ajouter.svg'
 import { connect } from 'react-redux';
+import CatCard from '../../ajouter-recette/components/cat-card';
 
-
-function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photoToDisplay,killPhotoRedux }) {
+function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photoToDisplay, killPhotoRedux }) {
 
     const [photo, setPhoto] = useState(false)
     const [titre, setTitre] = useState(recetteToDisplay.titre)
@@ -21,6 +21,9 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
     const [preparation, setPreparation] = useState(recetteToDisplay.preparation[0].preparation)
     const [quantite, setQuantite] = useState(recetteToDisplay.preparation[0].quantite)
     const [etapes, setEtapes] = useState(recetteToDisplay.etapes)
+    const [category, setCategory] = useState(recetteToDisplay.category)
+
+
 
 
     var cancelPhoto = () => {
@@ -31,6 +34,9 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
         clicRetourParent()
     }
 
+
+
+
     var validerRecette = async () => {
         var recette = recetteToDisplay;
         recette.titre = titre
@@ -40,8 +46,10 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
         recette.preparation[0].quantite = quantite
         recette.preparation[0].total = total
         recette.etapes = etapes
-        recette.image = photoToDisplay
-        console.log(recette)
+        recette.category = category
+        if (photoToDisplay != ""){
+            recette.image = photoToDisplay
+        }
 
         var body = JSON.stringify(recette)
 
@@ -57,7 +65,6 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
         }
 
     }
-
 
 
     var updateIngredients = (index, text) => {
@@ -96,6 +103,8 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
         setEtapes(newEtap)
     }
 
+
+
     var ingredientsTable = ingredients.map((ing, i) => {
 
         return (
@@ -110,12 +119,18 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
         )
     })
 
+    var categories = category.map((cat, i) => {
+        return (
+            <Text style={styles.category}>{cat}</Text>
+        )
+    })
+
     if (photo) {
         return (
             <PhotoCamera navigation={navigation} clickCancelPhoto={cancelPhoto} />
         )
     } else {
-     
+
 
         return (
 
@@ -129,7 +144,7 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
                             <View />
                         </View>
 
-                        <ImageBackground source={{uri : photoToDisplay}} style={{ width: '100%', height: 200, marginTop: 25, flex: 1, justifyContent: "flex-end" }}>
+                        <ImageBackground source={{ uri: photoToDisplay }} style={{ width: '100%', height: 200, marginTop: 25, flex: 1, justifyContent: "flex-end" }}>
 
                             <View style={{ backgroundColor: "white", opacity: 0.7, height: 50, width: "100%", alignItems: "center", flexDirection: "row", justifyContent: "center" }}>
 
@@ -144,6 +159,13 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
                         <View style={{ marginTop: 20 }}>
                             <Text style={styles.sousTitre}>Titre de la recette</Text>
                             <Input inputContainerStyle={styles.input} value={titre} placeholder={recetteToDisplay.titre} rightIcon={<Poubelle height={30} width={30} />} onChangeText={text => setTitre(text)}></Input>
+                        </View>
+
+                        <View style={{ marginTop: 20, marginBottom: 20 }}>
+                            <View style={{ flexDirection: "row" }}>
+                                <Text style={styles.sousTitre}>Catégories</Text>
+                            </View>
+                            {categories}
                         </View>
 
                         <View>
@@ -232,6 +254,12 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         paddingLeft: 10,
         borderBottomWidth: 0
+    },
+    category: {
+        fontSize: 20,
+        marginLeft: 15,
+        fontFamily: "BarlowCondensed-Regular",
+        color: "white"
     }
 })
 
@@ -242,10 +270,10 @@ function mapStateToProps(state) {
     }
 }
 
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch) {
     return {
-        killPhotoRedux: function(){
-            dispatch({type: 'killPhoto'})
+        killPhotoRedux: function () {
+            dispatch({ type: 'killPhoto' })
         }
     }
 }
