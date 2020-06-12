@@ -18,6 +18,7 @@ function ConsulterRecette({ navigation, recetteToDisplay, clickModifierParent })
     const [nombre, setNombre] = useState(1)
     const [ingredients, setIngredients] = useState(recetteToDisplay.ingredients)
 
+    console.log(recetteToDisplay)
     var clickModifier = () => {
         clickModifierParent()
     }
@@ -79,11 +80,11 @@ function ConsulterRecette({ navigation, recetteToDisplay, clickModifierParent })
     let vide;
 
     if (recetteToDisplay.preparation[0].preparation != "") {
-        preparation = <Text style={styles.preparation}> <Text style={styles.sousTitre}>Préparation :</Text> {recetteToDisplay.preparation[0].preparation} min</Text>
+        preparation = <Text style={styles.preparation}> <Text style={styles.sousTitre}>Préparation :</Text> {recetteToDisplay.preparation[0].preparation}</Text>
     }
 
     if (recetteToDisplay.preparation[0].cuisson != "") {
-        cuisson = <Text style={styles.preparation}> <Text style={styles.sousTitre}>Cuisson :</Text> {recetteToDisplay.preparation[0].cuisson} min </Text>
+        cuisson = <Text style={styles.preparation}> <Text style={styles.sousTitre}>Cuisson :</Text> {recetteToDisplay.preparation[0].cuisson}</Text>
     }
 
     if (recetteToDisplay.preparation[0].quantite != "") {
@@ -91,7 +92,7 @@ function ConsulterRecette({ navigation, recetteToDisplay, clickModifierParent })
     }
 
     if (recetteToDisplay.preparation[0].total != "") {
-        total = <Text style={styles.preparation}> <Text style={styles.sousTitre}>Total :</Text> {recetteToDisplay.preparation[0].total} min</Text>
+        total = <Text style={styles.preparation}> <Text style={styles.sousTitre}>Total :</Text> {recetteToDisplay.preparation[0].total}</Text>
     }
 
     if (recetteToDisplay.preparation[0].preparation === "" 

@@ -19,10 +19,10 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
     const [photoMarmit, setPhotoMarmit] = useState(marmitonToDisplay.recette.image)
     const [titre, setTitre] = useState(marmitonToDisplay.recette.titre)
     const [ingredients, setIngredients] = useState(marmitonToDisplay.recette.ingredients)
-    const [cuisson, setCuisson] = useState(marmitonToDisplay.recette.preparation.cuisson)
-    const [total, setTotal] = useState(marmitonToDisplay.recette.preparation.total)
-    const [preparation, setPreparation] = useState(marmitonToDisplay.recette.preparation.preparation)
-    const [quantite, setQuantite] = useState(marmitonToDisplay.recette.preparation.quantite)
+    const [cuisson, setCuisson] = useState(marmitonToDisplay.recette.preparation[0].cuisson)
+    const [total, setTotal] = useState(marmitonToDisplay.recette.preparation[0].total)
+    const [prep, setPrep] = useState(marmitonToDisplay.recette.preparation[0].preparation)
+    const [quantite, setQuantite] = useState(marmitonToDisplay.recette.preparation[0].quantite)
     const [etapes, setEtapes] = useState(marmitonToDisplay.recette.etapes)
     const [categoriesList, setCategoriesList] = useState([])
     const [overlayVisible, setOverlayVisible] = useState(false)
@@ -58,19 +58,22 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
         clicRetourParent()
     }
 
+    
     var validerRecette = async () => {
-        var recette = {};
+        
+        var recette = marmitonToDisplay.recette
         recette.titre = titre
         recette.etapes = etapes
         recette.ingredients = ingredients
         recette.image = photoMarmit
-        recette.url = ""
-        recette.preparation.preparation = preparation
-        recette.preparation.cuisson = cuisson
-        recette.preparation.total = total
-        recette.preparation.quantite = quantite
+        recette.url = marmitonToDisplay.recette.url
+        recette.preparation[0].preparation = prep
+        recette.preparation[0].cuisson = cuisson
+        recette.preparation[0].total = total
+        recette.preparation[0].quantite = quantite
+        recette.category = categoriesList
                
-        // console.log(recette)
+         console.log(recette)
 
         var body = JSON.stringify(recette)
 
@@ -219,9 +222,9 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
                     <View>
                         <Text style={styles.sousTitre}>Préparation</Text>
                         <Input 
-                            onChangeText={text => setPreparation(text)} 
+                            onChangeText={text => setPrep(text)} 
                             inputContainerStyle={styles.input} 
-                            value={preparation} 
+                            value={prep} 
                             rightIcon={<Poubelle height={30} width={30} onPress={() => setPreparation("")} />}
                             label='Temps de préparation'
                             renderErrorMessage={false}
