@@ -62,7 +62,7 @@ function AjoutCategorie({ navigation, sendCategories, suppCategorie }) {
 
     let categoryMap = categories.map((cat) => {
         return (
-            <CatCard key={cat.titre} titre={cat.titre} image={cat.image} handlePressParent={handlePress} />
+            <CatCard key={cat.titre} titre={cat.titre} image={cat.image} maxwidth={120} handlePressParent={handlePress} />
         )
     });
 

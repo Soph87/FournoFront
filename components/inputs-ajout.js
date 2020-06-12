@@ -35,7 +35,7 @@ export default function input(props) {
             value= {texte}
             placeholder={props.placeholder} 
             inputContainerStyle={styles.input}
-            inputStyle={{ fontFamily: "BarlowCondensed-Regular", fontSize: 20 }}
+            inputStyle={{ fontFamily: "BarlowCondensed-Regular", fontSize: 20, color: "#666666" }}
             labelStyle={styles.label}
             onEndEditing={() => handleEditingEnd(props.keyName, texte, props.index)}
             rightIcon={ icone }
@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0,
         marginBottom: 10,
         textAlignVertical: 'top',
-        //paddingBottom: 8
     },
     label: {
         color: 'white',
