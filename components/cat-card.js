@@ -7,7 +7,10 @@ export default function CatCard(props) {
     
     useEffect(() => {
         if(props.selection) {
-            if(props.selection.indexOf(props.titre.toLowerCase()) != -1) {
+            let titre = props.titre.toLowerCase();
+            titre = titre.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+
+            if(props.selection.indexOf(titre) != -1) {
                 setIsSelected(true)
             }
         }
