@@ -264,7 +264,6 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     return {
-<<<<<<< HEAD
         titreDisplay: state.ajoutTitre,
         categoryDisplay: state.ajoutCats,
         etapesDisplay: state.ajoutEtapes,
@@ -272,10 +271,6 @@ function mapStateToProps(state) {
         ingredientsDisplay: state.ajoutIngredients,
         photoDisplay: state.photo,
         token: state.token
-=======
-        recetteDisplay: state.recetteAjout,
-        photoDisplay: state.photo
->>>>>>> new
     }
 }
 function mapDispatchToProps(dispatch) {
