@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from 'react'
 import { Text, View, TouchableOpacity } from 'react-native'
 import {Button} from 'react-native-elements'
 import { Camera } from 'expo-camera'
-import FlecheRetour from '../../../assets/images/icones/fleche-retour.svg'
 import { FontAwesome } from '@expo/vector-icons';
 import * as MediaLibrary from 'expo-media-library';
 import { connect } from 'react-redux';

@@ -8,7 +8,7 @@ import FlecheRetour from '../../assets/images/icones/fleche-retour.svg';
 import CatCard from '../../components/cat-card';
 
 
-function AjoutCategorie({ navigation, sendCategories, suppCategorie }) {
+function AjoutCategorie({ navigation, sendCatRecette, suppCatRecette }) {
     const [estSelectionne, setEstSelectionne] = useState(false);
     const [listeCat, setListeCat] = useState([]);
 
@@ -46,11 +46,11 @@ function AjoutCategorie({ navigation, sendCategories, suppCategorie }) {
         let catChoisies = [...listeCat];
         if(catChoisies.indexOf(catName) === -1) {
             catChoisies.push(catName);
-            sendCategories(catName);
+            sendCatRecette(catName);
         } else {
             let index = catChoisies.indexOf(catName);
             catChoisies.splice(index, 1);
-            suppCategorie(catName);
+            suppCatRecette(catName)
         }
         
         setListeCat(catChoisies);
@@ -146,11 +146,11 @@ const styles = StyleSheet.create({
 
 function mapDispatchToProps(dispatch){
     return {
-        sendCategories: function(cat){
-            dispatch({type: 'ajoutCat', cat})
+        sendCatRecette: function(cat) {
+            dispatch({type: 'ajoutCategorie', cat})
         },
-        suppCategorie: function(cat){
-            dispatch({type: 'suppCat', cat})
+        suppCatRecette: function(cat) {
+            dispatch({type: 'suppCategorie', cat})
         }
     }
 }

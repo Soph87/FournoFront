@@ -1,26 +1,26 @@
 import React, {useState} from 'react'
-import { View, StyleSheet, ScrollView, Image, ImageBackground, Text, SafeAreaView, TextInput } from 'react-native';
-import {connect} from 'react-redux'
+import { View, StyleSheet, ScrollView, Image, ImageBackground, Text, SafeAreaView } from 'react-native';
 import { Input, Button, Overlay } from 'react-native-elements'
+//Redux
+import {connect} from 'react-redux'
+//Icones SVG
 import AppareilPhoto from '../../assets/images/icones/photo.svg'
 import Poubelle from '../../assets/images/icones/poubelle.svg'
 import Photo from '../../assets/images/icones/appareil-photo.svg'
 import FlecheRetour from '../../assets/images/icones/fleche-retour.svg'
 import PoubelleBlanche from '../../assets/images/icones/poubelleBlanche.svg'
-import PhotoCamera from '../rechercher-recette/components/photo'
 import Ajouter from '../../assets/images/icones/ajouter.svg'
-import CatCard from '../../components/cat-card';
 
-function RecapManuel({navigation, titreDisplay,categoryDisplay,etapesDisplay, prepaDisplay,ingredientsDisplay, photoDisplay, killPhotoRedux, token }){
+function RecapManuel({navigation, recetteDisplay, photoDisplay, killPhotoRedux, token }){
 
-    const [titre, setTitre] = useState(titreDisplay)
-    const [ingredients, setIngredients] = useState(ingredientsDisplay)
-    const [cuis, setCuis] = useState(prepaDisplay.cuisson)
-    const [tot, setTot] = useState(prepaDisplay.total)
-    const [prep, setPrep] = useState(prepaDisplay.preparation)
-    const [quantite, setQuantite] = useState(prepaDisplay.personne)
-    const [etapes, setEtapes] = useState(etapesDisplay)
-    const [category, setCategory] = useState(categoryDisplay)
+    const [titre, setTitre] = useState(recetteDisplay.titre)
+    const [ingredients, setIngredients] = useState(recetteDisplay.ingredients)
+    const [cuis, setCuis] = useState(recetteDisplay.prepa.cuisson)
+    const [tot, setTot] = useState(recetteDisplay.prepa.total)
+    const [prep, setPrep] = useState(recetteDisplay.prepa.preparation)
+    const [quantite, setQuantite] = useState(recetteDisplay.prepa.personne)
+    const [etapes, setEtapes] = useState(recetteDisplay.etapes)
+    const [category, setCategory] = useState(recetteDisplay.categories)
     const [photoToShow, setPhotoToShow] = useState(photoDisplay)
     const [overlayVisible, setOverlayVisible] = useState(false)
     const [photo, setPhoto] = useState(false)
@@ -264,11 +264,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     return {
-        titreDisplay: state.ajoutTitre,
-        categoryDisplay: state.ajoutCats,
-        etapesDisplay: state.ajoutEtapes,
-        prepaDisplay: state.ajoutPrepa,
-        ingredientsDisplay: state.ajoutIngredients,
+        recetteDisplay: state.recetteAjout,
         photoDisplay: state.photo,
         token: state.token
     }
