@@ -11,7 +11,7 @@ import PhotoCamera from '../rechercher-recette/components/photo'
 import Ajouter from '../../assets/images/icones/ajouter.svg'
 import CatCard from '../../components/cat-card';
 
-function RecapManuel({navigation, titreDisplay,categoryDisplay,etapesDisplay, prepaDisplay,ingredientsDisplay, photoDisplay, killPhotoRedux }){
+function RecapManuel({navigation, titreDisplay,categoryDisplay,etapesDisplay, prepaDisplay,ingredientsDisplay, photoDisplay, killPhotoRedux, token }){
 
     const [titre, setTitre] = useState(titreDisplay)
     const [ingredients, setIngredients] = useState(ingredientsDisplay)
@@ -96,6 +96,7 @@ function RecapManuel({navigation, titreDisplay,categoryDisplay,etapesDisplay, pr
         recette.image = photoToShow
         recette.category= category
         recette.url = ""
+        recette.token = token
 
         console.log(recette)
 
@@ -268,7 +269,8 @@ function mapStateToProps(state) {
         etapesDisplay: state.ajoutEtapes,
         prepaDisplay: state.ajoutPrepa,
         ingredientsDisplay: state.ajoutIngredients,
-        photoDisplay: state.photo
+        photoDisplay: state.photo,
+        token: state.token
     }
 }
 function mapDispatchToProps(dispatch) {

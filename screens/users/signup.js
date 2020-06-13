@@ -7,7 +7,7 @@ import Logo from '../../assets/images/logo-fourno.svg';
 //Redux
 import { connect } from 'react-redux'
 
-function SignUp({ navigation, sendPrenomToRedux }) {
+function SignUp({ navigation, sendPrenomToRedux,sendTokenToRedux }) {
 
     const [prenom, setPrenom] = useState("")
     const [email, setEmail] = useState("")
@@ -40,6 +40,7 @@ function SignUp({ navigation, sendPrenomToRedux }) {
             }
             AsyncStorage.setItem("user", JSON.stringify(user))
             sendPrenomToRedux(prenom)
+            sendTokenToRedux(response.user.token)
             navigation.navigate('Accueil')
         } else {
             if (response.error === "mail") {
@@ -164,6 +165,9 @@ function mapDispatchToProps(dispatch){
     return {
         sendPrenomToRedux: function(prenom){
             dispatch({type: 'addPrenom', prenom})
+        },
+        sendTokenToRedux: function(token){
+            dispatch({type: 'addToken', token})
         }
     }
 }

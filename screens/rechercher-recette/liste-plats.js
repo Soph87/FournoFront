@@ -5,14 +5,14 @@ import { connect } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
-function ListePlats({ navigation, catToDisplay, sendRecette,photoToDisplay }) {
+function ListePlats({ navigation, catToDisplay, sendRecette,photoToDisplay, token }) {
 
     const [recettes, setRecettes] = useState([])
 
     useEffect(() => {
 
         var retrieveRecettes = async () => {
-            var response = await fetch(`https://protected-anchorage-65968.herokuapp.com/getRecette?category=${catToDisplay}`)
+            var response = await fetch(`https://protected-anchorage-65968.herokuapp.com/getRecette?category=${catToDisplay}&token=${token}`)
             response = await response.json()
             setRecettes(response.recettes)
         }
@@ -114,7 +114,8 @@ const styles = StyleSheet.create({
 function mapStateToProps(state) {
     return {
         catToDisplay: state.category,
-        photoToDisplay: state.photo
+        photoToDisplay: state.photo,
+        token: state.token
     }
 }
 

@@ -13,7 +13,7 @@ import PhotoCamera from '../../rechercher-recette/components/photo';
 import CatCard from '../../../components/cat-card';
 
 
-function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoToDisplay, killPhotoRedux }) {
+function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoToDisplay, killPhotoRedux, token }) {
 
     const [photo, setPhoto] = useState(false)
     const [photoMarmit, setPhotoMarmit] = useState(marmitonToDisplay.recette.image)
@@ -72,7 +72,7 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
         recette.preparation[0].total = total
         recette.preparation[0].quantite = quantite
         recette.category = categoriesList
-               
+        recette.token = token
          console.log(recette)
 
         var body = JSON.stringify(recette)
@@ -394,7 +394,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     return {
-        photoToDisplay: state.photo
+        photoToDisplay: state.photo,
+        token: state.token
     }
 }
 
