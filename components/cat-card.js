@@ -6,8 +6,8 @@ export default function CatCard(props) {
     const [isSelected, setIsSelected] = useState(false);
     
     useEffect(() => {
-        if(props.selection) {
-            if(props.selection.indexOf(props.titre.toLowerCase()) != -1) {
+        if(props.catListe) {
+            if(props.catListe.indexOf(props.titre) != -1) {
                 setIsSelected(true)
             }
         }
@@ -15,9 +15,10 @@ export default function CatCard(props) {
     
     
     const handlePress = () => {
-        setIsSelected(!isSelected);
-        props.handlePressParent(props.titre);
-        
+        if(props.selection){
+            setIsSelected(!isSelected);
+        }
+        props.handlePressParent(props.titre);        
     }
 
 

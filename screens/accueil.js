@@ -59,7 +59,7 @@ function Accueil({ navigation, prenomToDisplay, sendCategoryToRedux, sendSearchT
                             <View style={styles.catContainer}>
 
                                 <View style={styles.categories} >
-                                    <TouchableOpacity onPress={() => sendToList("entrees")}>
+                                    <TouchableOpacity onPress={() => sendToList("Entrées")}>
                                         <Image
                                             source={require('../assets/images/categories/entrees.png')}
                                             style={{ width: '100%' }}
@@ -70,7 +70,7 @@ function Accueil({ navigation, prenomToDisplay, sendCategoryToRedux, sendSearchT
                                     </TouchableOpacity>
                                 </View>
                                 <View style={styles.catmilieu}>
-                                    <TouchableOpacity onPress={() => sendToList("plats")}>
+                                    <TouchableOpacity onPress={() => sendToList("Plats")}>
                                         <Image
                                             source={require('../assets/images/categories/Plat.png')}
                                             style={{ width: '100%' }}
@@ -81,7 +81,7 @@ function Accueil({ navigation, prenomToDisplay, sendCategoryToRedux, sendSearchT
                                     </TouchableOpacity>
                                 </View>
                                 <View style={styles.categories} >
-                                    <TouchableOpacity onPress={() => sendToList("desserts")}>
+                                    <TouchableOpacity onPress={() => sendToList("Desserts")}>
                                         <Image
                                             source={require('../assets/images/categories/Dessert.png')}
                                             style={{ width: '100%' }}

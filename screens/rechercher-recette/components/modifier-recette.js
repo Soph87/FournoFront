@@ -132,6 +132,19 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
         setEtapes(newEtap)
     }
 
+    //Modifier la liste des catégories de la recette
+    const handlePressCat = cat => {
+        const newCats = [...category];
+        if(newCats.indexOf(cat) === -1) {
+            newCats.push(cat);
+        } else {
+            const index = newCats.indexOf(cat);
+            newCats.splice(index, 1);
+        }
+        
+        setCategory(newCats);
+    }
+
     //Affichage des ingédients de la recette
     var ingredientsTable = ingredients.map((ing, i) => {
         return (
@@ -164,7 +177,7 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
     //Affichage des Cards de catégorie
     let categoryMap = listeCategories.map((cat) => {
         return (
-            <CatCard key={cat.titre} titre={cat.titre} image={cat.image} maxwidth={115} selection={category} />
+            <CatCard key={cat.titre} titre={cat.titre} image={cat.image} maxwidth={115} catListe={category} handlePressParent={handlePressCat} selection={true} />
         )
     });
 
@@ -307,15 +320,6 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
                             <ScrollView contentContainerStyle={styles.catContainer}>
                                 {categoryMap}
                             </ScrollView>
-                            <View style={{alignItems: 'center'}}>
-                                <Button
-                                    type='solid'
-                                    title='Valider'
-                                    buttonStyle={styles.overlayBtn}
-                                    titleStyle={{ fontFamily: "BarlowCondensed-SemiBold", fontSize: 20, color: '#fff' }}
-                                    containerStyle= {styles.overlayBtnContainer}
-                                />
-                            </View>
                         </View>
                     </Overlay>
                 </SafeAreaView>
@@ -419,14 +423,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around', 
         flexWrap: "wrap",
     },
-    overlayBtnContainer: {
-        marginTop: 10
-    },
-    overlayBtn: {
-        backgroundColor: '#FF5A5D',
-        borderRadius: 150,
-        paddingHorizontal: 20,
-    }
 })
 
 
