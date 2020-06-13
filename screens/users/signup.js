@@ -33,7 +33,12 @@ function SignUp({ navigation, sendPrenomToRedux }) {
         let response = await registerToDb.json()
 
         if (response.result) {
-            AsyncStorage.setItem("email", response.user.email)
+            var user = {
+                email : response.user.email,
+                prenom : response.user.prenom,
+                token : response.user.token
+            }
+            AsyncStorage.setItem("user", JSON.stringify(user))
             sendPrenomToRedux(prenom)
             navigation.navigate('Accueil')
         } else {

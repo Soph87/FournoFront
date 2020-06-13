@@ -5,6 +5,7 @@ import CroixBlanche from '../assets/images/icones/croix-blanche.svg';
 import Userjaune from '../assets/images/icones/user-jaune.svg';
 import Liste from '../assets/images/icones/liste.svg';
 import Sync from '../assets/images/icones/sync.svg';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 function Menu({ navigation }) {
     return (
@@ -17,10 +18,12 @@ function Menu({ navigation }) {
                         </TouchableWithoutFeedback>
                     </View>
                     <View style={{ flex: 1, justifyContent: 'center' }}>
+                        <TouchableOpacity onPress={()=> navigation.navigate("MonCompte")}>
                         <View style={styles.ongletMenu}>
                             <Userjaune width={30} height={30} />
                             <Text style={styles.ongletText}>Mon compte</Text>
                         </View>
+                        </TouchableOpacity>
                         <View style={styles.ongletMenu}>
                             <Liste width={30} height={30} />
                             <Text style={styles.ongletText}>Gestion des catégories et des plats</Text>

@@ -62,7 +62,8 @@ function SignIn({ navigation, sendPrenomToRedux }) {
 
                 var user = {
                     email : response.user.email,
-                    prenom : response.user.prenom
+                    prenom : response.user.prenom,
+                    token : response.user.token
                 }
 
                 AsyncStorage.setItem("user", JSON.stringify(user))

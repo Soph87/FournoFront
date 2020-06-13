@@ -26,6 +26,7 @@ import Recap from './screens/ajouter-recette/recapitulatif';
 import RecapManuel from './screens/ajouter-recette/recapManuel';
 import AjoutURL from './screens/ajouter-recette/ajout-url';
 import ListeRecherche from './screens/listeRecherche'
+import MonCompte from './screens/compte'
 //Redux
 import prenom from './reducers/prenom';
 import category from './reducers/category';
@@ -36,6 +37,9 @@ import ajoutCats from './reducers/ajout-categories.reducer';
 import ajoutTitre from './reducers/ajout-titre.reducer';
 import ajoutPrepa from './reducers/ajout-prepa.reducer';
 import newRecette from './reducers/marmiton.reducer';
+import ajoutIngredients from './reducers/ajout-ingredients.reducer'
+import ajoutEtapes from './reducers/ajout-etapes.reducer'
+import token from './reducers/token'
 import {Provider} from 'react-redux';
 import {createStore, combineReducers} from 'redux';
 
@@ -43,7 +47,7 @@ import { useFonts } from '@use-expo/font';
 import { AppLoading } from "expo";
 import { Easing } from 'react-native-reanimated';
 
-const store = createStore(combineReducers({prenom, category, recette, ajoutCats, ajoutTitre, ajoutPrepa,photo, searchText, newRecette}))
+const store = createStore(combineReducers({prenom, category, recette, ajoutCats, ajoutTitre, ajoutPrepa,photo, searchText, newRecette, token, ajoutIngredients, ajoutEtapes}))
 
 var StackNavigator = createStackNavigator({
     Home: SignIn,
@@ -62,7 +66,8 @@ var StackNavigator = createStackNavigator({
     Photo: Photo,
     Recap: Recap,
     ListeRecherche: ListeRecherche,
-    RecapManuel: RecapManuel
+    RecapManuel: RecapManuel,
+    MonCompte: MonCompte
 }, 
 {
   headerMode: "none",

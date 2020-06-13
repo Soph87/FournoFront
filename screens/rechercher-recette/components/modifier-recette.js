@@ -26,7 +26,14 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
     const [etapes, setEtapes] = useState(recetteToDisplay.etapes)
     const [category, setCategory] = useState(recetteToDisplay.category)
     const [overlayVisible, setOverlayVisible] = useState(false)
+    
+    var imageDeRecette;
 
+    if(photoToDisplay === ""){
+        imageDeRecette = recetteToDisplay.image
+    } else {
+        imageDeRecette = photoToDisplay
+    }
 
     let listeCategories = [
         { titre: 'Entrées', image: require('../../../assets/images/categories/entrees.png') },
@@ -186,7 +193,7 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
                     </View>
 
                     <ScrollView style={{ flex: 1, width: "100%" }}>
-                        <ImageBackground source={{ uri: photoToDisplay }} style={{ width: '100%', height: 200, marginTop: 25, flex: 1, justifyContent: "flex-end" }}>
+                        <ImageBackground source={{ uri: imageDeRecette }} style={{ width: '100%', height: 200, marginTop: 25, flex: 1, justifyContent: "flex-end" }}>
                             <View style={{ backgroundColor: "white", opacity: 0.7, height: 50, width: "100%", alignItems: "center", flexDirection: "row", justifyContent: "center" }}>
                                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around" }}>
                                     <AppareilPhoto width={30} height={30} onPress={() => { setPhoto(true) }} />
