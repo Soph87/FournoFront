@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Text, View, StyleSheet, SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, StyleSheet, SafeAreaView, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { Button } from 'react-native-elements';
 //Redux
 import { connect } from 'react-redux';
@@ -9,22 +9,26 @@ import Input from '../../components/inputs-ajout';
 import FlecheRetour from '../../assets/images/icones/fleche-retour.svg';
 import Home from '../../assets/images/icones/home.svg';
 
-function Titre({ navigation, sendTitre }) {
+function Titre({ navigation, sendTitre, titreToDisplay }) {
     const [inputPlein, setInputPlein] = useState(false);
-    const [titre, setTitre] = useState('');
+
+    useEffect(() => {
+        if(titreToDisplay.length > 1) {
+            setInputPlein(true);
+        }
+    }, []);
 
     const handleEditing = (key, value) => {
         if(value.length > 1) {
             setInputPlein(true);
-            setTitre(value);
+            sendTitre(value);
         } else {
             setInputPlein(false);
-            setTitre(value);
+            sendTitre(value);
         }
     }
 
     const handleValider = () => {
-        sendTitre(titre);
         navigation.navigate('Preparation')
     }
 
@@ -33,16 +37,20 @@ function Titre({ navigation, sendTitre }) {
         <SafeAreaView style={styles.global}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={{flex: 1}}>
-
                     <View style={styles.header}>
                         <FlecheRetour width={30} height={30} onPress={() => navigation.goBack()} />
                         <Text style={styles.titre}>Nom de la recette</Text>
                         <Home width={30} height={30} onPress={() => navigation.navigate('Accueil')} />
                     </View>
-                    
-                    <View style={styles.inputContainer}>
-                        <Input placeholder='Tarte aux poireaux, charlotte aux fraises...' label='Nom de la recette' handleEditingParent={handleEditing} />
-                    </View>
+                    <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.inputContainer}>
+                        <Input 
+                            valueRedux={titreToDisplay} 
+                            placeholder='Tarte aux poireaux, charlotte aux fraises...' 
+                            label='Nom de la recette' 
+                            handleEditingParent={handleEditing}
+                            multi={false} 
+                        />
+                    </KeyboardAvoidingView>
                     <View style={styles.bottomNav}>
                         <Button 
                             onPress={() => handleValider()}
@@ -98,6 +106,11 @@ const styles = StyleSheet.create({
     }
 });
 
+function mapStateToProps(state) {
+    return {
+        titreToDisplay: state.recetteAjout.titre
+    }
+}
 
 function mapDispatchToProps(dispatch){
     return {
@@ -108,6 +121,6 @@ function mapDispatchToProps(dispatch){
 }
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 ) (Titre);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, SafeAreaView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { Text, View, StyleSheet, SafeAreaView, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { Button } from 'react-native-elements';
 //Redux
 import { connect } from 'react-redux';
@@ -34,18 +34,16 @@ function Preparation({ navigation, sendPrepa }) {
         <SafeAreaView style={styles.global}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={{flex: 1}}>
-
                     <View style={styles.header}>
                         <FlecheRetour width={30} height={30} onPress={() => navigation.goBack()} />
                         <Text style={styles.titre}>Préparation</Text>
                         <Home width={30} height={30} onPress={() => navigation.navigate('Accueil')} />
                     </View>
-                    
-                    <View style={styles.inputContainer}>
-                        <Input keyName='prepa' placeholder='10 min' label='Préparation (optionnel)' handleEditingParent={handleEditing} />
-                        <Input keyName='cuisson' placeholder='30 min' label='Cuisson (optionnel)' handleEditingParent={handleEditing} />
+                    <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.inputContainer}>
+                        <Input keyName='prepa' placeholder='10 min' label='Temps de préparation (optionnel)' handleEditingParent={handleEditing} />
+                        <Input keyName='cuisson' placeholder='30 min' label='Temps de cuisson (optionnel)' handleEditingParent={handleEditing} />
                         <Input keyName='quantite' placeholder='4 personnes' label='Quantité (optionnel)' handleEditingParent={handleEditing} />
-                    </View>
+                    </KeyboardAvoidingView>
                     <View style={styles.bottomNav}>
                         <Button 
                             onPress={() => handleValider()}
