@@ -29,7 +29,6 @@ function SignUp({ navigation, sendPrenomToRedux,sendTokenToRedux }) {
             body: bodyToSend,
             headers: { 'Content-Type': 'application/json' }
         })
-
         let response = await registerToDb.json()
 
         if (response.result) {
@@ -38,6 +37,7 @@ function SignUp({ navigation, sendPrenomToRedux,sendTokenToRedux }) {
                 prenom : response.user.prenom,
                 token : response.user.token
             }
+            
             AsyncStorage.setItem("user", JSON.stringify(user))
             sendPrenomToRedux(prenom)
             sendTokenToRedux(response.user.token)
