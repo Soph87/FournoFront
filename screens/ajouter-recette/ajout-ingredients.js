@@ -10,7 +10,8 @@ import FlecheRetour from '../../assets/images/icones/fleche-retour.svg';
 import Home from '../../assets/images/icones/home.svg';
 
 function Ingredients({ navigation, sendIngredients }) {
-    const [aDesIngredients, setADesIngredients] = useState(false)
+    const [aDesIngredients, setADesIngredients] = useState(false);
+    //J'ajoute un élément vide au tableau ingredients pour avoir un input vide au chargement de la page :
     const [ingredients, setIngredients] = useState(['']);
 
     useEffect(() => {
@@ -53,6 +54,7 @@ function Ingredients({ navigation, sendIngredients }) {
     })
 
     const handleValider = () => {
+        //Je retire l'élément vide de l'array puis je retourne le résultat au reducer
         const ingredientsFinal = ingredients;
         ingredientsFinal.shift();
         sendIngredients(ingredientsFinal);

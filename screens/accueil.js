@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, Keyboard, StyleSheet, Image, KeyboardAvoidingView, SafeAreaView, TouchableWithoutFeedback, Dimensions } from 'react-native';
 import { Input, Button, Overlay } from 'react-native-elements';
 //Images SVG
@@ -11,32 +11,32 @@ import { connect } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
-function Accueil({ navigation, prenomToDisplay, sendCategoryToRedux, sendSearchToRedux }) {
+function Accueil({ navigation, prenomToDisplay, sendCategoryToRedux, sendSearchToRedux}) {
     const [visible, setVisible] = useState(false);
-    const [recherche, setRecherche] = useState("")
+    const [recherche, setRecherche] = useState("");
 
     const toggleOverlay = () => {
         setVisible(!visible);
     };
 
     var sendToList = (category) => {
-        sendCategoryToRedux(category)
-        navigation.navigate('ListePlats')
+        sendCategoryToRedux(category);
+        navigation.navigate('ListePlats');
     }
 
     var RedirectManuellement = () => {
         navigation.navigate('AjoutCategorie');
-        setVisible(false)
+        setVisible(false);
     }
 
     var RedirectURL = () => {
         navigation.navigate('AjoutURL');
-        setVisible(false)
+        setVisible(false);
     }
 
     var searchRecette = () => {
-        sendSearchToRedux(recherche)
-        navigation.navigate("ListeRecherche")
+        sendSearchToRedux(recherche);
+        navigation.navigate("ListeRecherche");
     }
 
     return (
@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     return {
-        prenomToDisplay: state.prenom
+        prenomToDisplay: state.prenom,
     }
 }
 
@@ -277,7 +277,7 @@ function mapDispatchToProps(dispatch) {
             dispatch({ type: 'selectCat', category })
         },
         sendSearchToRedux: function(searchText){
-            dispatch({type: 'sendSearch', searchText})
+            dispatch({ type: 'sendSearch', searchText })
         }
     }
 }

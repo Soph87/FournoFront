@@ -11,16 +11,16 @@ import PhotoCamera from '../rechercher-recette/components/photo'
 import Ajouter from '../../assets/images/icones/ajouter.svg'
 import CatCard from '../../components/cat-card';
 
-function RecapManuel({navigation, titreDisplay,categoryDisplay,etapesDisplay, prepaDisplay,ingredientsDisplay, photoDisplay, killPhotoRedux }){
+function RecapManuel({navigation, recetteDisplay, photoDisplay, killPhotoRedux }){
 
-    const [titre, setTitre] = useState(titreDisplay)
-    const [ingredients, setIngredients] = useState(ingredientsDisplay)
-    const [cuis, setCuis] = useState(prepaDisplay.cuisson)
-    const [tot, setTot] = useState(prepaDisplay.total)
-    const [prep, setPrep] = useState(prepaDisplay.preparation)
-    const [quantite, setQuantite] = useState(prepaDisplay.personne)
-    const [etapes, setEtapes] = useState(etapesDisplay)
-    const [category, setCategory] = useState(categoryDisplay)
+    const [titre, setTitre] = useState(recetteDisplay.titre)
+    const [ingredients, setIngredients] = useState(recetteDisplay.ingredients)
+    const [cuis, setCuis] = useState(recetteDisplay.prepa.cuisson)
+    const [tot, setTot] = useState(recetteDisplay.prepa.total)
+    const [prep, setPrep] = useState(recetteDisplay.prepa)
+    const [quantite, setQuantite] = useState(recetteDisplay.prepa.personne)
+    const [etapes, setEtapes] = useState(recetteDisplay.etapes)
+    const [category, setCategory] = useState(recetteDisplay.categories)
     const [photoToShow, setPhotoToShow] = useState(photoDisplay)
     const [overlayVisible, setOverlayVisible] = useState(false)
     const [photo, setPhoto] = useState(false)
@@ -263,11 +263,7 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     return {
-        titreDisplay: state.ajoutTitre,
-        categoryDisplay: state.ajoutCats,
-        etapesDisplay: state.ajoutEtapes,
-        prepaDisplay: state.ajoutPrepa,
-        ingredientsDisplay: state.ajoutIngredients,
+        recetteDisplay: state.recetteAjout,
         photoDisplay: state.photo
     }
 }

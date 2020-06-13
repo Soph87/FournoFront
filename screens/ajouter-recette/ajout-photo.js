@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, SafeAreaView, ImageBackground, Dimensions } from 'react-native';
 import { Button } from 'react-native-elements';
-
+//Redux
 import { connect } from 'react-redux';
-
-//Icones
+//Icones SVG
 import FlecheRetour from '../../assets/images/icones/fleche-retour.svg';
 import Home from '../../assets/images/icones/home.svg';
 import AppareilPhoto from '../../assets/images/icones/photo.svg';
 import Poubelle from '../../assets/images/icones/poubelle.svg'
 import Photo from '../../assets/images/icones/appareil-photo.svg';
-
+//Components
 import PhotoCamera from '../rechercher-recette/components/photo';
 
 
@@ -24,7 +23,7 @@ function AjoutPhoto({ navigation, photoToDisplay }) {
         setPhoto(false)
     }
 
-var photoBackGround;
+    var photoBackGround;
     if (photoToDisplay === "") {
         photoBackGround = <ImageBackground source={require('../../assets/images/no-photo.png')} style={styles.backgroundImg}>
             <View style={styles.boutonsContainer}>
@@ -77,7 +76,7 @@ var photoBackGround;
 
 }
 
-//Dimansion responsive de la photo en 16/9
+//Dimension responsive de la photo en 16/9
 const win = Dimensions.get('window');
 
 const styles = StyleSheet.create({

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input } from 'react-native-elements';
 import { StyleSheet } from 'react-native';
 import Poubelle from '../assets/images/icones/poubelle.svg';
@@ -7,7 +7,16 @@ export default function input(props) {
     const [texte, setTexte] = useState('');
     const [poubelle, setPoubelle] = useState(false)
 
+    //Si j'ai une value de départ pour l'input fournie par le reducer, je l'assigne à l'état
+    useEffect(() => {
+        if(props.valueRedux) {
+            setTexte(props.valueRedux);
+        }
+    }, []);
+
+    //Evènement qui se déclenche à la fin de l'édition de l'input
     const handleEditingEnd = (keyName, value, index) => {
+        //Affichage ou non de l'icone poubelle
         if(keyName === 'affichePoubelle' && value.length >= 1) {
             setPoubelle(true);
         } else {
@@ -16,6 +25,7 @@ export default function input(props) {
         props.handleEditingParent(keyName, value, index);
     }
 
+    //Se déclenche au press de la poubelle
     const handleSupp = (index) => {
         props.handleSuppParent(index)
     }
@@ -25,12 +35,10 @@ export default function input(props) {
         icone = <Poubelle width={30} height={30} onPress={() => handleSupp(props.index) } />
     }
 
-
     return (
         <Input
-            value = {props.value}
             label={props.label}
-            placeholderTextColor="#ADADAD" 
+            placeholderTextColor="#ADADAD"
             onChangeText={(text) => setTexte(text)}
             value= {texte}
             placeholder={props.placeholder} 
@@ -40,7 +48,7 @@ export default function input(props) {
             onEndEditing={() => handleEditingEnd(props.keyName, texte, props.index)}
             rightIcon={ icone }
             renderErrorMessage={false}
-            multiline
+            multiline={props.multi}
         />
     )
 }
