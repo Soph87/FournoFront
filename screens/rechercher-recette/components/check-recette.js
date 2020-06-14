@@ -153,12 +153,12 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
     // GoodRegex = ^[ \t]+|[ \t]+$
 
 
-    for (var l = 0; l < etape.length; l++) {
-        etape[l] = etape[l].replace('^[ \t]+|[ \t]+$', '');
-   }
+
    
     var etapesTable = etapes.map((etape, i) => {
-        
+        for (var l = 0; l < etape.length; l++) {
+            etape[l] = etape[l].replace('^[ \t]+|[ \t]+$', '');
+        }
 
         return (
             <Input onChangeText={text => { updateEtapes(i, text) }} multiline={true} inputContainerStyle={styles.input} inputStyle={{ fontFamily: "BarlowCondensed-Regular", fontSize: 20, padding: 10 }} value={etapes[i]} rightIcon={<Poubelle height={30} width={30} onPress={() => { deleteEtape(i) }} />}></Input>
