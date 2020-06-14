@@ -72,8 +72,7 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
         recette.preparation[0].total = total
         recette.preparation[0].quantite = quantite
         recette.category = categoriesList
-               
-         console.log(recette)
+
 
         var body = JSON.stringify(recette)
 
@@ -150,12 +149,16 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
         )
     })
 
-    var etapesTable = etapes.map((etape, i) => {
-        // var msg = messageData.message.replace(/:\)/g, '\u263A');
-        // msg = msg.replace(/:\(/g, '\u2639');
-        // msg = msg.replace(/:p/g, '\uD83D\uDE1B');
+   
+    // GoodRegex = ^[ \t]+|[ \t]+$
 
-        // var etapeRegex = etape.replace(^[ \t]+|[ \t]+$, "");
+
+    for (var l = 0; l < etape.length; l++) {
+        etape[l] = etape[l].replace('^[ \t]+|[ \t]+$', '');
+   }
+   
+    var etapesTable = etapes.map((etape, i) => {
+        
 
         return (
             <Input onChangeText={text => { updateEtapes(i, text) }} multiline={true} inputContainerStyle={styles.input} inputStyle={{ fontFamily: "BarlowCondensed-Regular", fontSize: 20, padding: 10 }} value={etapes[i]} rightIcon={<Poubelle height={30} width={30} onPress={() => { deleteEtape(i) }} />}></Input>

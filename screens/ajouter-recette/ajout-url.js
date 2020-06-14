@@ -17,7 +17,7 @@ function ImportUrl({navigation, sendUrlToRedux}) {
           body: `lienMarmiton=${urlMarmiton}`
         });
         const newRecette = await url.json();
-        console.log(newRecette)
+        
         if(newRecette){
             sendUrlToRedux(newRecette);
             navigation.navigate('Recap');
