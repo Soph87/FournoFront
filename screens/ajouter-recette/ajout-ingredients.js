@@ -9,39 +9,41 @@ import Input from '../../components/inputs-ajout';
 import FlecheRetour from '../../assets/images/icones/fleche-retour.svg';
 import Home from '../../assets/images/icones/home.svg';
 
-function Ingredients({ navigation, addIngredient, ingredientsToDisplay }) {
+function Ingredients({ navigation, sendIngredients }) {
     const [aDesIngredients, setADesIngredients] = useState(false);
-    const [ingredients, setIngredients] = useState(ingredientsToDisplay);
-
+    //J'ajoute un élément vide au tableau ingredients pour avoir un input vide au chargement de la page :
+    const [ingredients, setIngredients] = useState(['']);
 
     useEffect(() => {
-        if(ingredientsToDisplay.length >= 2) {
+        if(ingredients.length >= 2) {
             setADesIngredients(true);
         } else {
             setADesIngredients(false);
         }
-    }, [ingredientsToDisplay])
-
-
+    }, [ingredients])
 
     const handleEditing = (key, value, index) => {
-        if(value.length >= 1) {
-            addIngredient(value);
-            const test = [...ingredients];
-            test.push(value);
-            setIngredients(test);
+        if(value.length >= 1 && index === ingredients.length-1) {
+            let newIngredients = [...ingredients];
+            newIngredients.push(value)
+            setIngredients(newIngredients);
+        } else {
+            let newIngredients = [...ingredients];
+            newIngredients.splice(index, 1, value)
         }
     }
 
     const handleSUpp = index => {
-         
+        let ingredientsSupp = [...ingredients];
+        ingredientsSupp.splice(index, 1);
+        setIngredients(ingredientsSupp) 
     }
 
     let ingredientsListe = ingredients.map((ingre, index) => {
         return(
             <Input 
                 key={ingre} 
-                valueRedux={ingre} 
+                value={ingre} 
                 placeholder='3 oeufs, 100g de beurre...' 
                 handleEditingParent={handleEditing} 
                 keyName='affichePoubelle'
@@ -52,11 +54,11 @@ function Ingredients({ navigation, addIngredient, ingredientsToDisplay }) {
     })
 
     const handleValider = () => {
+        //Je retire l'élément vide de l'array puis je retourne le résultat au reducer
+        const ingredientsFinal = ingredients;
+        ingredientsFinal.shift();
+        sendIngredients(ingredientsFinal);
         navigation.navigate('Etapes')
-    }
-
-    const handleBack = () => {
-        navigation.goBack()
     }
 
     return (
@@ -65,7 +67,7 @@ function Ingredients({ navigation, addIngredient, ingredientsToDisplay }) {
                     <View style={{flex: 1}}>
                         <KeyboardAvoidingView style={{flex: 1}} behavior={Platform.OS == "ios" ? "padding" : "height"}>
                             <View style={styles.header}>
-                                <FlecheRetour width={30} height={30} onPress={() => handleBack()} />
+                                <FlecheRetour width={30} height={30} onPress={() => navigation.goBack()} />
                                 <Text style={styles.titre}>Ingrédients</Text>
                                 <Home width={30} height={30} onPress={() => navigation.navigate('Accueil')} />
                             </View>
@@ -128,21 +130,16 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
     }
 });
-function mapStateToProps(state) {
-    return {
-        ingredientsToDisplay: state.recetteAjout.ingredients
-    }
-}
 
 function mapDispatchToProps(dispatch){
     return {
-        addIngredient: function(ingredient){
-            dispatch({type: 'ajoutIngredient', ingredient})
+        sendIngredients: function(ingredients){
+            dispatch({type: 'ajoutIngredients', ingredients})
         },
     }
 }
 
 export default connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps
 ) (Ingredients);
