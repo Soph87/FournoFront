@@ -11,7 +11,7 @@ function ImportUrl({navigation, sendUrlToRedux}) {
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
     var addUrl = async () => {
-        const url = await fetch('https://protected-anchorage-65968.herokuapp.com/saveMarmiton', {
+        const url = await fetch('http://172.17.189.64:3000/saveMarmiton', {
           method:"POST",
           headers : {'Content-Type': 'application/x-www-form-urlencoded'},
           body: `lienMarmiton=${urlMarmiton}`
