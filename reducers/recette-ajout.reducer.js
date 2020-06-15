@@ -3,7 +3,7 @@ export default function(recette =
         categories: [], 
         titre: "", 
         prepa: {}, 
-        ingredients: ["",], 
+        ingredients: [], 
         etapes: [],
         photo: ""
     }, action){
@@ -44,7 +44,7 @@ export default function(recette =
                 categories: [], 
                 titre: "", 
                 prepa: {}, 
-                ingredients: ["",], 
+                ingredients: [], 
                 etapes: [],
                 photo: ""
             }
