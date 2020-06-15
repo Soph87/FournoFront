@@ -26,9 +26,9 @@ export default function(recette =
             const addPrepaObj = {...recette};
             addPrepaObj.prepa = action.prepa;
             return addPrepaObj;
-        case "ajoutIngredient" :
+        case "ajoutIngredients" :
             const addIngredientsObj = {...recette};
-            addIngredientsObj.ingredients.push(action.ingredient);
+            addIngredientsObj.ingredients.push(action.ingredients);
             //console.log(addIngredientsObj.ingredients);
             return addIngredientsObj;
         case "ajoutEtapes" :
