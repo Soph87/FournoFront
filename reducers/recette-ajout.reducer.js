@@ -9,32 +9,40 @@ export default function(recette =
     }, action){
     switch (action.type) {
         case "ajoutCategorie" :
-            let addCatObj = {...recette};
+            const addCatObj = {...recette};
             addCatObj.categories.push(action.cat);
             return addCatObj;
         case "suppCategorie" :
-            let suppCatObj = {...recette};
+            const suppCatObj = {...recette};
             const index = suppCatObj.categories.indexOf(action.cat);
             suppCatObj.categories.splice(index, 1);
             return suppCatObj;
         case "ajoutTitre" :
-            let addTitreObjet = {...recette};
+            const addTitreObjet = {...recette};
             addTitreObjet.titre = action.titre;
             return addTitreObjet;
         case "ajoutPrepa" :
-            let addPrepaObj = {...recette};
+            const addPrepaObj = {...recette};
             addPrepaObj.prepa = action.prepa;
             return addPrepaObj;
         case "ajoutIngredients" :
-            let addIngredientsObj = {...recette};
+            const addIngredientsObj = {...recette};
             addIngredientsObj.ingredients = action.ingredients;
             return addIngredientsObj;
         case "ajoutEtapes" :
-            let addEtapesObj = {...recette};
+            const addEtapesObj = {...recette};
             addEtapesObj.etapes = action.etapes;
             return addEtapesObj;
         case "killRecette" :
-            return recette;
+            const recetteVide = {
+                categories: [], 
+                titre: "", 
+                prepa: {}, 
+                ingredients: [], 
+                etapes: [],
+                photo: ""
+            }
+            return recetteVide;
         default:
             return recette;
     }

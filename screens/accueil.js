@@ -11,9 +11,11 @@ import { connect } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
-function Accueil({ navigation, prenomToDisplay, sendCategoryToRedux, sendSearchToRedux}) {
+function Accueil({ navigation, prenomToDisplay, sendCategoryToRedux, sendSearchToRedux, killRecette}) {
     const [visible, setVisible] = useState(false);
     const [recherche, setRecherche] = useState("");
+
+    killRecette()
 
     const toggleOverlay = () => {
         setVisible(!visible);
@@ -278,6 +280,9 @@ function mapDispatchToProps(dispatch) {
         },
         sendSearchToRedux: function(searchText){
             dispatch({ type: 'sendSearch', searchText })
+        },
+        killRecette: function() {
+            dispatch({type: 'killRecette'})
         }
     }
 }

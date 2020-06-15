@@ -72,7 +72,7 @@ function AjoutCategorie({ navigation, sendCatRecette, suppCatRecette }) {
             <SafeAreaView style={{ flex: 1 }}>
                 <View style={{ flex: 1 }}>
                     <View style={styles.header}>
-                        <FlecheRetour width={30} height={30} onPress={() => { navigation.navigate('Accueil') }} />
+                        <FlecheRetour width={30} height={30} onPress={() => { navigation.navigate('Accueil'); }} />
                         <Text style={styles.titre}> Choisir une catégorie </Text>
                         <View width={30} height={30} />
                     </View>
@@ -151,6 +151,9 @@ function mapDispatchToProps(dispatch){
         },
         suppCatRecette: function(cat) {
             dispatch({type: 'suppCategorie', cat})
+        },
+        killRecette: function() {
+            dispatch({type: 'killRecette'})
         }
     }
 }

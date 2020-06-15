@@ -40,7 +40,7 @@ function Titre({ navigation, sendTitre, titreToDisplay }) {
                     <View style={styles.header}>
                         <FlecheRetour width={30} height={30} onPress={() => navigation.goBack()} />
                         <Text style={styles.titre}>Nom de la recette</Text>
-                        <Home width={30} height={30} onPress={() => navigation.navigate('Accueil')} />
+                        <Home width={30} height={30} onPress={() => {navigation.navigate('Accueil');}} />
                     </View>
                     <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.inputContainer}>
                         <Input 
@@ -117,6 +117,9 @@ function mapDispatchToProps(dispatch){
         sendTitre: function(titre){
             dispatch({type: 'ajoutTitre', titre})
         },
+        killRecette: function() {
+            dispatch({type: 'killRecette'})
+        }
     }
 }
 
