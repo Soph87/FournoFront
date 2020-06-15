@@ -25,7 +25,7 @@ function Accueil({ navigation, catPref, prenomToDisplay, sendCategoryToRedux, se
 
     useEffect(() => {
         var retrieveCategoryPref = async () => {
-            let response = await fetch('http://192.168.1.23:3000/users/getCatPref?token=' + token)
+            let response = await fetch('https://protected-anchorage-65968.herokuapp.com/users/getCatPref?token=' + token)
 
             response = await response.json()
 
