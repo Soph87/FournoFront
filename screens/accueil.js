@@ -13,7 +13,7 @@ import CatPref from '../components/categoriesPref'
 import PlaceHolderAccueil from '../components/PlaceHolderAccueil'
 
 
-function Accueil({ navigation, catPref, prenomToDisplay, sendCategoryToRedux, sendSearchToRedux, token, sendCatPref }) {
+function Accueil({ navigation, catPref, prenomToDisplay, sendCategoryToRedux, sendSearchToRedux, token, sendCatPref, killRecette }) {
 
     const [visible, setVisible] = useState(false);
     const [recherche, setRecherche] = useState("");
@@ -42,6 +42,8 @@ function Accueil({ navigation, catPref, prenomToDisplay, sendCategoryToRedux, se
     }, [])
 
 
+
+    killRecette()
 
     const toggleOverlay = () => {
         setVisible(!visible);
@@ -294,6 +296,9 @@ function mapDispatchToProps(dispatch) {
         },
         sendCatPref: function (category) {
             dispatch({ type: "addToPref", category })
+        },
+        killRecette: function() {
+            dispatch({type: 'killRecette'})
         }
     }
 }
