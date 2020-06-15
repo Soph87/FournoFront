@@ -28,17 +28,13 @@ export default function(recette =
             return addPrepaObj;
         case "ajoutIngredients" :
             const addIngredientsObj = {...recette};
-            addIngredientsObj.ingredients.push(action.ingredients);
+            addIngredientsObj.ingredients = action.ingredients;
             //console.log(addIngredientsObj.ingredients);
             return addIngredientsObj;
         case "ajoutEtapes" :
             const addEtapesObj = {...recette};
             addEtapesObj.etapes = action.etapes;
             return addEtapesObj;
-        case "ajoutIng":
-            let test = {...recette}
-            test.ingredients.push(action.ingredient)
-            return test
         case "killRecette" :
             const recetteVide = {
                 categories: [], 
