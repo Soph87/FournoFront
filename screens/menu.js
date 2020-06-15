@@ -12,22 +12,24 @@ function Menu({ navigation }) {
         <View style={styles.global}>
             <SafeAreaView style={{ flex: 1 }}>
                 <View style={{ flex: 1 }}>
-                    <View style={{alignItems: 'flex-end'}}>
+                    <View style={{ alignItems: 'flex-end' }}>
                         <TouchableWithoutFeedback onPress={() => navigation.navigate('Accueil')} >
                             <CroixBlanche width={30} height={30} />
                         </TouchableWithoutFeedback>
                     </View>
                     <View style={{ flex: 1, justifyContent: 'center' }}>
-                        <TouchableOpacity onPress={()=> navigation.navigate("MonCompte")}>
-                        <View style={styles.ongletMenu}>
-                            <Userjaune width={30} height={30} />
-                            <Text style={styles.ongletText}>Mon compte</Text>
-                        </View>
+                        <TouchableOpacity onPress={() => navigation.navigate("MonCompte")}>
+                            <View style={styles.ongletMenu}>
+                                <Userjaune width={30} height={30} />
+                                <Text style={styles.ongletText}>Mon compte</Text>
+                            </View>
                         </TouchableOpacity>
-                        <View style={styles.ongletMenu}>
-                            <Liste width={30} height={30} />
-                            <Text style={styles.ongletText}>Gestion des catégories et des plats</Text>
-                        </View>
+                        <TouchableOpacity onPress={() => navigation.navigate("GestionCat")}>
+                            <View style={styles.ongletMenu}>
+                                <Liste width={30} height={30} />
+                                <Text style={styles.ongletText}>Gestion des catégories et des plats</Text>
+                            </View>
+                        </TouchableOpacity>
                         <View style={styles.ongletMenu}>
                             <Sync width={30} height={30} />
                             <Text style={styles.ongletText}>Synchronisation pour mode offline</Text>
@@ -41,7 +43,7 @@ function Menu({ navigation }) {
 
 const styles = StyleSheet.create({
     global: {
-        flex: 1, 
+        flex: 1,
         backgroundColor: "#FF5A5D",
         paddingHorizontal: 15,
         paddingTop: 30,
@@ -49,9 +51,9 @@ const styles = StyleSheet.create({
     },
     //header
     header: {
-        flexDirection: "row", 
-        justifyContent: 'space-between', 
-        alignItems: "center", 
+        flexDirection: "row",
+        justifyContent: 'space-between',
+        alignItems: "center",
         paddingBottom: 10
     },
     ongletMenu: {
@@ -71,7 +73,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.27,
         shadowRadius: 4.65,
-        
+
         elevation: 6,
     },
     ongletText: {
@@ -85,7 +87,7 @@ const styles = StyleSheet.create({
         height: 40,
         alignItems: "flex-end",
         justifyContent: "flex-end",
-        marginHorizontal: 20,  
+        marginHorizontal: 20,
     }
 });
 

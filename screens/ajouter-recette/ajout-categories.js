@@ -22,7 +22,7 @@ function AjoutCategorie({ navigation, sendCatRecette, suppCatRecette }) {
 
     let categories = [
         {titre: 'Entrées', image: require('../../assets/images/categories/entrees.png')},
-        {titre: 'Plats', image: require('../../assets/images/categories/Plat.png')},
+        {titre: 'Plâts', image: require('../../assets/images/categories/Plat.png')},
         {titre: 'Desserts', image: require('../../assets/images/categories/Dessert.png')},
         {titre: 'Petits-déj', image: require('../../assets/images/categories/Petit-dej.png')},
         {titre: 'Salades', image: require('../../assets/images/categories/Salade.png')},

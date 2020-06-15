@@ -27,6 +27,7 @@ import RecapManuel from './screens/ajouter-recette/recapManuel';
 import AjoutURL from './screens/ajouter-recette/ajout-url';
 import ListeRecherche from './screens/listeRecherche'
 import MonCompte from './screens/compte'
+import GestionCat from './screens/gestionCat'
 //Redux
 import prenom from './reducers/prenom';
 import category from './reducers/category';
@@ -35,6 +36,7 @@ import photo from './reducers/photo'
 import searchText from './reducers/search'
 import newRecette from './reducers/marmiton.reducer';
 import recetteAjout from './reducers/recette-ajout.reducer';
+import categoryPref from './reducers/categoryPref'
 import {Provider} from 'react-redux';
 import {createStore, combineReducers} from 'redux';
 import token from './reducers/token'
@@ -42,7 +44,7 @@ import { useFonts } from '@use-expo/font';
 import { AppLoading } from "expo";
 import { Easing } from 'react-native-reanimated';
 
-const store = createStore(combineReducers({prenom, category, recette, photo, searchText, newRecette, token, recetteAjout}))
+const store = createStore(combineReducers({prenom, category, recette, photo, searchText, newRecette, token, recetteAjout, categoryPref}))
 
 var StackNavigator = createStackNavigator({
     Home: SignIn,
@@ -62,7 +64,8 @@ var StackNavigator = createStackNavigator({
     Recap: Recap,
     ListeRecherche: ListeRecherche,
     RecapManuel: RecapManuel,
-    MonCompte: MonCompte
+    MonCompte: MonCompte,
+    GestionCat: GestionCat
 }, 
 {
   headerMode: "none",

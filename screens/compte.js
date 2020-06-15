@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, AsyncStorage, KeyboardAvoidingView } from 'react-native';
 import { Input, Button, Overlay } from 'react-native-elements'
+import { ScrollView } from 'react-native-gesture-handler';
+import FlecheRetour from '../assets/images/icones/fleche-retour.svg';
+
 
 function MonCompte({ navigation }) {
 
@@ -86,9 +89,12 @@ function MonCompte({ navigation }) {
 
         <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.global}>
             <SafeAreaView style={{ flex: 1 }}>
+                <ScrollView>
                 <View style={{ flex: 1 }}>
-                    <View>
+                    <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+                        <FlecheRetour width={30} height={30} onPress={() => { navigation.goBack() }} />
                         <Text style={styles.titre}>Mon compte</Text>
+                        <View />
                     </View>
                     <View style={{ marginTop: 30 }}>
                         <Text style={styles.titre}>{prenomToDisplay}, ici vous pouvez changer vos informations personnelles</Text>
@@ -127,6 +133,7 @@ function MonCompte({ navigation }) {
                         />
                     </View>
                 </View>
+                </ScrollView>
             </SafeAreaView>
         </KeyboardAvoidingView>
     )

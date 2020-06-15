@@ -33,6 +33,10 @@ export default function(recette =
             let addEtapesObj = {...recette};
             addEtapesObj.etapes = action.etapes;
             return addEtapesObj;
+        case "ajoutIng":
+            let test = {...recette}
+            test.ingredients.push(action.ingredient)
+            return test
         case "killRecette" :
             return recette;
         default:
