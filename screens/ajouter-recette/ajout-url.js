@@ -3,14 +3,20 @@ import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import FlecheRetour from '../../assets/images/icones/fleche-retour.svg';
 import { connect } from 'react-redux';
+import PlaceHolderAccueil from '../../components/PlaceHolderAccueil'
+
 
 function ImportUrl({navigation, sendUrlToRedux}) {
 
     const [isEnabled, setIsEnabled] = useState(false);
     const [urlMarmiton, setUrlMarmiton] = useState('');
+    const [isFetching, setIsFetching] = useState(null)
+
+
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
     var addUrl = async () => {
+        setIsFetching(true)
         const url = await fetch('https://protected-anchorage-65968.herokuapp.com/saveMarmiton', {
           method:"POST",
           headers : {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -19,10 +25,19 @@ function ImportUrl({navigation, sendUrlToRedux}) {
         const newRecette = await url.json();
         console.log(newRecette)
         if(newRecette){
+            setIsFetching(false)
             sendUrlToRedux(newRecette);
             navigation.navigate('Recap');
         }
     }
+
+    if(isFetching){
+        return (
+            <PlaceHolderAccueil />
+        )
+    } else {
+
+   
     
     return (
 
@@ -61,6 +76,7 @@ function ImportUrl({navigation, sendUrlToRedux}) {
             </SafeAreaView>
         </View>
     )
+}
 }
 
 
