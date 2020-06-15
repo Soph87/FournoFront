@@ -7,13 +7,13 @@ import Photo from '../../../assets/images/icones/appareil-photo.svg'
 import FlecheRetour from '../../../assets/images/icones/fleche-retour.svg'
 import Ajouter from '../../../assets/images/icones/ajouter.svg'
 import { connect } from 'react-redux';
-
+import * as ImagePicker from 'expo-image-picker';
 //Components
 import PhotoCamera from '../../rechercher-recette/components/photo';
 import CatCard from '../../../components/cat-card';
 
 
-function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoToDisplay, killPhotoRedux, token }) {
+function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoToDisplay, killPhotoRedux, token, sendPhoto }) {
 
     const [photo, setPhoto] = useState(false)
     const [photoMarmit, setPhotoMarmit] = useState(marmitonToDisplay.recette.image)
@@ -26,8 +26,10 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
     const [etapes, setEtapes] = useState(marmitonToDisplay.recette.etapes)
     const [categoriesList, setCategoriesList] = useState([])
     const [overlayVisible, setOverlayVisible] = useState(false)
+    const [hasAlbumPermission, setHasAlbumPermission] = useState(null)
+    const [noPhoto, setNoPhoto] = useState(false)
 
-    
+
     let listeCategories = [
         { titre: 'Entrées', image: require('../../../assets/images/categories/entrees.png') },
         { titre: 'Plats', image: require('../../../assets/images/categories/Plat.png') },
@@ -57,6 +59,46 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
     var clickRetour = () => {
         clicRetourParent()
     }
+    var photoSaved = () => {
+        setNoPhoto(false)
+    }
+
+    //Fonction qui va gérer l'appui sur le picto album (regarder la page modifier recette pour plus d'nfos)
+    var getPhotoFromAlbum = async () => {
+        (async () => {
+            //if (Constants.platform.ios) {
+              const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
+              if (status !== 'granted') {
+                alert('Oups!! Nous avons besoin de votre permission pour accéder à vos photos!');
+              }
+              setHasAlbumPermission(status === "granted")
+            //}
+          })();
+          
+          if (hasAlbumPermission){
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.All,
+                allowsEditing: true,
+                aspect: [4, 3],
+                quality: 1,
+              });
+          
+              console.log(result);
+          
+              if (!result.cancelled) {
+                sendPhoto(result.uri)
+                //On donne a photoMarmit la nouvelle valeur, c'est a dire la photo qu'il vient de choisir
+                setPhotoMarmit(result.uri)
+                setNoPhoto(false)
+              }
+              console.log(result.uri)
+          }
+    }
+
+    var deletePhoto = () => {
+        sendPhoto("")
+        setNoPhoto(true)
+    }
 
     
     var validerRecette = async () => {
@@ -65,7 +107,16 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
         recette.titre = titre
         recette.etapes = etapes
         recette.ingredients = ingredients
-        recette.image = photoMarmit
+        //Ici on check si l'user a appuyé sur le picto poubelle pour effacer la photo
+        //Si c'est le cas on envoie une chaine de caractere vide
+        //Sinon on envoie la photoMarmit (qui est soit la photo qui vient de marmiton, soit la photo que l'user a choisi)
+        if (noPhoto){
+            recette.image = ""
+        } else if (photoToDisplay === ""){
+            recette.image = photoMarmit
+        } else {
+            recette.image = photoToDisplay
+        }
         recette.url = marmitonToDisplay.recette.url
         recette.preparation[0].preparation = prep
         recette.preparation[0].cuisson = cuisson
@@ -135,6 +186,8 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
         )
     })
 
+   
+
     //Affichage des Cards de catégorie
     let categoryMap = listeCategories.map((cat) => {
         return (
@@ -162,9 +215,40 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
         )
     })
 
+   var imageToDisplay;
+
+   if(photoToDisplay === ""){
+       imageToDisplay = photoMarmit
+   } else {
+       imageToDisplay = photoToDisplay
+   }
+
+    var imageToShow;
+    if (noPhoto){
+        imageToShow= <ImageBackground source={require('../../../assets/images/no-photo.png')} style={{ width: '100%', height: 200, marginTop: 25, flex: 1, justifyContent: "flex-end" }}>
+        <View style={{ backgroundColor: "white", opacity: 0.7, height: 50, width: "100%", alignItems: "center", flexDirection: "row", justifyContent: "center" }}>
+            <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around" }}>
+                <AppareilPhoto width={30} height={30} onPress={() => { setPhoto(true) }} />
+                <Photo width={30} height={30} onPress={() => getPhotoFromAlbum()} />
+                <Poubelle width={30} height={30} onPress={() => deletePhoto()}/>
+            </View>
+        </View>
+    </ImageBackground>
+    } else {
+        imageToShow= <ImageBackground source={{uri: imageToDisplay}} style={{ width: '100%', height: 200, marginTop: 25, flex: 1, justifyContent: "flex-end" }}>
+        <View style={{ backgroundColor: "white", opacity: 0.7, height: 50, width: "100%", alignItems: "center", flexDirection: "row", justifyContent: "center" }}>
+            <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around" }}>
+                <AppareilPhoto width={30} height={30} onPress={() => { setPhoto(true) }} />
+                <Photo width={30} height={30} onPress={() => getPhotoFromAlbum()} />
+                <Poubelle width={30} height={30} onPress={() => deletePhoto()}/>
+            </View>
+        </View>
+    </ImageBackground>
+    }
+
     if (photo) {
         return (
-            <PhotoCamera navigation={navigation} clickCancelPhoto={cancelPhoto} />
+            <PhotoCamera navigation={navigation} clickCancelPhoto={cancelPhoto} photoSaved={photoSaved} />
         )
     } else {
      
@@ -181,15 +265,7 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
                 </View>
 
                 <ScrollView style={{ flex: 1, width: "100%" }}>
-                    <ImageBackground source={{ uri: photoMarmit }} style={{ width: '100%', height: 200, marginTop: 25, flex: 1, justifyContent: "flex-end" }}>
-                        <View style={{ backgroundColor: "white", opacity: 0.7, height: 50, width: "100%", alignItems: "center", flexDirection: "row", justifyContent: "center" }}>
-                            <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around" }}>
-                                <AppareilPhoto width={30} height={30} onPress={() => { setPhoto(true) }} />
-                                <Photo width={30} height={30} />
-                                <Poubelle width={30} height={30} />
-                            </View>
-                        </View>
-                    </ImageBackground>
+                    {imageToShow}
                     <View style={styles.separateur} />
                     <View>
                         <Text style={styles.sousTitre}>Titre de la recette</Text>
@@ -403,6 +479,9 @@ function mapDispatchToProps(dispatch){
     return {
         killPhotoRedux: function(){
             dispatch({type: 'killPhoto'})
+        },
+        sendPhoto: function(photo){
+            dispatch({type: 'addPhoto', photo})
         }
     }
 }

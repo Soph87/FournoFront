@@ -78,6 +78,16 @@ function ConsulterRecette({ navigation, recetteToDisplay, clickModifierParent })
     let quantite;
     let total;
     let vide;
+    //Ici on va gérer la photo à afficher
+    var imageToShow;
+    //Si l'image est un string vide (donc pas de photo enregistrée)
+    //On montre le png (no-photo)
+    if (recetteToDisplay.image === ""){
+        imageToShow= <Image source={require('../../../assets/images/no-photo.png')} style={{ width: '100%', height: 200, marginTop: 25 }}></Image>
+        //Sinon on montre l'image qui revient de la DB
+    } else {
+        imageToShow= <Image source={{uri : recetteToDisplay.image}} style={{ width: '100%', height: 200, marginTop: 25 }}></Image>
+    }
 
     if (recetteToDisplay.preparation[0].preparation != "") {
         preparation = <Text style={styles.preparation}> <Text style={styles.sousTitre}>Préparation :</Text> {recetteToDisplay.preparation[0].preparation}</Text>
@@ -114,7 +124,7 @@ function ConsulterRecette({ navigation, recetteToDisplay, clickModifierParent })
                     </View>
                     <ScrollView style={{ flex: 1, width: "100%" }}>
                         <View>
-                            <Image source={{uri : recetteToDisplay.image}} style={{ width: '100%', height: 200, marginTop: 25 }}></Image>
+                            {imageToShow}
                         </View>
                         <Text style={styles.titre}>{recetteToDisplay.titre}</Text>
                         <View style={{ padding: 15 }}>

@@ -26,10 +26,20 @@ function ListePlats({ navigation, catToDisplay, sendRecette,photoToDisplay, toke
         navigation.navigate('Recette')
     }
 
+    
 
     var recettesTab = recettes.map((recette, i) => {
-       
-     
+    //Ici on va gérer ce qu'on recoit comme info de photo
+    
+     var imageToShow;
+     //Si on recoit un string vide comme photo, (ce qui veut dire qu'il na pas enregistré de photo)
+     //alors on montre le png (no-photo)
+     if (recette.image === ""){
+         imageToShow = <Image source={require('../../assets/images/no-photo.png')} style={styles.cardImages} />
+        //Sinon on montre l'image qui revient de la DB
+        } else {
+         imageToShow = <Image source={{uri: recette.image}} style={styles.cardImages} />
+     }
         
         
         return (
@@ -37,8 +47,7 @@ function ListePlats({ navigation, catToDisplay, sendRecette,photoToDisplay, toke
                 < View style={styles.cards} >
                     <View style={{ width: 84, height: 60 }}>
 
-                        <Image source={{uri: recette.image}} style={styles.cardImages} />
-
+                        {imageToShow}
                     </View>
 
                     <Text style={styles.cardTexte}>

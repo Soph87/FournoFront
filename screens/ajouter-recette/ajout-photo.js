@@ -11,10 +11,15 @@ import Poubelle from '../../assets/images/icones/poubelle.svg'
 import Photo from '../../assets/images/icones/appareil-photo.svg';
 //Components
 import PhotoCamera from '../rechercher-recette/components/photo';
+import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
 
 
-function AjoutPhoto({ navigation, photoToDisplay }) {
+function AjoutPhoto({ navigation, photoToDisplay, sendPhoto }) {
+
     const [photo, setPhoto] = useState(false);
+    const [hasAlbumPermission, setHasAlbumPermission] = useState(null)
+
 
     const handleValider = () => {
         navigation.navigate('RecapManuel');
@@ -23,21 +28,55 @@ function AjoutPhoto({ navigation, photoToDisplay }) {
         setPhoto(false)
     }
 
+    var getPhotoFromAlbum = async () => {
+        (async () => {
+            //if (Constants.platform.ios) {
+              const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
+              if (status !== 'granted') {
+                alert('Oups!! Nous avons besoin de votre permission pour accéder à vos photos!');
+              }
+              setHasAlbumPermission(status === "granted")
+            //}
+          })();
+          
+          if (hasAlbumPermission){
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.All,
+                allowsEditing: true,
+                aspect: [4, 3],
+                quality: 1,
+              });
+          
+              console.log(result);
+          
+              if (!result.cancelled) {
+                sendPhoto(result.uri)
+              }
+          }
+    }
+
+    var deletePhoto = () => {
+        sendPhoto("")
+    }
+    var photoSaved = () => {
+        
+    }
+
     var photoBackGround;
     if (photoToDisplay === "") {
         photoBackGround = <ImageBackground source={require('../../assets/images/no-photo.png')} style={styles.backgroundImg}>
             <View style={styles.boutonsContainer}>
                 <AppareilPhoto width={30} height={30} onPress={() => { setPhoto(true) }} />
-                <Photo width={30} height={30} />
-                <Poubelle width={30} height={30} />
+                <Photo width={30} height={30} onPress={() => getPhotoFromAlbum()}/>
+                <Poubelle width={30} height={30} onPress={()=> deletePhoto()}/>
             </View>
         </ImageBackground>
     } else {
         photoBackGround =   <ImageBackground source={{uri : photoToDisplay}} style={styles.backgroundImg}>
             <View style={styles.boutonsContainer}>
                 <AppareilPhoto width={30} height={30} onPress={() => { setPhoto(true) }} />
-                <Photo width={30} height={30} />
-                <Poubelle width={30} height={30} />
+                <Photo width={30} height={30} onPress={() => getPhotoFromAlbum()} />
+                <Poubelle width={30} height={30} onPress={()=> deletePhoto()}/>
             </View>
         </ImageBackground>
     }
@@ -45,7 +84,7 @@ function AjoutPhoto({ navigation, photoToDisplay }) {
 
     if (photo) {
         return (
-            <PhotoCamera navigation={navigation} clickCancelPhoto={cancelPhoto} />
+            <PhotoCamera navigation={navigation} clickCancelPhoto={cancelPhoto} photoSaved={photoSaved}/>
         )
     } else {
         return (
@@ -131,9 +170,16 @@ function mapStateToProps(state) {
         photoToDisplay: state.photo
     }
 }
+function mapDispatchToProps(dispatch){
+    return {
+        sendPhoto: function(photo){
+            dispatch({type: 'addPhoto', photo})
+        }
+    }
+}
 
 
 export default connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
 )(AjoutPhoto)

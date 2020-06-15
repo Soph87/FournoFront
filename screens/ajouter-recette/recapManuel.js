@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { View, StyleSheet, ScrollView, Image, ImageBackground, Text, SafeAreaView } from 'react-native';
 import { Input, Button, Overlay } from 'react-native-elements'
 //Redux
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 //Icones SVG
 import AppareilPhoto from '../../assets/images/icones/photo.svg'
 import Poubelle from '../../assets/images/icones/poubelle.svg'
@@ -10,8 +10,11 @@ import Photo from '../../assets/images/icones/appareil-photo.svg'
 import FlecheRetour from '../../assets/images/icones/fleche-retour.svg'
 import PoubelleBlanche from '../../assets/images/icones/poubelleBlanche.svg'
 import Ajouter from '../../assets/images/icones/ajouter.svg'
+import PhotoCamera from '../rechercher-recette/components/photo';
+import * as ImagePicker from 'expo-image-picker';
 
-function RecapManuel({navigation, recetteDisplay, photoDisplay, killPhotoRedux, token }){
+
+function RecapManuel({ navigation, recetteDisplay, photoDisplay, killPhotoRedux, token, sendPhoto }) {
 
     const [titre, setTitre] = useState(recetteDisplay.titre)
     const [ingredients, setIngredients] = useState(recetteDisplay.ingredients)
@@ -21,9 +24,58 @@ function RecapManuel({navigation, recetteDisplay, photoDisplay, killPhotoRedux, 
     const [quantite, setQuantite] = useState(recetteDisplay.prepa.personne)
     const [etapes, setEtapes] = useState(recetteDisplay.etapes)
     const [category, setCategory] = useState(recetteDisplay.categories)
-    const [photoToShow, setPhotoToShow] = useState(photoDisplay)
     const [overlayVisible, setOverlayVisible] = useState(false)
     const [photo, setPhoto] = useState(false)
+    const [hasAlbumPermission, setHasAlbumPermission] = useState(ImagePicker.getCameraPermissionsAsync())
+    const [noPhoto, setNoPhoto] = useState(false)
+
+
+
+    var getPhotoFromAlbum = async () => {
+        if (hasAlbumPermission) {
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.All,
+                allowsEditing: true,
+                aspect: [4, 3],
+                quality: 1,
+            });
+
+            //console.log(result);
+            //Si l'user n'a pas appuyé sur cancel alors on envoie la photo redux pour l'afficher
+            if (!result.cancelled) {
+                //setPhotoToShow(result.uri)
+                sendPhoto(result.uri)
+                setNoPhoto(false)
+
+            }
+            //console.log(result.uri)
+        } else {
+            (async () => {
+                //if (Constants.platform.ios) {
+                //On demande la permission d'acceder a l'album
+                const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
+                //On gère le cas ou la perosnne ne permets pas d'acceder a l'album
+                if (status !== 'granted') {
+                    alert('Oups!! Nous avons besoin de votre permission pour accéder à vos photos!');
+                }
+                //On mets à jour la permission pour pouvoir l'utiliser plus tard
+                setHasAlbumPermission(status === "granted")
+                //}
+            })();
+        }
+
+        //Si on a la permission, alors on créée une variable qui sera égale à la photo qu'on va chercher dans l'album
+
+    }
+    //Ici on gère le cas ou la personne clique sur le picto poubelle pour effacer la photo
+    var deletePhoto = () => {
+        //On envoie au reducer une photo vide
+        sendPhoto("")
+        //on mets l'état noPhoto a vrai qui nous permettra ensuite de montrer la bonne photo
+        //Etant donné que la png à afficher s'utilise en require, on doit passer par un état
+        setNoPhoto(true)
+    }
+
 
     var categories = category.map((cat, i) => {
         return (
@@ -81,6 +133,42 @@ function RecapManuel({navigation, recetteDisplay, photoDisplay, killPhotoRedux, 
         setEtapes(newEtap)
     }
 
+    var cancelPhoto = () => {
+        setPhoto(false)
+    }
+
+    var photoSaved = () => {
+        setNoPhoto(false)
+    }
+
+    var imageToShow;
+
+    if (noPhoto || photoDisplay === ""){
+        imageToShow = <ImageBackground source={require("../../assets/images/no-photo.png")} style={{ width: '100%', height: 200, marginTop: 25, flex: 1, justifyContent: "flex-end" }}>
+
+        <View style={{ backgroundColor: "white", opacity: 0.7, height: 50, width: "100%", alignItems: "center", flexDirection: "row", justifyContent: "center" }}>
+
+            <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around" }}>
+                <AppareilPhoto width={30} height={30} onPress={() => { setPhoto(true) }} />
+                <Photo width={30} height={30} onPress={() => getPhotoFromAlbum()} />
+                <Poubelle width={30} height={30} onPress={() => deletePhoto()} />
+            </View>
+        </View>
+    </ImageBackground>
+    } else {
+        imageToShow= <ImageBackground source={{ uri: photoDisplay }} style={{ width: '100%', height: 200, marginTop: 25, flex: 1, justifyContent: "flex-end" }}>
+
+        <View style={{ backgroundColor: "white", opacity: 0.7, height: 50, width: "100%", alignItems: "center", flexDirection: "row", justifyContent: "center" }}>
+
+            <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around" }}>
+                <AppareilPhoto width={30} height={30} onPress={() => { setPhoto(true) }} />
+                <Photo width={30} height={30} onPress={() => getPhotoFromAlbum()} />
+                <Poubelle width={30} height={30} onPress={() => deletePhoto()} />
+            </View>
+        </View>
+    </ImageBackground>
+    }
+
     var validerRecette = async () => {
         var recette = {}
         var preparation = {
@@ -89,12 +177,16 @@ function RecapManuel({navigation, recetteDisplay, photoDisplay, killPhotoRedux, 
             total: tot,
             quantite: quantite,
         }
-        recette.titre= titre
+        recette.titre = titre
         recette.preparation = preparation
         recette.etapes = etapes
         recette.ingredients = ingredients
-        recette.image = photoToShow
-        recette.category= category
+       if (noPhoto){
+           recette.image = ""
+       } else {
+           recette.image = photoDisplay
+       }
+        recette.category = category
         recette.url = ""
         recette.token = token
 
@@ -108,17 +200,21 @@ function RecapManuel({navigation, recetteDisplay, photoDisplay, killPhotoRedux, 
             body: body,
         })
 
-        if (response){
+        if (response) {
             killPhotoRedux()
             navigation.navigate("Accueil")
         }
     }
 
+    if (photo) {
+        return (
+            <PhotoCamera navigation={navigation} clickCancelPhoto={cancelPhoto} photoSaved={photoSaved} />
+        )
+    } else {
 
+        return (
 
-    return (
-
-        <View style={{ flex: 1, backgroundColor: "#FF5A5B" }}>
+            <View style={{ flex: 1, backgroundColor: "#FF5A5B" }}>
                 <SafeAreaView style={{ flex: 1 }}>
                     <ScrollView style={{ flex: 1, width: "100%" }}>
 
@@ -128,17 +224,7 @@ function RecapManuel({navigation, recetteDisplay, photoDisplay, killPhotoRedux, 
                             <View />
                         </View>
 
-                        <ImageBackground source={{ uri: photoToShow }} style={{ width: '100%', height: 200, marginTop: 25, flex: 1, justifyContent: "flex-end" }}>
-
-                            <View style={{ backgroundColor: "white", opacity: 0.7, height: 50, width: "100%", alignItems: "center", flexDirection: "row", justifyContent: "center" }}>
-
-                                <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around" }}>
-                                    <AppareilPhoto width={30} height={30} onPress={() => { setPhoto(true) }} />
-                                    <Photo width={30} height={30} />
-                                    <Poubelle width={30} height={30} />
-                                </View>
-                            </View>
-                        </ImageBackground>
+                        {imageToShow}
 
                         <View style={{ marginTop: 20 }}>
                             <Text style={styles.sousTitre}>Titre de la recette</Text>
@@ -163,8 +249,8 @@ function RecapManuel({navigation, recetteDisplay, photoDisplay, killPhotoRedux, 
                         </View>
 
                         <Overlay isVisible={overlayVisible} onBackdropPress={() => setOverlayVisible(false)}>
-                           <ScrollView>
-                            <Text>Ceci est un overlay</Text>
+                            <ScrollView>
+                                <Text>Ceci est un overlay</Text>
                             </ScrollView>
                         </Overlay>
 
@@ -225,7 +311,8 @@ function RecapManuel({navigation, recetteDisplay, photoDisplay, killPhotoRedux, 
                     </View>
                 </SafeAreaView>
             </View>
-    )
+        )
+    }
 }
 
 const styles = StyleSheet.create({
@@ -273,6 +360,9 @@ function mapDispatchToProps(dispatch) {
     return {
         killPhotoRedux: function () {
             dispatch({ type: 'killPhoto' })
+        },
+        sendPhoto: function (photo) {
+            dispatch({ type: "addPhoto", photo })
         }
     }
 }

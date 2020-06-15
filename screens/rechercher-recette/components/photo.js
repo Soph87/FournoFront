@@ -6,10 +6,11 @@ import { FontAwesome } from '@expo/vector-icons';
 import * as MediaLibrary from 'expo-media-library';
 import { connect } from 'react-redux';
 
-function PhotoCamera({ navigation, clickCancelPhoto, sendPhoto }) {
+function PhotoCamera({ navigation, clickCancelPhoto, sendPhoto, photoSaved }) {
 
     const [hasPermission, setHasPermission] = useState(null);
     const [type, setType] = useState(Camera.Constants.Type.back);
+
     var camera = useRef(null)
 
     useEffect(() => {
@@ -74,6 +75,7 @@ function PhotoCamera({ navigation, clickCancelPhoto, sendPhoto }) {
                                         MediaLibrary.saveToLibraryAsync(photo.uri)
                                         sendPhoto(photo.uri)
                                         clickCancelPhoto()
+                                        photoSaved()
                                     };
 
                                 }
@@ -84,7 +86,7 @@ function PhotoCamera({ navigation, clickCancelPhoto, sendPhoto }) {
                             
                         </TouchableOpacity>
                         <TouchableOpacity>
-                        <Text style={{ fontSize: 18, marginBottom: 50, color: 'white' }} onPress={() => navigation.goBack()}>Retour</Text>
+                        <Text style={{ fontSize: 18, marginBottom: 50, color: 'white' }} onPress={() => clickCancelPhoto()}>Retour</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
