@@ -9,7 +9,7 @@ import Input from '../../components/inputs-ajout';
 import FlecheRetour from '../../assets/images/icones/fleche-retour.svg';
 import Home from '../../assets/images/icones/home.svg';
 
-function Preparation({ navigation, sendPrepa }) {
+function Preparation({ navigation, sendPrepa, infosToDisplay }) {
     const [prepa, setPrepa] = useState('');
     const [cuisson, setCuisson] = useState('');
     const [quantite, setQuantite] = useState('');
@@ -36,13 +36,31 @@ function Preparation({ navigation, sendPrepa }) {
                 <View style={{flex: 1}}>
                     <View style={styles.header}>
                         <FlecheRetour width={30} height={30} onPress={() => navigation.goBack()} />
-                        <Text style={styles.titre}>Préparation</Text>
+                        <Text style={styles.titre}>Infos recette</Text>
                         <Home width={30} height={30} onPress={() => navigation.navigate('Accueil')} />
                     </View>
                     <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.inputContainer}>
-                        <Input keyName='prepa' placeholder='10 min' label='Temps de préparation (optionnel)' handleEditingParent={handleEditing} />
-                        <Input keyName='cuisson' placeholder='30 min' label='Temps de cuisson (optionnel)' handleEditingParent={handleEditing} />
-                        <Input keyName='quantite' placeholder='4 personnes' label='Quantité (optionnel)' handleEditingParent={handleEditing} />
+                        <Input 
+                            keyName='prepa' 
+                            placeholder='10 min' 
+                            label='Temps de préparation (optionnel)' 
+                            handleEditingParent={handleEditing} 
+                            valueRedux={infosToDisplay.preparation}
+                        />
+                        <Input 
+                            keyName='cuisson' 
+                            placeholder='30 min' 
+                            label='Temps de cuisson (optionnel)' 
+                            handleEditingParent={handleEditing}
+                            valueRedux={infosToDisplay.cuisson}
+                        />
+                        <Input 
+                            keyName='quantite' 
+                            placeholder='4 personnes' 
+                            label='Quantité (optionnel)' 
+                            handleEditingParent={handleEditing} 
+                            valueRedux={infosToDisplay.personne}
+                        />
                     </KeyboardAvoidingView>
                     <View style={styles.bottomNav}>
                         <Button 
@@ -98,6 +116,11 @@ const styles = StyleSheet.create({
     }
 });
 
+function mapStateToProps(state) {
+    return {
+        infosToDisplay: state.recetteAjout.prepa
+    }
+}
 
 function mapDispatchToProps(dispatch){
     return {
@@ -108,6 +131,6 @@ function mapDispatchToProps(dispatch){
 }
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 ) (Preparation);

@@ -3,10 +3,11 @@ export default function(recette =
         categories: [], 
         titre: "", 
         prepa: {}, 
-        ingredients: [], 
+        ingredients: ["",], 
         etapes: [],
         photo: ""
     }, action){
+
     switch (action.type) {
         case "ajoutCategorie" :
             const addCatObj = {...recette};
@@ -25,9 +26,10 @@ export default function(recette =
             const addPrepaObj = {...recette};
             addPrepaObj.prepa = action.prepa;
             return addPrepaObj;
-        case "ajoutIngredients" :
+        case "ajoutIngredient" :
             const addIngredientsObj = {...recette};
-            addIngredientsObj.ingredients = action.ingredients;
+            addIngredientsObj.ingredients.push(action.ingredient);
+            //console.log(addIngredientsObj.ingredients);
             return addIngredientsObj;
         case "ajoutEtapes" :
             const addEtapesObj = {...recette};
@@ -38,7 +40,7 @@ export default function(recette =
                 categories: [], 
                 titre: "", 
                 prepa: {}, 
-                ingredients: [], 
+                ingredients: ["",], 
                 etapes: [],
                 photo: ""
             }

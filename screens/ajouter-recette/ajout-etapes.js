@@ -65,7 +65,7 @@ function Etapes({ navigation, sendEtapes }) {
                     <View style={{flex: 1}}>
                         <KeyboardAvoidingView style={{flex: 1}} behavior={Platform.OS == "ios" ? "padding" : "height"}>
                             <View style={styles.header}>
-                                <FlecheRetour width={30} height={30} onPress={() => navigation.goBack()} />
+                                <FlecheRetour width={30} height={30} onPress={() => navigation.navigate('Ingredients')} />
                                 <Text style={styles.titre}>Etapes de la recette</Text>
                                 <Home width={30} height={30} onPress={() => navigation.navigate('Accueil')} />
                             </View>
