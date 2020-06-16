@@ -105,21 +105,21 @@ function MonCompte({ navigation }) {
 
                     <View style={{ marginTop: 30 }}>
                         <Text style={styles.titre}>Modifier prénom</Text>
-                        <Input inputContainerStyle={styles.input} placeholder="modifier votre prénom" onChangeText={text => setPrenom(text)}></Input>
+                        <Input inputContainerStyle={styles.input} placeholder="Entrez votre prénom" onChangeText={text => setPrenom(text)}></Input>
                     </View>
 
                     <View style={{ marginTop: 30 }}>
                         <Text style={styles.titre}>Modifier adresse e-mail</Text>
-                        <Input inputContainerStyle={styles.input} keyboardType="email-address"  placeholder="adresse mail actuelle" onChangeText={text => setEmail(text)}></Input>
-                        <Input inputContainerStyle={styles.input} keyboardType="email-address"  placeholder="nouvelle adresse mail" onChangeText={text => setNewEmail(text)}></Input>
-                        <Input inputContainerStyle={styles.input} keyboardType="email-address"  placeholder="répéter nouvelle adresse mail" onChangeText={text => setNewEmailRepeat(text)}></Input>
+                        <Input inputContainerStyle={styles.input} keyboardType="email-address"  placeholder="Adresse e-mail actuelle" onChangeText={text => setEmail(text)}></Input>
+                        <Input inputContainerStyle={styles.input} keyboardType="email-address"  placeholder="Nouvelle adresse e-mail" onChangeText={text => setNewEmail(text)}></Input>
+                        <Input inputContainerStyle={styles.input} keyboardType="email-address"  placeholder="Confirmer nouvelle adresse e-mail" onChangeText={text => setNewEmailRepeat(text)}></Input>
                     </View>
 
                     <View style={{ marginTop: 30 }}>
                         <Text style={styles.titre}>Modifier mot de passe</Text>
-                        <Input inputContainerStyle={styles.input} secureTextEntry={true}  placeholder="mot de passe actuel" onChangeText={text => setPassword(text)}></Input>
-                        <Input inputContainerStyle={styles.input} secureTextEntry={true}  placeholder="nouveau mot de passe" onChangeText={text => setNewPassword(text)}></Input>
-                        <Input inputContainerStyle={styles.input} secureTextEntry={true}  placeholder="répéter nouveau mot de passe" onChangeText={text => setRepeatPass(text)}></Input>
+                        <Input inputContainerStyle={styles.input} secureTextEntry={true}  placeholder="Mot de passe actuel" onChangeText={text => setPassword(text)}></Input>
+                        <Input inputContainerStyle={styles.input} secureTextEntry={true}  placeholder="Nouveau mot de passe" onChangeText={text => setNewPassword(text)}></Input>
+                        <Input inputContainerStyle={styles.input} secureTextEntry={true}  placeholder="Confirmer nouveau mot de passe" onChangeText={text => setRepeatPass(text)}></Input>
                     </View>
 
                     <View style={{ alignItems: "center" }}>
