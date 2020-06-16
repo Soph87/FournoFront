@@ -24,7 +24,10 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
     const [prep, setPrep] = useState(marmitonToDisplay.recette.preparation[0].preparation)
     const [quantite, setQuantite] = useState(marmitonToDisplay.recette.preparation[0].quantite)
     const [etapes, setEtapes] = useState(marmitonToDisplay.recette.etapes)
-    const [categoriesList, setCategoriesList] = useState([])
+    const [category, setCategory] = useState([]);
+    //const [categoriesList, setCategoriesList] = useState([])
+    const [listeCat, setListeCat] = useState([])
+    const [estSelectionne, setEstSelectionne] = useState(false)
     const [overlayVisible, setOverlayVisible] = useState(false)
     const [hasAlbumPermission, setHasAlbumPermission] = useState(null)
     const [noPhoto, setNoPhoto] = useState(false)
@@ -51,6 +54,37 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
         { titre: 'Boissons', image: require('../../../assets/images/categories/Boisson.png') },
         { titre: 'Autres', image: require('../../../assets/images/categories/Autre.png') },
     ]
+
+    useEffect(() => {
+        if(listeCat.length >= 1) {
+            setEstSelectionne(true);
+        } else {
+            setEstSelectionne(false)
+        }
+    }, [listeCat])
+
+
+    const handlePress = (catName) => {
+        let catChoisies = [...listeCat];
+        if(catChoisies.indexOf(catName) === -1) {
+            catChoisies.push(catName);
+            sendCategories(catName);
+        } else {
+            let index = catChoisies.indexOf(catName);
+            catChoisies.splice(index, 1);
+            suppCategorie(catName);
+        }
+        
+        setListeCat(catChoisies);
+    };
+
+    // Ajouter catégories à la recette
+    var ajoutCategories = () => {
+        setCategoriesList(categoriesToDisplay)
+        setCategories(categoriesToDisplay);
+        setOverlayVisible(false)
+    }
+    
 
     var cancelPhoto = () => {
         setPhoto(false)
@@ -122,9 +156,8 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
         recette.preparation[0].cuisson = cuisson
         recette.preparation[0].total = total
         recette.preparation[0].quantite = quantite
-        recette.category = categoriesList
+        recette.category = category
         recette.token = token
-         console.log(recette)
 
         var body = JSON.stringify(recette)
 
@@ -186,16 +219,29 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
         )
     })
 
+    //Modifier la liste des catégories de la recette
+    const handlePressCat = cat => {
+        const newCats = [...category];
+        if (newCats.indexOf(cat) === -1) {
+            newCats.push(cat);
+        } else {
+            const index = newCats.indexOf(cat);
+            newCats.splice(index, 1);
+        }
+
+        setCategory(newCats);
+    }
    
 
     //Affichage des Cards de catégorie
     let categoryMap = listeCategories.map((cat) => {
         return (
-            <CatCard key={cat.titre} titre={cat.titre} image={cat.image} maxwidth={115} />
+            <CatCard key={cat.titre} titre={cat.titre} image={cat.image} maxwidth={115} catListe={category} handlePressParent={handlePressCat} selection={true} />
         )
     });
 
-    var categories = categoriesList.map((cat, i) => {
+    //Affichage des catégories de la recette
+    var categories = category.map((cat, i) => {
         return (
             <View style={styles.catRound}>
                 <Text style={styles.categoriesDisplay}>{cat}</Text>
