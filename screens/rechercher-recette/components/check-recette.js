@@ -13,7 +13,7 @@ import PhotoCamera from '../../rechercher-recette/components/photo';
 import CatCard from '../../../components/cat-card';
 
 
-function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoToDisplay, killPhotoRedux, token, sendPhoto }) {
+function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoToDisplay, killPhotoRedux, sendCategories, suppCategorie, categoriesToDisplay,  token, sendPhoto}) {
 
     const [photo, setPhoto] = useState(false)
     const [photoMarmit, setPhotoMarmit] = useState(marmitonToDisplay.recette.image)
@@ -24,7 +24,10 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
     const [prep, setPrep] = useState(marmitonToDisplay.recette.preparation[0].preparation)
     const [quantite, setQuantite] = useState(marmitonToDisplay.recette.preparation[0].quantite)
     const [etapes, setEtapes] = useState(marmitonToDisplay.recette.etapes)
+    const [categories, setCategories] = useState([])
     const [categoriesList, setCategoriesList] = useState([])
+    const [listeCat, setListeCat] = useState([])
+    const [estSelectionne, setEstSelectionne] = useState(false)
     const [overlayVisible, setOverlayVisible] = useState(false)
     const [hasAlbumPermission, setHasAlbumPermission] = useState(null)
     const [noPhoto, setNoPhoto] = useState(false)
@@ -51,6 +54,52 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
         { titre: 'Boissons', image: require('../../../assets/images/categories/Boisson.png') },
         { titre: 'Autres', image: require('../../../assets/images/categories/Autre.png') },
     ]
+
+    //Affichage des Cards de catégorie
+
+    const handlePress = (catName) => {
+    let catChoisies = [...listeCat];
+    if(catChoisies.indexOf(catName) === -1) {
+        catChoisies.push(catName);
+        sendCategories(catName);
+    } else {
+        let index = catChoisies.indexOf(catName);
+        catChoisies.splice(index, 1);
+        suppCategorie(catName);
+    }
+    
+    setListeCat(catChoisies);
+    };
+
+    let categoryMap = listeCategories.map((cat) => {
+        return (
+            <CatCard key={cat.titre} titre={cat.titre} image={cat.image} maxwidth={115} handlePressParent={handlePress}/>
+        )
+    });
+
+    var categoriesMarmiton = categoriesList.map((cat, i) => {
+        return (
+            <View style={styles.catRound}>
+                <Text style={styles.categoriesDisplay}>{cat}</Text>
+            </View>
+        )
+    })
+
+    useEffect(() => {
+        if(listeCat.length >= 1) {
+            setEstSelectionne(true);
+        } else {
+            setEstSelectionne(false)
+        }
+    }, [listeCat])
+
+    // Ajouter catégories à la recette
+    var ajoutCategories = () => {
+        setCategoriesList(categoriesToDisplay)
+        setCategories(categoriesToDisplay);
+        setOverlayVisible(false)
+    }
+    
 
     var cancelPhoto = () => {
         setPhoto(false)
@@ -204,12 +253,6 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
     })
 
     var etapesTable = etapes.map((etape, i) => {
-        // var msg = messageData.message.replace(/:\)/g, '\u263A');
-        // msg = msg.replace(/:\(/g, '\u2639');
-        // msg = msg.replace(/:p/g, '\uD83D\uDE1B');
-
-        // var etapeRegex = etape.replace(^[ \t]+|[ \t]+$, "");
-
         return (
             <Input onChangeText={text => { updateEtapes(i, text) }} multiline={true} inputContainerStyle={styles.input} inputStyle={{ fontFamily: "BarlowCondensed-Regular", fontSize: 20, padding: 10 }} value={etapes[i]} rightIcon={<Poubelle height={30} width={30} onPress={() => { deleteEtape(i) }} />}></Input>
         )
@@ -281,12 +324,12 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
                     <View>
                         <Text style={styles.sousTitre}>Catégories</Text>
                         <View style={styles.catDisplayContainer}>
-                            {categories}
+                            {categoriesMarmiton}
                         </View>
                         <View style={{ alignItems: "center" }}>
                             <Button
                                 type='solid'
-                                title='Modifier catégories'
+                                title='Ajouter des catégories'
                                 buttonStyle={styles.boutons}
                                 titleStyle={{ fontFamily: "BarlowCondensed-SemiBold", fontSize: 20, color: '#FF5A5D' }}
                                 raised
@@ -362,6 +405,16 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
                     <ScrollView contentContainerStyle={styles.catContainer}>
                         {categoryMap}
                     </ScrollView>
+                    <Button 
+                        onPress={() => ajoutCategories() }
+                        type='solid'
+                        title='Valider' 
+                        buttonStyle={styles.validerBtn} 
+                        titleStyle={{fontFamily: "BarlowCondensed-SemiBold", fontSize: 20, color: '#FF5A5D'}}
+                        containerStyle = {styles.btnPosition}
+                        disabled = {!estSelectionne}
+                        raised
+                    />
                 </Overlay>
             </SafeAreaView>
         </View>
@@ -448,6 +501,17 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontFamily: "BarlowCondensed-SemiBold",
     },
+    btnPosition: {
+        position: 'absolute',
+        bottom: 15,
+        left: '50%',
+        transform: [{ translateX: -50 }],
+    },
+    validerBtn: {
+        backgroundColor: 'white',
+        borderRadius: 150,
+        paddingHorizontal: 30,
+    },
     //Navigation bas écran
     bottomNavContainer: {
         flexDirection: "row", 
@@ -482,6 +546,12 @@ function mapDispatchToProps(dispatch){
         },
         sendPhoto: function(photo){
             dispatch({type: 'addPhoto', photo})
+        },
+        sendCategories: function(cat){
+            dispatch({type: 'ajoutCat', cat})
+        },
+        suppCategorie: function(cat){
+            dispatch({type: 'suppCat', cat})
         }
     }
 }
@@ -490,3 +560,4 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps
 )(CheckRecette)
+

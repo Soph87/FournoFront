@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import PlaceHolderAccueil from '../../components/PlaceHolderAccueil'
 
 
+
 function ImportUrl({navigation, sendUrlToRedux}) {
 
     const [isEnabled, setIsEnabled] = useState(false);
@@ -23,7 +24,7 @@ function ImportUrl({navigation, sendUrlToRedux}) {
           body: `lienMarmiton=${urlMarmiton}`
         });
         const newRecette = await url.json();
-        console.log(newRecette)
+        
         if(newRecette){
             setIsFetching(false)
             sendUrlToRedux(newRecette);
