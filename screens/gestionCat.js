@@ -96,7 +96,7 @@ function GestionCat({navigation, replaceCatPref, token, changeCat}) {
                 <View style={{ flex: 1 }}>
                     <View style={styles.header}>
                         <FlecheRetour width={30} height={30} onPress={() => { navigation.goBack() }} />
-                        <Text style={styles.titre}> Choisir une catégorie </Text>
+                        <Text style={styles.titre}> Veuillez choisir 3 nouvelles catégories </Text>
                         <View width={30} height={30} />
                     </View>
                     <ScrollView>

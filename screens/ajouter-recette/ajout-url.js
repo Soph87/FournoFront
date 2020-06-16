@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import FlecheRetour from '../../assets/images/icones/fleche-retour.svg';
 import { connect } from 'react-redux';
-import PlaceHolderAccueil from '../../components/PlaceHolderAccueil'
+import PlaceHolderUrl from '../../components/PlaceHolderUrl';
 
 
 
@@ -34,7 +34,7 @@ function ImportUrl({navigation, sendUrlToRedux}) {
 
     if(isFetching){
         return (
-            <PlaceHolderAccueil />
+            <PlaceHolderUrl />
         )
     } else {
 
