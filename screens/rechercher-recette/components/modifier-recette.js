@@ -90,7 +90,7 @@ function ModifierRecette({ navigation, token, recetteToDisplay, clicRetourParent
     //passer par un état, s'il est vrai, alors on utilise le require
     var imageToShow;
     if (noPhoto || imageDeRecette === "") {
-        imageToShow = <ImageBackground source={require('../../../assets/images/no-photo.png')} style={{ width: '100%', height: 200, marginTop: 25, flex: 1, justifyContent: "flex-end" }}>
+        imageToShow = <ImageBackground source={require('../../../assets/images/no-photo.png')} style={{ width: '100%', height: 200, flex: 1, justifyContent: "flex-end" }}>
             <View style={{ backgroundColor: "white", opacity: 0.7, height: 50, width: "100%", alignItems: "center", flexDirection: "row", justifyContent: "center" }}>
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around" }}>
                     <AppareilPhoto width={30} height={30} onPress={() => { setPhoto(true) }} />
@@ -101,7 +101,7 @@ function ModifierRecette({ navigation, token, recetteToDisplay, clicRetourParent
         </ImageBackground>
         //Sinon on utilise l'imageDeRecette ( qui sera soit l'image de redux soit l'image de la recette enregistrée)
     } else {
-        imageToShow = <ImageBackground source={{ uri: imageDeRecette }} style={{ width: '100%', height: 200, marginTop: 25, flex: 1, justifyContent: "flex-end" }}>
+        imageToShow = <ImageBackground source={{ uri: imageDeRecette }} style={{ width: '100%', height: 200, flex: 1, justifyContent: "flex-end" }}>
             <View style={{ backgroundColor: "white", opacity: 0.7, height: 50, width: "100%", alignItems: "center", flexDirection: "row", justifyContent: "center" }}>
                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around" }}>
                     <AppareilPhoto width={30} height={30} onPress={() => { setPhoto(true) }} />
@@ -316,7 +316,6 @@ function ModifierRecette({ navigation, token, recetteToDisplay, clicRetourParent
         return (
             <View style={{ flex: 1, backgroundColor: "#FF5A5B" }}>
                 <SafeAreaView style={{ flex: 1 }}>
-
                     <View style={styles.header}>
                         <FlecheRetour width={30} height={30} onPress={() => { clickRetour() }} />
                         <Text style={styles.headerTitre}> Modifier la recette </Text>
@@ -356,7 +355,7 @@ function ModifierRecette({ navigation, token, recetteToDisplay, clicRetourParent
                         </View>
                         <View style={styles.separateur} />
                         <View>
-                            <Text style={styles.sousTitre}>Préparation</Text>
+                            <Text style={styles.sousTitre}>Infos recette</Text>
                             <Input
                                 onChangeText={text => setPreparation(text)}
                                 inputContainerStyle={styles.input}

@@ -52,11 +52,11 @@ function ImportUrl({navigation, sendUrlToRedux}) {
                     </View>
                                      
                     <View style={styles.inputContainer}>
-                        <Text style={styles.urlTexte}> Entrer l'URL du site</Text>
+                        <Text style={styles.urlTexte}>Entrez le lien de la page où se trouve la recette</Text>
                             <Input 
                                 inputContainerStyle={styles.input} 
                                 renderErrorMessage={false} 
-                                placeholder='URL de la recette'
+                                placeholder='lien vers la recette'
                                 containerStyle={{ paddingHorizontal: 0 }}
                                 inputStyle={{ fontFamily: "BarlowCondensed-Regular", fontSize: 20 }}
                                 onChangeText={(e) => setUrlMarmiton(e)} 
