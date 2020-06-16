@@ -8,6 +8,12 @@ import Sync from '../assets/images/icones/sync.svg';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 function Menu({ navigation }) {
+
+
+    var logout = () => {
+
+        navigation.navigate("Home")
+    }
     return (
         <View style={styles.global}>
             <SafeAreaView style={{ flex: 1 }}>
@@ -30,10 +36,16 @@ function Menu({ navigation }) {
                                 <Text style={styles.ongletText}>Gestion des catégories et des plats</Text>
                             </View>
                         </TouchableOpacity>
-                        <View style={styles.ongletMenu}>
+                        {/* <View style={styles.ongletMenu}>
                             <Sync width={30} height={30} />
                             <Text style={styles.ongletText}>Synchronisation pour mode offline</Text>
-                        </View>
+                        </View> */}
+                        <TouchableOpacity onPress={()=> logout()}>
+                            <View style={styles.ongletMenu}>
+                                <Sync width={30} height={30} />
+                                <Text style={styles.ongletText}>Deconnexion</Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </SafeAreaView>
