@@ -24,7 +24,6 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
     const [prep, setPrep] = useState(marmitonToDisplay.recette.preparation[0].preparation)
     const [quantite, setQuantite] = useState(marmitonToDisplay.recette.preparation[0].quantite)
     const [etapes, setEtapes] = useState(marmitonToDisplay.recette.etapes)
-    const [categories, setCategories] = useState([])
     const [categoriesList, setCategoriesList] = useState([])
     const [listeCat, setListeCat] = useState([])
     const [estSelectionne, setEstSelectionne] = useState(false)
@@ -70,12 +69,6 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
     
     setListeCat(catChoisies);
     };
-
-    let categoryMap = listeCategories.map((cat) => {
-        return (
-            <CatCard key={cat.titre} titre={cat.titre} image={cat.image} maxwidth={115} handlePressParent={handlePress}/>
-        )
-    });
 
     var categoriesMarmiton = categoriesList.map((cat, i) => {
         return (
@@ -240,7 +233,7 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
     //Affichage des Cards de catégorie
     let categoryMap = listeCategories.map((cat) => {
         return (
-            <CatCard key={cat.titre} titre={cat.titre} image={cat.image} maxwidth={115} />
+            <CatCard key={cat.titre} titre={cat.titre} image={cat.image} maxwidth={115} handlePressParent={handlePress}/>
         )
     });
 
