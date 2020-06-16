@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import * as ImagePicker from 'expo-image-picker';
 
 
-function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photoToDisplay, killPhotoRedux, sendPhoto }) {
+function ModifierRecette({ navigation, token, recetteToDisplay, clicRetourParent, photoToDisplay, killPhotoRedux, sendPhoto }) {
 
     const [photo, setPhoto] = useState(false)
     const [titre, setTitre] = useState(recetteToDisplay.titre)
@@ -29,6 +29,8 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
     const [overlayVisible, setOverlayVisible] = useState(false)
     const [hasAlbumPermission, setHasAlbumPermission] = useState(ImagePicker.getCameraPermissionsAsync())
     const [noPhoto, setNoPhoto] = useState(false)
+    const [suppOverlayVisible, setSuppOverlayVisible] = useState(false)
+    const [overlayMessage, setOverlayMessage] = useState("")
 
     //Cette fonction va gérer le fait d'appuyer sur le picto album pour aller choisir une photo
     var getPhotoFromAlbum = async () => {
@@ -51,7 +53,7 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
         } else {
             (async () => {
                 //if (Constants.platform.ios) {
-                    //On demande la permission d'acceder a l'album
+                //On demande la permission d'acceder a l'album
                 const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
                 //On gère le cas ou la perosnne ne permets pas d'acceder a l'album
                 if (status !== 'granted') {
@@ -62,9 +64,9 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
                 //}
             })();
         }
-        
+
         //Si on a la permission, alors on créée une variable qui sera égale à la photo qu'on va chercher dans l'album
-        
+
     }
     //Ici on gère le cas ou la personne clique sur le picto poubelle pour effacer la photo
     var deletePhoto = () => {
@@ -158,17 +160,17 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
         recette.category = category
         //Ici il faut qu'on sache si on sauvegarde la nouvelle photo qui est dans redux
         if (photoToDisplay != "") {
-           recette.image = photoToDisplay
+            recette.image = photoToDisplay
         } else {
             //Ou si dans le cas ou noPhoto est vrai (donc qu'il a appuyé sur la poubelle pour ne plus avoir de photo)
             //Si c'est le cas on envoie un string vide à la DB
-            if (noPhoto){
+            if (noPhoto) {
                 recette.image = ""
             }
             //Dans tout les autres cas, on envoie rien, ce qui veut dire qu'il va garder l'image qui état deja presente à l'origine
         }
 
-        
+
 
         var body = JSON.stringify(recette)
 
@@ -213,6 +215,33 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
         let newIng = [...ingredients]
         newIng.push("")
         setIngredients(newIng)
+    }
+
+    var supprimerRecette = async () => {
+        var body = {
+            id: recetteToDisplay._id,
+            token: token
+        }
+
+        var bodyToSend = JSON.stringify(body)
+
+        let response = await fetch("https://protected-anchorage-65968.herokuapp.com/users/deleteRecette", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: bodyToSend,
+        })
+        response = await response.json()
+
+        if (response.result) {
+            setOverlayMessage("La recette a bien été supprimée")
+            setSuppOverlayVisible(true)
+            setTimeout(() => {setOverlayVisible(false); navigation.navigate("Accueil")}, 2000)
+            
+        } else {
+            setOverlayMessage("Quelque chose s'est mal passé")
+            setSuppOverlayVisible(true)
+            setTimeout(() => setOverlayVisible(false), 2000)
+        }
     }
 
     var ajouterEtap = () => {
@@ -281,7 +310,7 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
 
     if (photo) {
         return (
-            <PhotoCamera navigation={navigation} clickCancelPhoto={cancelPhoto} photoSaved={photoSaved}/>
+            <PhotoCamera navigation={navigation} clickCancelPhoto={cancelPhoto} photoSaved={photoSaved} />
         )
     } else {
         return (
@@ -394,6 +423,7 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
                             buttonStyle={styles.boutons}
                             titleStyle={{ fontFamily: "BarlowCondensed-SemiBold", fontSize: 20, color: '#FF5A5D' }}
                             containerStyle={styles.boutonsContainer}
+                            onPress={() => supprimerRecette()}
                         />
                     </View>
                     <Overlay isVisible={overlayVisible} onBackdropPress={() => setOverlayVisible(false)} overlayStyle={styles.overlay}>
@@ -401,6 +431,13 @@ function ModifierRecette({ navigation, recetteToDisplay, clicRetourParent, photo
                             <ScrollView contentContainerStyle={styles.catContainer}>
                                 {categoryMap}
                             </ScrollView>
+                        </View>
+                    </Overlay>
+                    <Overlay isVisible={suppOverlayVisible}>
+                        <View>
+                            <Text>
+                                {overlayMessage}
+                            </Text>
                         </View>
                     </Overlay>
                 </SafeAreaView>
@@ -509,7 +546,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state) {
     return {
-        photoToDisplay: state.photo
+        photoToDisplay: state.photo,
+        token: state.token
     }
 }
 

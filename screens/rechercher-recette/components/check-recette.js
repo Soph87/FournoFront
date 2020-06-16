@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, StyleSheet, ScrollView, ImageBackground, Text, SafeAreaView, Dimensions} from 'react-native';
+import { View, StyleSheet, ScrollView, ImageBackground, Text, SafeAreaView, Dimensions } from 'react-native';
 import { Input, Button, Overlay } from 'react-native-elements'
 import AppareilPhoto from '../../../assets/images/icones/photo.svg'
 import Poubelle from '../../../assets/images/icones/poubelle.svg'
@@ -11,7 +11,7 @@ import * as ImagePicker from 'expo-image-picker';
 //Components
 import PhotoCamera from '../../rechercher-recette/components/photo';
 import CatCard from '../../../components/cat-card';
-
+import Home from '../../../assets/images/icones/home.svg'
 
 function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoToDisplay, killPhotoRedux, token, sendPhoto }) {
 
@@ -56,7 +56,7 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
     ]
 
     useEffect(() => {
-        if(listeCat.length >= 1) {
+        if (listeCat.length >= 1) {
             setEstSelectionne(true);
         } else {
             setEstSelectionne(false)
@@ -66,7 +66,7 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
 
     const handlePress = (catName) => {
         let catChoisies = [...listeCat];
-        if(catChoisies.indexOf(catName) === -1) {
+        if (catChoisies.indexOf(catName) === -1) {
             catChoisies.push(catName);
             sendCategories(catName);
         } else {
@@ -74,7 +74,7 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
             catChoisies.splice(index, 1);
             suppCategorie(catName);
         }
-        
+
         setListeCat(catChoisies);
     };
 
@@ -84,7 +84,7 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
         setCategories(categoriesToDisplay);
         setOverlayVisible(false)
     }
-    
+
 
     var cancelPhoto = () => {
         setPhoto(false)
@@ -101,32 +101,32 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
     var getPhotoFromAlbum = async () => {
         (async () => {
             //if (Constants.platform.ios) {
-              const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
-              if (status !== 'granted') {
+            const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
+            if (status !== 'granted') {
                 alert('Oups!! Nous avons besoin de votre permission pour accéder à vos photos!');
-              }
-              setHasAlbumPermission(status === "granted")
+            }
+            setHasAlbumPermission(status === "granted")
             //}
-          })();
-          
-          if (hasAlbumPermission){
+        })();
+
+        if (hasAlbumPermission) {
             let result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.All,
                 allowsEditing: true,
                 aspect: [4, 3],
                 quality: 1,
-              });
-          
-              console.log(result);
-          
-              if (!result.cancelled) {
+            });
+
+            console.log(result);
+
+            if (!result.cancelled) {
                 sendPhoto(result.uri)
                 //On donne a photoMarmit la nouvelle valeur, c'est a dire la photo qu'il vient de choisir
                 setPhotoMarmit(result.uri)
                 setNoPhoto(false)
-              }
-              console.log(result.uri)
-          }
+            }
+            console.log(result.uri)
+        }
     }
 
     var deletePhoto = () => {
@@ -134,9 +134,9 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
         setNoPhoto(true)
     }
 
-    
+
     var validerRecette = async () => {
-        
+
         var recette = marmitonToDisplay.recette
         recette.titre = titre
         recette.etapes = etapes
@@ -144,9 +144,9 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
         //Ici on check si l'user a appuyé sur le picto poubelle pour effacer la photo
         //Si c'est le cas on envoie une chaine de caractere vide
         //Sinon on envoie la photoMarmit (qui est soit la photo qui vient de marmiton, soit la photo que l'user a choisi)
-        if (noPhoto){
+        if (noPhoto) {
             recette.image = ""
-        } else if (photoToDisplay === ""){
+        } else if (photoToDisplay === "") {
             recette.image = photoMarmit
         } else {
             recette.image = photoToDisplay
@@ -213,6 +213,9 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
         setEtapes(newEtap)
     }
 
+    var goToHome = () => {
+        navigation.navigate("Accueil")
+    }
     var ingredientsTable = ingredients.map((ing, i) => {
         return (
             <Input onChangeText={text => { updateIngredients(i, text) }} inputContainerStyle={styles.input} value={ingredients[i]} rightIcon={<Poubelle height={30} width={30} onPress={() => { deleteIng(i) }} />}></Input>
@@ -231,7 +234,7 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
 
         setCategory(newCats);
     }
-   
+
 
     //Affichage des Cards de catégorie
     let categoryMap = listeCategories.map((cat) => {
@@ -261,35 +264,35 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
         )
     })
 
-   var imageToDisplay;
+    var imageToDisplay;
 
-   if(photoToDisplay === ""){
-       imageToDisplay = photoMarmit
-   } else {
-       imageToDisplay = photoToDisplay
-   }
+    if (photoToDisplay === "") {
+        imageToDisplay = photoMarmit
+    } else {
+        imageToDisplay = photoToDisplay
+    }
 
     var imageToShow;
-    if (noPhoto){
-        imageToShow= <ImageBackground source={require('../../../assets/images/no-photo.png')} style={{ width: '100%', height: 200, marginTop: 25, flex: 1, justifyContent: "flex-end" }}>
-        <View style={{ backgroundColor: "white", opacity: 0.7, height: 50, width: "100%", alignItems: "center", flexDirection: "row", justifyContent: "center" }}>
-            <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around" }}>
-                <AppareilPhoto width={30} height={30} onPress={() => { setPhoto(true) }} />
-                <Photo width={30} height={30} onPress={() => getPhotoFromAlbum()} />
-                <Poubelle width={30} height={30} onPress={() => deletePhoto()}/>
+    if (noPhoto) {
+        imageToShow = <ImageBackground source={require('../../../assets/images/no-photo.png')} style={{ width: '100%', height: 200, marginTop: 25, flex: 1, justifyContent: "flex-end" }}>
+            <View style={{ backgroundColor: "white", opacity: 0.7, height: 50, width: "100%", alignItems: "center", flexDirection: "row", justifyContent: "center" }}>
+                <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around" }}>
+                    <AppareilPhoto width={30} height={30} onPress={() => { setPhoto(true) }} />
+                    <Photo width={30} height={30} onPress={() => getPhotoFromAlbum()} />
+                    <Poubelle width={30} height={30} onPress={() => deletePhoto()} />
+                </View>
             </View>
-        </View>
-    </ImageBackground>
+        </ImageBackground>
     } else {
-        imageToShow= <ImageBackground source={{uri: imageToDisplay}} style={{ width: '100%', height: 200, marginTop: 25, flex: 1, justifyContent: "flex-end" }}>
-        <View style={{ backgroundColor: "white", opacity: 0.7, height: 50, width: "100%", alignItems: "center", flexDirection: "row", justifyContent: "center" }}>
-            <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around" }}>
-                <AppareilPhoto width={30} height={30} onPress={() => { setPhoto(true) }} />
-                <Photo width={30} height={30} onPress={() => getPhotoFromAlbum()} />
-                <Poubelle width={30} height={30} onPress={() => deletePhoto()}/>
+        imageToShow = <ImageBackground source={{ uri: imageToDisplay }} style={{ width: '100%', height: 200, marginTop: 25, flex: 1, justifyContent: "flex-end" }}>
+            <View style={{ backgroundColor: "white", opacity: 0.7, height: 50, width: "100%", alignItems: "center", flexDirection: "row", justifyContent: "center" }}>
+                <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around" }}>
+                    <AppareilPhoto width={30} height={30} onPress={() => { setPhoto(true) }} />
+                    <Photo width={30} height={30} onPress={() => getPhotoFromAlbum()} />
+                    <Poubelle width={30} height={30} onPress={() => deletePhoto()} />
+                </View>
             </View>
-        </View>
-    </ImageBackground>
+        </ImageBackground>
     }
 
     if (photo) {
@@ -297,120 +300,120 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
             <PhotoCamera navigation={navigation} clickCancelPhoto={cancelPhoto} photoSaved={photoSaved} />
         )
     } else {
-     
+
 
         return (
 
             <View style={{ flex: 1, backgroundColor: "#FF5A5B" }}>
-            <SafeAreaView style={{ flex: 1 }}>
+                <SafeAreaView style={{ flex: 1 }}>
 
-                <View style={styles.header}>
-                    <FlecheRetour width={30} height={30} onPress={() => { clickRetour() }} />
-                    <Text style={styles.headerTitre}> Modifier la recette </Text>
-                    <View width={30} height={30} />
-                </View>
-
-                <ScrollView style={{ flex: 1, width: "100%" }}>
-                    {imageToShow}
-                    <View style={styles.separateur} />
-                    <View>
-                        <Text style={styles.sousTitre}>Titre de la recette</Text>
-                        <Input 
-                            inputContainerStyle={styles.input} 
-                            value={titre} 
-                            rightIcon={<Poubelle height={30} width={30} />} onChangeText={text => setTitre(text)}
-                            renderErrorMessage={false}
-                            inputStyle={styles.inputTexte}
-                        />
+                    <View style={styles.header}>
+                        <View width={30} height={30} />
+                        <Text style={styles.headerTitre}> Modifier la recette </Text>
+                        <Home height={30} width={30} onPress={() => goToHome()} />
                     </View>
-                    <View style={styles.separateur} />
-                    <View>
-                        <Text style={styles.sousTitre}>Catégories</Text>
-                        <View style={styles.catDisplayContainer}>
-                            {categories}
-                        </View>
-                        <View style={{ alignItems: "center" }}>
-                            <Button
-                                type='solid'
-                                title='Modifier catégories'
-                                buttonStyle={styles.boutons}
-                                titleStyle={{ fontFamily: "BarlowCondensed-SemiBold", fontSize: 20, color: '#FF5A5D' }}
-                                raised
-                                onPress={() => setOverlayVisible(true)}
+
+                    <ScrollView style={{ flex: 1, width: "100%" }}>
+                        {imageToShow}
+                        <View style={styles.separateur} />
+                        <View>
+                            <Text style={styles.sousTitre}>Titre de la recette</Text>
+                            <Input
+                                inputContainerStyle={styles.input}
+                                value={titre}
+                                rightIcon={<Poubelle height={30} width={30} />} onChangeText={text => setTitre(text)}
+                                renderErrorMessage={false}
+                                inputStyle={styles.inputTexte}
                             />
                         </View>
-                    </View>
-                    <View style={styles.separateur} />
-                    <View>
-                        <Text style={styles.sousTitre}>Préparation</Text>
-                        <Input 
-                            onChangeText={text => setPrep(text)} 
-                            inputContainerStyle={styles.input} 
-                            value={prep} 
-                            rightIcon={<Poubelle height={30} width={30} onPress={() => setPreparation("")} />}
-                            label='Temps de préparation'
-                            renderErrorMessage={false}
-                            inputStyle={styles.inputTexte}
-                            labelStyle={styles.label}
-                        />
-                        <Input 
-                            onChangeText={text => setCuisson(text)} 
-                            inputContainerStyle={styles.input} 
-                            value={cuisson} 
-                            rightIcon={<Poubelle height={30} width={30} onPress={() => setCuisson("")} />}
-                            label='Temps de cuisson'
-                            renderErrorMessage={false}
-                            inputStyle={styles.inputTexte}
-                            labelStyle={styles.label}
-                        />
-                        <Input 
-                            onChangeText={text => setQuantite(text)} 
-                            inputContainerStyle={styles.input} 
-                            value={quantite} 
-                            rightIcon={<Poubelle height={30} width={30} onPress={() => setQuantite("")} />}
-                            label='Quantité'
-                            renderErrorMessage={false}
-                            inputStyle={styles.inputTexte}
-                            labelStyle={styles.label}
-                        />
-                    </View>
-                    <View style={styles.separateur} />
-                    <View>
-                        <Text style={styles.sousTitre}>Ingrédients</Text>
-                        {ingredientsTable}
-                        <View style={{ alignItems: "center" }}>
-                            <Ajouter height={30} width={30} onPress={() => ajouterIng()} />
-                            <Text style={{ color: "white", fontFamily: "BarlowCondensed-Regular", fontSize: 20 }}>Ajouter un ingrédient</Text>
+                        <View style={styles.separateur} />
+                        <View>
+                            <Text style={styles.sousTitre}>Catégories</Text>
+                            <View style={styles.catDisplayContainer}>
+                                {categories}
+                            </View>
+                            <View style={{ alignItems: "center" }}>
+                                <Button
+                                    type='solid'
+                                    title='Modifier catégories'
+                                    buttonStyle={styles.boutons}
+                                    titleStyle={{ fontFamily: "BarlowCondensed-SemiBold", fontSize: 20, color: '#FF5A5D' }}
+                                    raised
+                                    onPress={() => setOverlayVisible(true)}
+                                />
+                            </View>
                         </View>
-                    </View>
-                    <View style={styles.separateur} />
-                    <View>
-                        <Text style={styles.sousTitre}>Etapes</Text>
-                        {etapesTable}
-                        <View style={{ alignItems: "center" }}>
-                            <Ajouter height={30} width={30} onPress={() => ajouterEtap()} />
-                            <Text style={{ color: "white", fontFamily: "BarlowCondensed-Regular", fontSize: 20 }}>Ajouter un étape</Text>
+                        <View style={styles.separateur} />
+                        <View>
+                            <Text style={styles.sousTitre}>Préparation</Text>
+                            <Input
+                                onChangeText={text => setPrep(text)}
+                                inputContainerStyle={styles.input}
+                                value={prep}
+                                rightIcon={<Poubelle height={30} width={30} onPress={() => setPreparation("")} />}
+                                label='Temps de préparation'
+                                renderErrorMessage={false}
+                                inputStyle={styles.inputTexte}
+                                labelStyle={styles.label}
+                            />
+                            <Input
+                                onChangeText={text => setCuisson(text)}
+                                inputContainerStyle={styles.input}
+                                value={cuisson}
+                                rightIcon={<Poubelle height={30} width={30} onPress={() => setCuisson("")} />}
+                                label='Temps de cuisson'
+                                renderErrorMessage={false}
+                                inputStyle={styles.inputTexte}
+                                labelStyle={styles.label}
+                            />
+                            <Input
+                                onChangeText={text => setQuantite(text)}
+                                inputContainerStyle={styles.input}
+                                value={quantite}
+                                rightIcon={<Poubelle height={30} width={30} onPress={() => setQuantite("")} />}
+                                label='Quantité'
+                                renderErrorMessage={false}
+                                inputStyle={styles.inputTexte}
+                                labelStyle={styles.label}
+                            />
                         </View>
-                    </View>
-                </ScrollView>
-
-                <View style={styles.bottomNavContainer}>
-                    <Button
-                        type='solid'
-                        title='Valider'
-                        buttonStyle={styles.boutons}
-                        titleStyle={{ fontFamily: "BarlowCondensed-SemiBold", fontSize: 20, color: '#FF5A5D' }}
-                        containerStyle= {styles.boutonsContainer}
-                        onPress={() => validerRecette()}
-                    />
-                </View>
-                <Overlay isVisible={overlayVisible} onBackdropPress={() => setOverlayVisible(false)} overlayStyle={styles.overlay}>
-                    <ScrollView contentContainerStyle={styles.catContainer}>
-                        {categoryMap}
+                        <View style={styles.separateur} />
+                        <View>
+                            <Text style={styles.sousTitre}>Ingrédients</Text>
+                            {ingredientsTable}
+                            <View style={{ alignItems: "center" }}>
+                                <Ajouter height={30} width={30} onPress={() => ajouterIng()} />
+                                <Text style={{ color: "white", fontFamily: "BarlowCondensed-Regular", fontSize: 20 }}>Ajouter un ingrédient</Text>
+                            </View>
+                        </View>
+                        <View style={styles.separateur} />
+                        <View>
+                            <Text style={styles.sousTitre}>Etapes</Text>
+                            {etapesTable}
+                            <View style={{ alignItems: "center" }}>
+                                <Ajouter height={30} width={30} onPress={() => ajouterEtap()} />
+                                <Text style={{ color: "white", fontFamily: "BarlowCondensed-Regular", fontSize: 20 }}>Ajouter un étape</Text>
+                            </View>
+                        </View>
                     </ScrollView>
-                </Overlay>
-            </SafeAreaView>
-        </View>
+
+                    <View style={styles.bottomNavContainer}>
+                        <Button
+                            type='solid'
+                            title='Valider'
+                            buttonStyle={styles.boutons}
+                            titleStyle={{ fontFamily: "BarlowCondensed-SemiBold", fontSize: 20, color: '#FF5A5D' }}
+                            containerStyle={styles.boutonsContainer}
+                            onPress={() => validerRecette()}
+                        />
+                    </View>
+                    <Overlay isVisible={overlayVisible} onBackdropPress={() => setOverlayVisible(false)} overlayStyle={styles.overlay}>
+                        <ScrollView contentContainerStyle={styles.catContainer}>
+                            {categoryMap}
+                        </ScrollView>
+                    </Overlay>
+                </SafeAreaView>
+            </View>
         )
     }
 }
@@ -422,9 +425,9 @@ const height = 80 * win.height / 100
 const styles = StyleSheet.create({
     //Header
     header: {
-        flexDirection: "row", 
-        justifyContent: "space-between", 
-        alignItems: "center", 
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
         paddingBottom: 10,
         paddingHorizontal: 15
     },
@@ -459,8 +462,8 @@ const styles = StyleSheet.create({
         textAlignVertical: 'top',
     },
     inputTexte: {
-        fontFamily: "BarlowCondensed-Regular", 
-        fontSize: 20, 
+        fontFamily: "BarlowCondensed-Regular",
+        fontSize: 20,
         color: "#666666"
     },
     label: {
@@ -496,8 +499,8 @@ const styles = StyleSheet.create({
     },
     //Navigation bas écran
     bottomNavContainer: {
-        flexDirection: "row", 
-        justifyContent: "center", 
+        flexDirection: "row",
+        justifyContent: "center",
         paddingVertical: 10
     },
     //Overlay catégories
@@ -508,7 +511,7 @@ const styles = StyleSheet.create({
     catContainer: {
         width: '100%',
         flexDirection: 'row',
-        justifyContent: 'space-around', 
+        justifyContent: 'space-around',
         flexWrap: "wrap",
     }
 })
@@ -521,13 +524,13 @@ function mapStateToProps(state) {
     }
 }
 
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch) {
     return {
-        killPhotoRedux: function(){
-            dispatch({type: 'killPhoto'})
+        killPhotoRedux: function () {
+            dispatch({ type: 'killPhoto' })
         },
-        sendPhoto: function(photo){
-            dispatch({type: 'addPhoto', photo})
+        sendPhoto: function (photo) {
+            dispatch({ type: 'addPhoto', photo })
         }
     }
 }

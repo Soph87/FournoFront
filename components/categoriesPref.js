@@ -92,7 +92,7 @@ function CatPref({ category1, category2, category3, sendToList }) {
 
         />
         break;
-        case "Plâts": image1 = <Image
+        case "Plats": image1 = <Image
             source={require('../assets/images/categories/Plat.png')}
             style={{ width: '100%' }}
             resizeMode='contain'
@@ -229,7 +229,7 @@ function CatPref({ category1, category2, category3, sendToList }) {
 
         />
         break;
-        case "Plâts": image2 = <Image
+        case "Plats": image2 = <Image
             source={require('../assets/images/categories/Plat.png')}
             style={{ width: '100%' }}
             resizeMode='contain'
@@ -366,7 +366,7 @@ function CatPref({ category1, category2, category3, sendToList }) {
 
         />
         break;
-        case "Plâts": image3 = <Image
+        case "Plats": image3 = <Image
             source={require('../assets/images/categories/Plat.png')}
             style={{ width: '100%' }}
             resizeMode='contain'

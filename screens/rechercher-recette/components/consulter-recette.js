@@ -139,7 +139,7 @@ function ConsulterRecette({ navigation, recetteToDisplay, clickModifierParent })
                             <View style={{ backgroundColor: "#FFF", borderRadius: 10, padding: 10, flexDirection: "column", justifyContent: "space-between", marginTop: 15 }}>
                                 <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between" }}>
                                     <Text style={styles.sousLigne}>Ingrédients</Text>
-                                    <Balance width={30} height={30} onPress={() => setIsVisible(true)} />
+                                    {/* <Balance width={30} height={30} onPress={() => setIsVisible(true)} /> */}
                                 </View>
                                 <View>
                                     {ingredientTable}
