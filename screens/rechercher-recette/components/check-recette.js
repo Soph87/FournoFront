@@ -24,7 +24,8 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
     const [prep, setPrep] = useState(marmitonToDisplay.recette.preparation[0].preparation)
     const [quantite, setQuantite] = useState(marmitonToDisplay.recette.preparation[0].quantite)
     const [etapes, setEtapes] = useState(marmitonToDisplay.recette.etapes)
-    const [categoriesList, setCategoriesList] = useState([])
+    const [category, setCategory] = useState([]);
+    //const [categoriesList, setCategoriesList] = useState([])
     const [listeCat, setListeCat] = useState([])
     const [estSelectionne, setEstSelectionne] = useState(false)
     const [overlayVisible, setOverlayVisible] = useState(false)
@@ -54,30 +55,6 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
         { titre: 'Autres', image: require('../../../assets/images/categories/Autre.png') },
     ]
 
-    //Affichage des Cards de catégorie
-
-    const handlePress = (catName) => {
-    let catChoisies = [...listeCat];
-    if(catChoisies.indexOf(catName) === -1) {
-        catChoisies.push(catName);
-        sendCategories(catName);
-    } else {
-        let index = catChoisies.indexOf(catName);
-        catChoisies.splice(index, 1);
-        suppCategorie(catName);
-    }
-    
-    setListeCat(catChoisies);
-    };
-
-    var categoriesMarmiton = categoriesList.map((cat, i) => {
-        return (
-            <View style={styles.catRound}>
-                <Text style={styles.categoriesDisplay}>{cat}</Text>
-            </View>
-        )
-    })
-
     useEffect(() => {
         if(listeCat.length >= 1) {
             setEstSelectionne(true);
@@ -85,6 +62,21 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
             setEstSelectionne(false)
         }
     }, [listeCat])
+
+
+    const handlePress = (catName) => {
+        let catChoisies = [...listeCat];
+        if(catChoisies.indexOf(catName) === -1) {
+            catChoisies.push(catName);
+            sendCategories(catName);
+        } else {
+            let index = catChoisies.indexOf(catName);
+            catChoisies.splice(index, 1);
+            suppCategorie(catName);
+        }
+        
+        setListeCat(catChoisies);
+    };
 
     // Ajouter catégories à la recette
     var ajoutCategories = () => {
@@ -164,9 +156,8 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
         recette.preparation[0].cuisson = cuisson
         recette.preparation[0].total = total
         recette.preparation[0].quantite = quantite
-        recette.category = categoriesList
+        recette.category = category
         recette.token = token
-         console.log(recette)
 
         var body = JSON.stringify(recette)
 
@@ -228,16 +219,29 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
         )
     })
 
+    //Modifier la liste des catégories de la recette
+    const handlePressCat = cat => {
+        const newCats = [...category];
+        if (newCats.indexOf(cat) === -1) {
+            newCats.push(cat);
+        } else {
+            const index = newCats.indexOf(cat);
+            newCats.splice(index, 1);
+        }
+
+        setCategory(newCats);
+    }
    
 
     //Affichage des Cards de catégorie
     let categoryMap = listeCategories.map((cat) => {
         return (
-            <CatCard key={cat.titre} titre={cat.titre} image={cat.image} maxwidth={115} handlePressParent={handlePress}/>
+            <CatCard key={cat.titre} titre={cat.titre} image={cat.image} maxwidth={115} catListe={category} handlePressParent={handlePressCat} selection={true} />
         )
     });
 
-    var categories = categoriesList.map((cat, i) => {
+    //Affichage des catégories de la recette
+    var categories = category.map((cat, i) => {
         return (
             <View style={styles.catRound}>
                 <Text style={styles.categoriesDisplay}>{cat}</Text>
@@ -317,7 +321,7 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
                     <View>
                         <Text style={styles.sousTitre}>Catégories</Text>
                         <View style={styles.catDisplayContainer}>
-                            {categoriesMarmiton}
+                            {categories}
                         </View>
                         <View style={{ alignItems: "center" }}>
                             <Button
@@ -398,16 +402,6 @@ function CheckRecette({ navigation, marmitonToDisplay, clicRetourParent, photoTo
                     <ScrollView contentContainerStyle={styles.catContainer}>
                         {categoryMap}
                     </ScrollView>
-                    <Button 
-                        onPress={() => ajoutCategories() }
-                        type='solid'
-                        title='Valider' 
-                        buttonStyle={styles.validerBtn} 
-                        titleStyle={{fontFamily: "BarlowCondensed-SemiBold", fontSize: 20, color: '#FF5A5D'}}
-                        containerStyle = {styles.btnPosition}
-                        disabled = {!estSelectionne}
-                        raised
-                    />
                 </Overlay>
             </SafeAreaView>
         </View>

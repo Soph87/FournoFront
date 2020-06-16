@@ -3,10 +3,17 @@ import { Text, View, StyleSheet, Image, TouchableHighlight } from 'react-native'
 import Selection from '../assets/images/icones/selection.svg';
 
 export default function CatCard(props) {
-
     const [isSelected, setIsSelected] = useState(false);
     
-    
+    useEffect(() => {
+        if(props.catListe) {
+            for(let i = 0; i < props.catListe.length; i++) {
+                if(props.catListe[i] === props.titre) {
+                    setIsSelected(true);
+                }
+            }
+        }
+    }, []);
     
     const handlePress = () => {
         if(props.selection){

@@ -1,17 +1,20 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, ScrollView, Image, ImageBackground, Text, SafeAreaView } from 'react-native';
-import { Input, Button, Overlay } from 'react-native-elements'
-//Redux
-import { connect } from 'react-redux'
-//Icones SVG
-import AppareilPhoto from '../../assets/images/icones/photo.svg'
-import Poubelle from '../../assets/images/icones/poubelle.svg'
-import Photo from '../../assets/images/icones/appareil-photo.svg'
-import FlecheRetour from '../../assets/images/icones/fleche-retour.svg'
-import PoubelleBlanche from '../../assets/images/icones/poubelleBlanche.svg'
-import Ajouter from '../../assets/images/icones/ajouter.svg'
-import PhotoCamera from '../rechercher-recette/components/photo';
+import { View, StyleSheet, ScrollView, Image, ImageBackground, Text, SafeAreaView, Dimensions } from 'react-native';
+import { Input, Button, Overlay } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
+//Redux
+import { connect } from 'react-redux';
+//Icones SVG
+import AppareilPhoto from '../../assets/images/icones/photo.svg';
+import Poubelle from '../../assets/images/icones/poubelle.svg';
+import Photo from '../../assets/images/icones/appareil-photo.svg';
+import FlecheRetour from '../../assets/images/icones/fleche-retour.svg';
+import PoubelleBlanche from '../../assets/images/icones/poubelleBlanche.svg';
+import Ajouter from '../../assets/images/icones/ajouter.svg';
+//Components
+import PhotoCamera from '../rechercher-recette/components/photo';
+import CatCard from '../../components/cat-card';
+
 
 
 function RecapManuel({ navigation, recetteDisplay, photoDisplay, killPhotoRedux, token, sendPhoto }) {
@@ -29,7 +32,27 @@ function RecapManuel({ navigation, recetteDisplay, photoDisplay, killPhotoRedux,
     const [hasAlbumPermission, setHasAlbumPermission] = useState(ImagePicker.getCameraPermissionsAsync())
     const [noPhoto, setNoPhoto] = useState(false)
 
-
+    let listeCategories = [
+        { titre: 'Entrées', image: require('../../assets/images/categories/entrees.png') },
+        { titre: 'Plats', image: require('../../assets/images/categories/Plat.png') },
+        { titre: 'Desserts', image: require('../../assets/images/categories/Dessert.png') },
+        { titre: 'Petits-déj', image: require('../../assets/images/categories/Petit-dej.png') },
+        { titre: 'Salades', image: require('../../assets/images/categories/Salade.png') },
+        { titre: 'Soupes', image: require('../../assets/images/categories/Soupe.png') },
+        { titre: 'Viandes', image: require('../../assets/images/categories/Viande.png') },
+        { titre: 'Volailles', image: require('../../assets/images/categories/Volaille.png') },
+        { titre: 'Poissons', image: require('../../assets/images/categories/Poisson.png') },
+        { titre: 'Légumes', image: require('../../assets/images/categories/Legumes.png') },
+        { titre: 'Pâtes', image: require('../../assets/images/categories/Pates.png') },
+        { titre: 'Sauces', image: require('../../assets/images/categories/Sauce.png') },
+        { titre: 'Gâteaux', image: require('../../assets/images/categories/Gateaux.png') },
+        { titre: 'En-cas', image: require('../../assets/images/categories/En-cas.png') },
+        { titre: 'Confitures', image: require('../../assets/images/categories/Confiture.png') },
+        { titre: 'Boulangerie', image: require('../../assets/images/categories/Boulangerie.png') },
+        { titre: 'Apéritifs', image: require('../../assets/images/categories/Apero.png') },
+        { titre: 'Boissons', image: require('../../assets/images/categories/Boisson.png') },
+        { titre: 'Autres', image: require('../../assets/images/categories/Autre.png') },
+    ]
 
     var getPhotoFromAlbum = async () => {
         if (hasAlbumPermission) {
@@ -205,6 +228,25 @@ function RecapManuel({ navigation, recetteDisplay, photoDisplay, killPhotoRedux,
             navigation.navigate("Accueil")
         }
     }
+    //Modifier la liste des catégories de la recette
+    const handlePressCat = cat => {
+        const newCats = [...category];
+        if (newCats.indexOf(cat) === -1) {
+            newCats.push(cat);
+        } else {
+            const index = newCats.indexOf(cat);
+            newCats.splice(index, 1);
+        }
+
+        setCategory(newCats);
+    }
+
+    //Affichage des Cards de catégorie
+    let categoryMap = listeCategories.map((cat) => {
+        return (
+            <CatCard key={cat.titre} titre={cat.titre} image={cat.image} maxwidth={115} catListe={category} handlePressParent={handlePressCat} selection={true} />
+        )
+    });
 
     if (photo) {
         return (
@@ -247,12 +289,6 @@ function RecapManuel({ navigation, recetteDisplay, photoDisplay, killPhotoRedux,
                                 />
                             </View>
                         </View>
-
-                        <Overlay isVisible={overlayVisible} onBackdropPress={() => setOverlayVisible(false)}>
-                            <ScrollView>
-                                <Text>Ceci est un overlay</Text>
-                            </ScrollView>
-                        </Overlay>
 
                         <View>
                             <Text style={styles.sousTitre}>Préparation</Text>
@@ -309,11 +345,22 @@ function RecapManuel({ navigation, recetteDisplay, photoDisplay, killPhotoRedux,
                             <PoubelleBlanche height={30} width={40} />
                         </View>
                     </View>
+                    <Overlay isVisible={overlayVisible} onBackdropPress={() => setOverlayVisible(false)} overlayStyle={styles.overlay}>
+                        <View style={{ flex: 1 }}>
+                            <ScrollView contentContainerStyle={styles.catContainer}>
+                                {categoryMap}
+                            </ScrollView>
+                        </View>
+                    </Overlay>
                 </SafeAreaView>
             </View>
         )
     }
 }
+
+//Définition de la hauteur de l'overlay à 80% de la hauteur de l'écran :
+const win = Dimensions.get('window');
+const height = 80 * win.height / 100
 
 const styles = StyleSheet.create({
     titre: {
@@ -346,7 +393,18 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         fontFamily: "BarlowCondensed-Regular",
         color: "white"
-    }
+    },
+    //Overlay catégories
+    overlay: {
+        height: height,
+        width: '95%'
+    },
+    catContainer: {
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        flexWrap: "wrap",
+    },
 })
 
 function mapStateToProps(state) {

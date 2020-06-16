@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { View, ScrollView, TouchableOpacity, SafeAreaView, StyleSheet, Text } from 'react-native'
+import { View, ScrollView, SafeAreaView, StyleSheet, Text } from 'react-native'
 import {Button} from 'react-native-elements'
 import CatCard from '../components/cat-card';
 import FlecheRetour from '../assets/images/icones/fleche-retour.svg'
@@ -12,7 +12,6 @@ function GestionCat({navigation, replaceCatPref, token, changeCat}) {
     const [listeCat, setListeCat] = useState([]);
 
     useEffect(() => {
-        console.log(listeCat)
         if(listeCat.length >= 1) {
             setEstSelectionne(true);
         } else {
