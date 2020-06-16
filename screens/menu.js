@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
 import { Button } from 'react-native-elements';
 import CroixBlanche from '../assets/images/icones/croix-blanche.svg';
+import CroixJaune from '../assets/images/icones/croixjaune.svg'
 import Userjaune from '../assets/images/icones/user-jaune.svg';
 import Liste from '../assets/images/icones/liste.svg';
 import Sync from '../assets/images/icones/sync.svg';
@@ -42,7 +43,7 @@ function Menu({ navigation }) {
                         </View> */}
                         <TouchableOpacity onPress={()=> logout()}>
                             <View style={styles.ongletMenu}>
-                                <Sync width={30} height={30} />
+                                <CroixJaune width={30} height={30} />
                                 <Text style={styles.ongletText}>Deconnexion</Text>
                             </View>
                         </TouchableOpacity>
